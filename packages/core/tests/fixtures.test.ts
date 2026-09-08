@@ -4,6 +4,7 @@ import {
   ComparisonSnapshot,
   generateAndEvaluateRoutes,
   rankRoutes,
+  recompileWhatIf,
 } from '../src/index.js';
 
 describe('End-to-End Core Engine Fixtures', () => {
@@ -162,5 +163,39 @@ describe('End-to-End Core Engine Fixtures', () => {
     // Winner changed: no valid routes now
     const winner = recompiledRoutes.find((r) => r.status === 'SELECTED');
     expect(winner).toBeUndefined();
+  });
+
+  it('uses recompileWhatIf helper to extract exact diffs and newly rejected paths', () => {
+    const originalIntent: ExecutionIntent = {
+      version: '1',
+      objective: 'hedge',
+      asset: 'BNB',
+      amount: { type: 'exposure_fraction', value: '0.7' },
+      horizon: { value: 24, unit: 'hours' },
+      must_retain_underlying: true,
+      max_leverage: '1.5',
+      max_estimated_carry_bps: '10.0',
+      urgency: 'normal',
+    };
+
+    const originalRoutes = rankRoutes(
+      generateAndEvaluateRoutes({
+        intent: originalIntent,
+        snapshot: mockSnapshot,
+        currentTimeMs: 1788870000030,
+      })
+    );
+
+    const diff = recompileWhatIf(
+      originalRoutes,
+      { ...originalIntent, max_estimated_carry_bps: '1.0' },
+      mockSnapshot,
+      1788870000030
+    );
+
+    expect(diff.winnerChanged).toBe(true);
+    expect(diff.previousWinner).toBe('usd_m_perp');
+    expect(diff.newWinner).toBeUndefined();
+    expect(diff.newlyRejected.some((r) => r.kind === 'usd_m_perp' && r.rejectionCode === 'CARRY_LIMIT')).toBe(true);
   });
 });
