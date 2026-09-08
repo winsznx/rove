@@ -261,6 +261,15 @@ export const BenchmarkExplorer: React.FC = () => {
 
   return (
     <div>
+      {/* Scope & Methodology Banner */}
+      <div className="methodology-banner">
+        <strong>Benchmark Methodology:</strong> Rove Bench runs <strong>2,000 deterministic evaluations</strong> across <strong>20 economic intents</strong> and <strong>100 synthetic multi-asset order-book scenarios</strong> anchored to observed Binance reference prices.
+        <br />
+        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          Benchmark is supporting evidence: median savings on economically equivalent comparable routes is 0.00 bps; primary value lies in constraint enforcement, cross-venue cost verification, and safety-gated execution.
+        </span>
+      </div>
+
       {/* KPI Hero Cards */}
       <div className="kpi-grid">
         <div className="kpi-card">

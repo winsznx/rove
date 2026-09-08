@@ -1,6 +1,6 @@
 # Rove — Agent-Native Execution-Path Compiler for Binance
 
-[![CI](https://github.com/rove-finance/rove/actions/workflows/ci.yml/badge.svg)](https://github.com/rove-finance/rove/actions/workflows/ci.yml)
+[![CI](https://github.com/winsznx/rove/actions/workflows/ci.yml/badge.svg)](https://github.com/winsznx/rove/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
 [![Binance Agent OS](https://img.shields.io/badge/Binance%20Agent%20OS-Track%20A-F0B90B.svg)](https://agent.binance.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -171,7 +171,7 @@ rove/
 
 ### 1. Clone & Verify Clean Build
 ```bash
-git clone https://github.com/rove-finance/rove.git
+git clone https://github.com/winsznx/rove.git
 cd rove
 pnpm install
 pnpm verify

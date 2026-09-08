@@ -119,7 +119,52 @@ export const RouteCardView: React.FC<RouteCardViewProps> = ({
             </span>
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--color-warning-text)', lineHeight: 1.4, marginTop: '0.35rem' }}>
-            ℹ️ <i>{card.estimatedHorizon.assumption}</i>
+            <i>{card.estimatedHorizon.assumption}</i>
+          </div>
+        </div>
+      )}
+
+      {/* Zone 2b: Hedge Sizing & Resulting Delta */}
+      {card.hedgeSemantics && (
+        <div className="card-section">
+          <div className="card-section-label">
+            <span>Hedge Sizing & Resulting Delta</span>
+          </div>
+          <div className="metrics-table mono">
+            <div className="metric-row">
+              <span className="metric-key">Source Exposure</span>
+              <span className="metric-val">{card.hedgeSemantics.sourceExposure} {card.hedgeSemantics.sourceAsset}</span>
+            </div>
+            <div className="metric-row">
+              <span className="metric-key">Target Fraction</span>
+              <span className="metric-val">{(parseFloat(card.hedgeSemantics.targetFraction) * 100).toFixed(1)}%</span>
+            </div>
+            <div className="metric-row">
+              <span className="metric-key">Hedge Quantity</span>
+              <span className="metric-val">{card.hedgeSemantics.roundedHedgeQuantity} {card.hedgeSemantics.sourceAsset}</span>
+            </div>
+            <div className="metric-row">
+              <span className="metric-key">Hedge Notional</span>
+              <span className="metric-val">${card.hedgeSemantics.hedgeNotionalUsdt} USDT</span>
+            </div>
+            {card.hedgeSemantics.availableCollateralUsdt && (
+              <div className="metric-row">
+                <span className="metric-key">Available Collateral</span>
+                <span className="metric-val">${card.hedgeSemantics.availableCollateralUsdt} USDT</span>
+              </div>
+            )}
+            {card.hedgeSemantics.requiredLeverage && (
+              <div className="metric-row highlight">
+                <span className="metric-key">Required Leverage</span>
+                <span className="metric-val" style={{ color: isBest ? 'var(--color-best-text)' : 'inherit' }}>
+                  {card.hedgeSemantics.requiredLeverage}x {card.hedgeSemantics.maxLeverageCap ? `(limit: ${card.hedgeSemantics.maxLeverageCap}x)` : ''}
+                </span>
+              </div>
+            )}
+            <div className="metric-row">
+              <span className="metric-key">Resulting Delta</span>
+              <span className="metric-val" style={{ fontSize: '0.72rem' }}>{card.hedgeSemantics.resultingIntendedDelta}</span>
+            </div>
           </div>
         </div>
       )}

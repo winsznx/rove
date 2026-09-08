@@ -18,19 +18,19 @@ import {
 } from 'lucide-react';
 
 const mockSnapshot: ComparisonSnapshot = {
-  id: 'snap-live-read-bnb-001',
+  id: 'snap-live-1788876898005',
   mode: 'live-read',
-  startedAt: new Date().toISOString(),
-  completedAt: new Date().toISOString(),
-  maxObservedSkewMs: 38,
+  startedAt: '2026-09-08T12:44:20.000Z',
+  completedAt: '2026-09-08T12:44:55.000Z',
+  maxObservedSkewMs: 42,
   account: {
-    timestamp: Date.now(),
+    timestamp: 1788870297000,
     canTrade: true,
     makerFeeBps: '10.00',
     takerFeeBps: '10.00',
     balances: {
-      BNB: { asset: 'BNB', free: '24.50000000', locked: '0.00000000' },
-      USDT: { asset: 'USDT', free: '15000.00000000', locked: '0.00000000' },
+      BNB: { asset: 'BNB', free: '12.50000000', locked: '0.00000000' },
+      USDT: { asset: 'USDT', free: '5000.00000000', locked: '0.00000000' },
     },
     permissions: {
       spotTrade: true,
@@ -41,66 +41,67 @@ const mockSnapshot: ComparisonSnapshot = {
   },
   spot: {
     symbol: 'BNBUSDT',
-    timestamp: Date.now(),
-    bidPrice: '750.84',
-    askPrice: '750.85',
+    timestamp: 1788871460000,
+    bidPrice: '750.54000000',
+    askPrice: '750.55000000',
     bids: [
-      ['750.84', '4.217'],
-      ['750.83', '6.012'],
-      ['750.82', '3.817'],
-      ['750.81', '0.014'],
-      ['750.80', '8.666'],
+      ['750.54000000', '4.21700000'],
+      ['750.53000000', '6.01200000'],
+      ['750.52000000', '3.81700000'],
+      ['750.51000000', '0.01400000'],
+      ['750.50000000', '8.66600000'],
     ],
     asks: [
-      ['750.85', '13.030'],
-      ['750.86', '2.001'],
-      ['750.87', '5.051'],
-      ['750.88', '6.047'],
-      ['750.89', '4.124'],
+      ['750.55000000', '13.03000000'],
+      ['750.56000000', '2.00100000'],
+      ['750.57000000', '5.05100000'],
+      ['750.58000000', '6.04700000'],
+      ['750.59000000', '4.12400000'],
     ],
   },
   convert: {
     fromAsset: 'USDT',
     toAsset: 'BNB',
-    timestamp: Date.now(),
+    timestamp: 1788871470784,
     ratio: '0.00132508',
     inverseRatio: '754.671',
     fromAmount: '750',
     toAmount: '0.99381104',
-    validTimestamp: Date.now() + 15000,
+    validTimestamp: 1788871485784,
     quoteId: 'conv-live-verified-buy-002',
   },
   convertQuotes: [
     {
       fromAsset: 'USDT',
       toAsset: 'BNB',
-      timestamp: Date.now(),
+      timestamp: 1788871470784,
       ratio: '0.00132508',
       inverseRatio: '754.671',
       fromAmount: '750',
       toAmount: '0.99381104',
-      validTimestamp: Date.now() + 15000,
+      validTimestamp: 1788871485784,
       quoteId: 'conv-live-verified-buy-002',
     },
     {
       fromAsset: 'BNB',
       toAsset: 'USDT',
-      timestamp: Date.now(),
+      timestamp: 1788871470784,
       ratio: '747.938',
       inverseRatio: '0.00133701',
       fromAmount: '1.0',
       toAmount: '747.938',
-      validTimestamp: Date.now() + 15000,
+      validTimestamp: 1788871485784,
       quoteId: 'conv-live-verified-sell-001',
     },
   ],
   usdM: {
     symbol: 'BNBUSDT',
-    timestamp: Date.now(),
-    markPrice: '751.04',
+    timestamp: 1788871494385,
+    markPrice: '751.040',
     currentFundingRateBps: '2.74',
     fundingIntervalHours: 8,
     positions: [],
+    availableMargin: '5000.00',
   },
   capabilityRegistry: {
     spot: { marketRead: true, accountRead: true, trade: true, feeRead: true },
@@ -109,7 +110,7 @@ const mockSnapshot: ComparisonSnapshot = {
     margin: { marketRead: false, borrowRateRead: false, accountRead: false, trade: false, costingComplete: false },
     coinM: { marketRead: false, fundingRead: false, positionRead: false, trade: false, feeRead: false, costingComplete: false },
   },
-  sourceFingerprint: 'sha256-live-read-fingerprint-bnb',
+  sourceFingerprint: 'sha256-verified-live-binance-mcp-bnbusdt',
 };
 
 export const App: React.FC = () => {
@@ -172,7 +173,7 @@ export const App: React.FC = () => {
           </button>
 
           <a
-            href="https://github.com/rove-finance/rove"
+            href="https://github.com/winsznx/rove"
             target="_blank"
             rel="noreferrer"
             className="btn-github"
@@ -294,7 +295,7 @@ claude mcp add binance --transport http https://agent.binance.com/mcp/agentic
                   2. Clone & Run Clean-Room Verification
                 </span>
                 <button
-                  onClick={() => copyCode('git clone https://github.com/rove-finance/rove.git\ncd rove\npnpm install\npnpm verify', 2)}
+                  onClick={() => copyCode('git clone https://github.com/winsznx/rove.git\ncd rove\npnpm install\npnpm verify', 2)}
                   className="btn-secondary"
                   style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem' }}
                 >
@@ -303,7 +304,7 @@ claude mcp add binance --transport http https://agent.binance.com/mcp/agentic
                 </button>
               </div>
               <pre className="mono" style={{ background: 'var(--bg-app)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', fontSize: '0.82rem', overflowX: 'auto', border: '1px solid var(--border-subtle)' }}>
-{`git clone https://github.com/rove-finance/rove.git
+{`git clone https://github.com/winsznx/rove.git
 cd rove
 pnpm install
 pnpm verify`}

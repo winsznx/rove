@@ -17,7 +17,7 @@ This guide walks through configuring and running Rove locally, verifying clean b
 Clone the repository and install all dependencies:
 
 ```bash
-git clone https://github.com/rove-finance/rove.git
+git clone https://github.com/winsznx/rove.git
 cd rove
 pnpm install
 ```
