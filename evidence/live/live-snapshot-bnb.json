@@ -1,5 +1,5 @@
 {
-  "id": "snap-live-1788871520178",
+  "id": "snap-live-1788876898005",
   "mode": "live-read",
   "startedAt": "2026-09-08T12:44:20.000Z",
   "completedAt": "2026-09-08T12:44:55.000Z",
@@ -119,23 +119,48 @@
     ]
   },
   "convert": {
-    "fromAsset": "BNB",
-    "toAsset": "USDT",
+    "fromAsset": "USDT",
+    "toAsset": "BNB",
     "timestamp": 1788871470784,
-    "ratio": "747.938",
-    "inverseRatio": "0.00133701",
-    "fromAmount": "1",
-    "toAmount": "747.93751108",
+    "ratio": "0.00132508",
+    "inverseRatio": "754.671",
+    "fromAmount": "750",
+    "toAmount": "0.99381104",
     "validTimestamp": 1788871485784,
-    "quoteId": "conv-live-verified-001"
+    "quoteId": "conv-live-verified-buy-002"
   },
+  "convertQuotes": [
+    {
+      "fromAsset": "USDT",
+      "toAsset": "BNB",
+      "timestamp": 1788871470784,
+      "ratio": "0.00132508",
+      "inverseRatio": "754.671",
+      "fromAmount": "750",
+      "toAmount": "0.99381104",
+      "validTimestamp": 1788871485784,
+      "quoteId": "conv-live-verified-buy-002"
+    },
+    {
+      "fromAsset": "BNB",
+      "toAsset": "USDT",
+      "timestamp": 1788871470784,
+      "ratio": "747.938",
+      "inverseRatio": "0.00133701",
+      "fromAmount": "1",
+      "toAmount": "747.93751108",
+      "validTimestamp": 1788871485784,
+      "quoteId": "conv-live-verified-sell-001"
+    }
+  ],
   "usdM": {
     "symbol": "BNBUSDT",
     "timestamp": 1788871494385,
     "markPrice": "751.040",
     "currentFundingRateBps": "2.74",
     "fundingIntervalHours": 8,
-    "positions": []
+    "positions": [],
+    "availableMargin": "5000.00"
   },
   "capabilityRegistry": {
     "spot": {

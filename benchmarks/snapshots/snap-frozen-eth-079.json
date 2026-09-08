@@ -73,20 +73,45 @@
     "fromAsset": "ETH",
     "toAsset": "USDT",
     "timestamp": 1788874740015,
-    "ratio": "2345.0145",
-    "inverseRatio": "0.00042644",
+    "ratio": "2334.4630",
+    "inverseRatio": "0.00042836",
     "fromAmount": "1.0",
-    "toAmount": "2345.0145",
+    "toAmount": "2334.4630",
     "validTimestamp": 1788874755000,
-    "quoteId": "quote-ETH-79"
+    "quoteId": "quote-sell-ETH-79"
   },
+  "convertQuotes": [
+    {
+      "fromAsset": "USDT",
+      "toAsset": "ETH",
+      "timestamp": 1788874740015,
+      "ratio": "0.00042461",
+      "inverseRatio": "2355.0970",
+      "fromAmount": "10000",
+      "toAmount": "4.24610961",
+      "validTimestamp": 1788874755000,
+      "quoteId": "quote-buy-ETH-79"
+    },
+    {
+      "fromAsset": "ETH",
+      "toAsset": "USDT",
+      "timestamp": 1788874740015,
+      "ratio": "2334.4630",
+      "inverseRatio": "0.00042836",
+      "fromAmount": "1.0",
+      "toAmount": "2334.4630",
+      "validTimestamp": 1788874755000,
+      "quoteId": "quote-sell-ETH-79"
+    }
+  ],
   "usdM": {
     "symbol": "ETHUSDT",
     "timestamp": 1788874740012,
     "markPrice": "2344.78",
     "currentFundingRateBps": "0.10",
     "fundingIntervalHours": 8,
-    "positions": []
+    "positions": [],
+    "availableMargin": "25000.00"
   },
   "capabilityRegistry": {
     "spot": {

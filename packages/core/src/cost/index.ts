@@ -108,6 +108,9 @@ export function calculateSpotCost(
 
 /**
  * Calculates Convert observed execution cost from Convert quote and reference spot price.
+ * For a BUY: delta = ((effectivePrice - refPrice) / refPrice) * 10,000
+ * For a SELL: delta = ((refPrice - effectivePrice) / refPrice) * 10,000
+ * Any spread markup embedded by the RFQ market maker is counted as observed immediate cost.
  */
 export function calculateConvertCost(
   effectivePrice: string,
@@ -116,11 +119,21 @@ export function calculateConvertCost(
   quoteId?: string,
   observedAt?: string
 ): ObservedExecutionCost {
+  const eff = toDecimal(effectivePrice);
+  const ref = toDecimal(referencePrice);
+  if (ref.isZero()) {
+    throw new Error('Reference price cannot be zero');
+  }
+
   let deltaBpsDecimal: DecimalInstance;
   if (side === 'buy') {
-    deltaBpsDecimal = toDecimal(calculateDeltaBps(effectivePrice, referencePrice));
+    // When buying, paying more than referencePrice is an embedded cost:
+    // delta = ((effectivePrice - referencePrice) / referencePrice) * 10,000
+    deltaBpsDecimal = eff.minus(ref).dividedBy(ref).times(10000);
   } else {
-    deltaBpsDecimal = toDecimal(calculateDeltaBps(referencePrice, effectivePrice));
+    // When selling, receiving less than referencePrice is an embedded cost:
+    // delta = ((referencePrice - effectivePrice) / referencePrice) * 10,000
+    deltaBpsDecimal = ref.minus(eff).dividedBy(ref).times(10000);
   }
 
   const zero = toDecimal(0);
@@ -133,7 +146,9 @@ export function calculateConvertCost(
       source: 'convert_quote',
       observedAt,
       status: 'OBSERVED',
-      note: quoteId ? `Quote ID: ${quoteId}` : 'Quote pricing (unfunded pre-quote)',
+      note: quoteId
+        ? `Quote ID: ${quoteId} (Embedded RFQ spread markup vs Spot mid)`
+        : 'Embedded RFQ spread markup vs Spot mid',
     },
     {
       key: 'exchange_fee',
@@ -141,7 +156,7 @@ export function calculateConvertCost(
       source: 'binance_convert',
       observedAt,
       status: 'OBSERVED',
-      note: 'Zero trading fees on Binance Convert',
+      note: 'Zero explicit trading fee on Binance Convert (cost is embedded in quoted rate)',
     },
   ];
 
@@ -222,7 +237,7 @@ export function calculateUsdMCost(
   const fundingRateDecimal = toDecimal(currentFundingRateBps);
   const estimatedCarryBps = fundingRateDecimal.times(numIntervals).abs().toFixed(2);
 
-  const assumption = `Explicit assumption: current funding rate of ${currentFundingRateBps} bps per ${intervalHours}h persists unchanged across ${horizon.value} ${horizon.unit}.`;
+  const assumption = `Estimated ${horizonHours}h carry if the current ${intervalHours}h funding rate persisted (scenario only, not a known future cost).`;
 
   const carry: EstimatedCarry = {
     horizon,

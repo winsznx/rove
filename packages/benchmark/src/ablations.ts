@@ -22,6 +22,7 @@ export function runAblation(
       adjustedSnapshot = {
         ...snapshot,
         convert: undefined,
+        convertQuotes: undefined,
         usdM: undefined,
       };
       break;
@@ -30,6 +31,7 @@ export function runAblation(
       adjustedSnapshot = {
         ...snapshot,
         convert: undefined,
+        convertQuotes: undefined,
       };
       break;
     }
@@ -77,15 +79,15 @@ export function runAblation(
       }
       break;
     }
+    case 'spot_default':
     case 'llm_only': {
-      // Simulated LLM-only path choice: naive model chooses Spot for buy/sell,
-      // and naive choice for hedge without checking retain underlying or fees
+      // SPOT_DEFAULT_BASELINE: A deterministic baseline that attempts Spot execution first where semantically applicable,
+      // without compiler constraint verification (e.g. ignoring retain_underlying or execution cost caps)
       const standardRoutes = generateAndEvaluateRoutes({
         intent: adjustedIntent,
         snapshot: adjustedSnapshot,
         currentTimeMs,
       });
-      // LLM blindly picks Spot if available, regardless of constraints
       const spotRoute = standardRoutes.find((r) => r.kind === 'spot');
       if (spotRoute) {
         return [{ ...spotRoute, status: 'SELECTED' }];

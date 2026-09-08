@@ -1,16 +1,36 @@
 {
   "experiment": "Rove Bench 20-Intent Route-Flip Experiment",
-  "generatedAt": "2026-09-08T12:37:09.493Z",
+  "generatedAt": "2026-09-08T14:14:57.939Z",
   "engineVersion": "1.0.0",
-  "totalEvaluatedIntents": 20,
-  "routeFlipRate": "100.0%",
-  "constraintEnforcementRate": "65.0%",
-  "medianCostSavingsBps": "12.02",
-  "frozenSnapshotsCount": 100,
+  "provenance": "Rove Bench runs 2,000 deterministic evaluations across 20 economic intents and 100 synthetic multi-asset order-book scenarios anchored to observed Binance reference prices.",
+  "classification": "SYNTHETIC_DETERMINISTIC_REPLAY",
+  "representativeRun": {
+    "totalIntents": 20,
+    "routeDecisionChangeRate": "40.0%",
+    "constraintRescueRate": "35.0%",
+    "comparableRouteSavingsBps": "0.00",
+    "baselineViolationRate": "75.0%",
+    "roveViolationRate": "0.0%",
+    "failClosedRate": "100.0%"
+  },
+  "aggregate100Snapshots": {
+    "frozenSnapshotsCount": 100,
+    "totalEvaluations": 2000,
+    "routeDecisionChangeRate": "31.6%",
+    "constraintRescueRate": "27.2%",
+    "comparableRouteSavingsBps": "0.00",
+    "baselineViolationRate": "75.7%",
+    "roveViolationRate": "0.0%",
+    "failClosedRate": "100.0%"
+  },
+  "routeFlipRate": "31.6%",
+  "constraintEnforcementRate": "27.2%",
+  "medianCostSavingsBps": "0.00",
   "findings": [
-    "Retain-underlying constraint deterministically rejects spot & convert sale in 100% of applicable hedge cases, safely switching to USD-M perpetual futures.",
-    "Execution-cost ceiling rejects spot market orders when order-book walk exceeds user-specified bps.",
-    "Convert RFQ wins retail ticket cases where zero book slippage offsets exchange fees.",
-    "Carrying costs are explicitly projected and separated from immediate execution observations."
+    "Retain-underlying constraint deterministically rescues 100% of applicable hedge cases from Spot-default liquidation, safely routing to USD-M perpetual hedge.",
+    "Execution-cost ceiling rejects spot market orders when taker fee or order-book walk exceeds user ceiling (0.0% violation rate by Rove vs 75.7% Spot-default baseline violation rate).",
+    "Spot taker orderbook execution beats Convert RFQ on small retail liquid pairs due to embedded RFQ spread markup (e.g. 44.90 bps on $750 BNB buy).",
+    "Comparable cost savings are reported strictly on valid, constraint-satisfying, economically equivalent routes (excluding rejected paths and hedge-vs-liquidation comparisons).",
+    "Leverage ceiling enforcement calculates actual required leverage against available collateral and fails closed when state is unavailable."
   ]
 }

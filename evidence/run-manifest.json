@@ -1,6 +1,6 @@
 {
   "manifestVersion": "1.0.0",
-  "createdAt": "2026-09-08T12:37:09.493Z",
+  "createdAt": "2026-09-08T14:14:57.940Z",
   "commitSha": "main",
   "artifacts": {
     "toolList": "evidence/mcp/tool-list.json",
@@ -9,6 +9,7 @@
     "benchmarkResultsJson": "benchmarks/results.json",
     "benchmarkResultsCsv": "benchmarks/results.csv",
     "ablationSummary": "benchmarks/ablations/summary.json",
+    "provenanceJson": "evidence/benchmark-provenance.json",
     "snapshotsCount": 100
   }
 }

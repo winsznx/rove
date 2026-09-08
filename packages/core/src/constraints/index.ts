@@ -23,6 +23,7 @@ export const REJECTION_CODES = [
   'SIZE_ABOVE_LIMIT',
   'INSUFFICIENT_VISIBLE_DEPTH',
   'ACCOUNT_STATE_UNAVAILABLE',
+  'COLLATERAL_STATE_UNAVAILABLE',
   'EXECUTION_STATE_UNKNOWN',
   'ORDER_VALIDATION_FAILED',
   'ROUTE_SEMANTICS_MISMATCH',
@@ -213,11 +214,26 @@ export function evaluateRouteConstraints(
       constraints.push({
         key: 'max_leverage',
         state: 'PASS',
-        observedValue: `${ctx.requiredLeverage}x`,
+        observedValue: `${ctx.requiredLeverage}x required`,
         limitValue: `${intent.max_leverage}x`,
       });
     }
-  } else if (intent.max_leverage !== undefined) {
+  } else if (intent.max_leverage !== undefined && (ctx.kind === 'usd_m_perp' || ctx.kind === 'coin_m_perp' || ctx.kind === 'margin')) {
+    const c: ConstraintResult = {
+      key: 'max_leverage',
+      state: 'UNKNOWN',
+      reason: 'Authoritative collateral state unavailable; required leverage cannot be derived',
+      limitValue: `${intent.max_leverage}x`,
+    };
+    constraints.push(c);
+    if (!primaryRejection) {
+      primaryRejection = {
+        code: 'COLLATERAL_STATE_UNAVAILABLE',
+        message: 'Authoritative collateral balance unavailable to verify required leverage against ceiling',
+        evidence: { maxLeverage: intent.max_leverage },
+      };
+    }
+  } else {
     constraints.push({ key: 'max_leverage', state: 'NA' });
   }
 

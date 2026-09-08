@@ -30,7 +30,7 @@
 ┌──────────────────────────────────────┐
 │        Binance Agent OS MCP          │
 │  • Streamable HTTP / JSON-RPC        │
-│  • 81 Discovered Tools               │
+│  • 81 Catalogued (7 Live Exercised)  │
 │  • Non-withdrawable Sub-account      │
 └──────────────────────────────────────┘
 ```
@@ -124,7 +124,7 @@ Rove strictly separates immediate observed execution cost from forward-looking c
   * Projected funding payments over user horizon:
     $$\text{Carry}_{\text{bps}} = \text{Rate}_{\text{bps}} \times \left( \frac{\text{Horizon}_{\text{hours}}}{\text{Interval}_{\text{hours}}} \right)$$
 * **Property**: Conditional and probabilistic. Must include mandatory disclosure:
-  *"Explicit assumption: current funding rate of X bps persists across Y hours."*
+  *"Estimated 24h carry if the current 8h funding rate persisted (scenario only, not a known future cost)."*
 
 ---
 

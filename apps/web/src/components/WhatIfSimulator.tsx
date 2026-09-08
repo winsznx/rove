@@ -132,7 +132,7 @@ export const WhatIfSimulator: React.FC<WhatIfSimulatorProps> = ({ baseSnapshot }
               <span>Small Retail Swap ($750)</span>
             </div>
             <div className="preset-chip-desc">
-              Convert RFQ eliminates 10 bps taker fee + slippage.
+              Spot book walk (10.01 bps) beats Convert RFQ spread markup (50.9 bps).
             </div>
           </div>
 

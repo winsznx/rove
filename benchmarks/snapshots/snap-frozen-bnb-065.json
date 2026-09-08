@@ -73,20 +73,45 @@
     "fromAsset": "BNB",
     "toAsset": "USDT",
     "timestamp": 1788873900015,
-    "ratio": "753.6754",
-    "inverseRatio": "0.00132683",
+    "ratio": "751.3392",
+    "inverseRatio": "0.00133096",
     "fromAmount": "1.0",
-    "toAmount": "753.6754",
+    "toAmount": "751.3392",
     "validTimestamp": 1788873915000,
-    "quoteId": "quote-BNB-65"
+    "quoteId": "quote-sell-BNB-65"
   },
+  "convertQuotes": [
+    {
+      "fromAsset": "USDT",
+      "toAsset": "BNB",
+      "timestamp": 1788873900015,
+      "ratio": "0.00132299",
+      "inverseRatio": "755.8608",
+      "fromAmount": "10000",
+      "toAmount": "13.22994922",
+      "validTimestamp": 1788873915000,
+      "quoteId": "quote-buy-BNB-65"
+    },
+    {
+      "fromAsset": "BNB",
+      "toAsset": "USDT",
+      "timestamp": 1788873900015,
+      "ratio": "751.3392",
+      "inverseRatio": "0.00133096",
+      "fromAmount": "1.0",
+      "toAmount": "751.3392",
+      "validTimestamp": 1788873915000,
+      "quoteId": "quote-sell-BNB-65"
+    }
+  ],
   "usdM": {
     "symbol": "BNBUSDT",
     "timestamp": 1788873900012,
     "markPrice": "753.60",
     "currentFundingRateBps": "0.10",
     "fundingIntervalHours": 8,
-    "positions": []
+    "positions": [],
+    "availableMargin": "25000.00"
   },
   "capabilityRegistry": {
     "spot": {

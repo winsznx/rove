@@ -17,7 +17,7 @@ export const EvidenceExplorer: React.FC = () => {
   const claims = [
     {
       id: 'CLM-001',
-      claim: 'Binance Agent OS MCP provides 81 live tools across Spot, Convert, Futures, Margin, and Wallet.',
+      claim: '81 authenticated Binance Agent OS tools catalogued. Live-read path verified against production Binance. Live-trade path implemented, tested with fixtures, and safety-gated pending explicit execution verification.',
       status: 'VERIFIED_LIVE',
       artifact: 'evidence/mcp/tool-list.json',
     },
@@ -29,13 +29,13 @@ export const EvidenceExplorer: React.FC = () => {
     },
     {
       id: 'CLM-003',
-      claim: 'Convert pricing is obtained from live quote requests.',
+      claim: 'Convert pricing is obtained from live quote requests; RFQ spread markup is embedded into observed execution cost.',
       status: 'VERIFIED_LIVE',
       artifact: 'evidence/mcp/capability-map.json',
     },
     {
       id: 'CLM-004',
-      claim: 'USD-M perpetual funding and mark price are read live.',
+      claim: 'USD-M perpetual funding and mark price are read live from production Binance.',
       status: 'VERIFIED_LIVE',
       artifact: 'evidence/mcp/capability-map.json',
     },
@@ -65,19 +65,19 @@ export const EvidenceExplorer: React.FC = () => {
     },
     {
       id: 'CLM-009',
-      claim: 'Route-flip rate of 100% across 20 varied intents vs naive Spot baseline.',
+      claim: 'Route Decision Change Rate of 31.6% across 2,000 evaluations (100 synthetic scenarios) vs Spot-default baseline.',
       status: 'VERIFIED_BENCH',
       artifact: 'benchmarks/results.csv',
     },
     {
       id: 'CLM-010',
-      claim: 'Hard constraints pruned invalid execution paths in 65% of test scenarios.',
+      claim: 'Constraint Rescue Rate of 27.2%; on Rove Bench, the Spot-default baseline violated at least one hard intent constraint in 75.7% of evaluations, while Rove produced 0 hard-constraint violations.',
       status: 'VERIFIED_BENCH',
       artifact: 'evidence/headline.json',
     },
     {
       id: 'CLM-011',
-      claim: 'Median observed cost savings of 12.02 bps when routing retail tickets or hedging.',
+      claim: 'Comparable Route Savings evaluated strictly on valid, economically equivalent paths (396/396 comparable evaluations) yields a median of 0.00 bps.',
       status: 'VERIFIED_BENCH',
       artifact: 'evidence/headline.json',
     },
@@ -199,10 +199,10 @@ export const EvidenceExplorer: React.FC = () => {
             <span style={{ fontWeight: 800, fontSize: '0.95rem' }}>Discovered MCP Tools</span>
           </div>
           <div className="mono" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-            81 Live Tools
+            81 Tools Catalogued
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-            Spot (11), Convert (10), USD-M (16), Margin (13), Wallet (11), COIN-M (16)
+            7 Rove-critical exercised live • 1 state-gated verified • 73 dormant
           </div>
         </div>
 

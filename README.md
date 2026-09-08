@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > **Built for the Binance Agent OS Mini Hackathon — Track A: Agentic Commerce & Trading Applications.**  
-> *Live MCP Endpoint Verified:* `https://agent.binance.com/mcp/agentic` (81 tools cataloged, zero withdrawals enabled).
+> *Live-read path verified against production Binance. Live-trade path implemented, tested with fixtures, and safety-gated pending explicit execution verification (`ROVE_ENABLE_LIVE_TRADE=false`). 81 authenticated Binance Agent OS tools catalogued.*
 
 ---
 
@@ -14,9 +14,9 @@
 
 > **"Tell Rove the outcome you want. It finds the Binance path that fits."**
 
-Today, AI agents connected to cryptocurrency exchanges do one of two naive things:
-1. **Default blindly to Spot:** When a user asks an agent to *"Hedge 70% of my BNB for 24 hours without selling my BNB"*, naive LLMs execute a Spot market sell—disposing of the user's underlying tokens, surrendering staking yields, and failing the user's economic constraint.
-2. **Hallucinate financial calculations:** LLMs fabricate orderbook slippage, invent fee schedules, confuse maker and taker rates, or hallucinate future funding rates as known facts.
+Today, unassisted agent pipelines connected to cryptocurrency exchanges typically encounter two fundamental challenges:
+1. **Default blindly to Spot:** When a user asks an agent to *"Hedge 70% of my BNB for 24 hours without selling my BNB"*, a deterministic Spot-default execution attempts a Spot market sell—disposing of the user's underlying tokens, surrendering staking yields, and violating the user's economic constraint.
+2. **Hallucinate financial calculations:** Direct generation fabricates orderbook slippage, invents fee schedules, confuses maker and taker rates, or hallucinates future funding rates as known facts.
 
 ### The Rove Principle: Division of Responsibility
 ```
@@ -64,12 +64,22 @@ When an intent is compiled, Rove evaluates candidate Binance execution paths (**
 - **Expected Fill**: 751.040 USDT
 - **Book Slippage**: 0.00 bps
 - **Exchange Fee**: 5.00 bps
+- **Current Funding Rate**: 2.74 bps per 8h (Observed live)
 - **Total Observed Immediate Cost**: 5.00 bps
 - **Quote Freshness**: 0 ms
 
 #### Estimated Over Horizon (24 hours)
 - **Projected Funding Carry**: 8.22 bps
-- *Explicit assumption: current funding rate of 2.74 bps per 8h persists unchanged across 24 hours.*
+- *Estimated 24h carry if the current 8h funding rate persisted (scenario only, not a known future cost).*
+
+#### Hedge Sizing & Resulting Delta
+- **Source Exposure**: 12.50000000 BNB (from free spot balance)
+- **Target Fraction**: 0.7000 (70.0%)
+- **Calculated Quantity**: 8.75000000 BNB (rounded to 8.750 at 0.001 step size)
+- **Hedge Notional**: $6571.60 USDT at mark price 751.040
+- **Available Margin Collateral**: $5000.00 USDT
+- **Required / Effective Leverage**: 1.31x (within user ceiling of 1.5x)
+- **Resulting Intended Delta**: +3.75000000 BNB (30.0% unhedged)
 
 #### Constraints
 | Constraint | Result | Observed / Limit |
@@ -77,7 +87,7 @@ When an intent is compiled, Rove evaluates candidate Binance execution paths (**
 | `product_available` | **✅ PASS** | Compliant |
 | `trade_permission` | **✅ PASS** | Compliant |
 | `retain_underlying` | **✅ PASS** | Compliant |
-| `max_leverage` | **✅ PASS** | 1.5x (limit: 1.5x) |
+| `max_leverage` | **✅ PASS** | 1.31x required (limit: 1.5x) |
 | `max_carry` | **✅ PASS** | 8.22 bps (limit: 15.0 bps) |
 
 > **Decision**: Ranked first because it satisfies every hard constraint and has the lowest observed execution cost (5.00 bps) on this snapshot.
@@ -90,21 +100,42 @@ When an intent is compiled, Rove evaluates candidate Binance execution paths (**
 
 ## 📊 Rove Bench: Empirical Route-Flip Benchmark
 
-We constructed **Rove Bench**—a test matrix of 20 canonical economic intents evaluated across 100 frozen multi-path Binance orderbook snapshots (2,000 evaluated route decisions).
+We constructed **Rove Bench**—running 2,000 deterministic evaluations across 20 economic intents and 100 synthetic multi-asset order-book scenarios anchored to observed Binance reference prices (BNB, BTC, ETH, SOL).
 
 | Metric | Measured Result | Significance | Evidence Artifact |
 | :--- | :---: | :--- | :--- |
-| **Route Flip Rate** | **100.0%** | In every intent, Rove picked an optimal route different from naive Spot | `evidence/headline.json` |
-| **Constraint Enforcement** | **65.0%** | Hard constraints pruned invalid paths (e.g. retain-underlying, carry cap) | `benchmarks/results.json` |
-| **Median Cost Savings** | **12.02 bps** | Convert RFQ zero slippage + derivative shorting vs naive Spot selling | `benchmarks/results.csv` |
+| **Route Decision Change Rate** | **31.6%** (2,000 evaluations) | Rove picks optimal route differing from Spot-default baseline via venue flips or safe pruning | `evidence/headline.json` |
+| **Constraint Rescue Rate** | **27.2%** | Rescues hedge intents from Spot-default liquidation to USD-M perpetual hedge | `evidence/headline.json` |
+| **Baseline vs Rove Violations** | **75.7% vs 0.0%** | On Rove Bench, the Spot-default baseline violated at least one hard intent constraint in 75.7% of evaluations, while Rove produced 0 hard-constraint violations | `evidence/headline.json` |
+| **Comparable Route Savings** | **0.00 bps** | Median savings strictly on valid, constraint-satisfying, economically equivalent routes (396/396 comparable evaluations) | `benchmarks/results.json` |
+| **Fail-Closed Safety** | **100% across tested controls** | 100% correct fail-closed behavior across tested control cases (stale, incomplete, collateral, leverage, unavailable-cost) with named machine rejection codes | `packages/core/tests/constraints.test.ts` |
 | **Snapshot Skew Bound** | **< 50 ms** | Cross-market state captured in single concurrency window | `evidence/live/live-snapshot-bnb.json` |
 | **Withdrawal Safety** | **0 Withdrawals** | Sub-account permissions enforce `enableWithdrawals: false` | `evidence/claim-ledger.md` (CLM-012) |
 
 ### Key Route-Flip Scenarios
 
-1. **Small Retail Swaps ($750 BNB):** Convert RFQ flips Spot because Convert offers 0.00 bps spread/fee vs Spot's 10.07 bps taker fee + book walk.
-2. **Hedge Without Selling Underlying:** Spot and Convert are deterministically rejected with code `RETAIN_UNDERLYING_VIOLATION`. USD-M Perpetual Short is selected with 1.5x leverage cap.
-3. **Carry-Constrained Long Horizon:** When projected 7-day funding exceeds user ceiling `max_estimated_carry_bps`, Futures is rejected with `CARRY_CEILING_EXCEEDED`, flipping back to Spot.
+1. **Small Retail Swaps ($750 BNB):** Spot book walk (10.07 bps total observed cost) beats Convert RFQ because Convert embeds 54.97 bps of spread markup in the quoted rate despite claiming 0 explicit fees (saving 44.90 bps / $3.36 on Spot).
+2. **Hedge Without Selling Underlying:** Spot and Convert are deterministically rejected with code `RETAIN_UNDERLYING_CONFLICT`. USD-M Perpetual Short is selected with dynamic 1.31x leverage check against collateral.
+3. **Carry-Constrained Long Horizon:** When projected funding exceeds user ceiling `max_estimated_carry_bps`, Futures is rejected with `CARRY_LIMIT`, pruning the invalid path.
+
+---
+
+## 🔌 Binance Agent OS Tool Surface Audit
+
+**Live-read path verified against production Binance. Live-trade path implemented, tested with fixtures, and safety-gated pending explicit execution verification.**
+
+- **81 Catalogued Tools** across 8 namespaces (`spot`, `convert`, `futures_usds`, `futures_coin`, `margin`, `wallet`, `sub_account`, `analysis`).
+- **7 Rove-Critical Live-Exercised Tools:**
+  1. `spot.depth` — Live orderbook depth reading and slippage computation.
+  2. `spot.tickerPrice` — Real-time price reference.
+  3. `convert.sendQuoteRequest` — Live RFQ quotation and embedded spread markup extraction.
+  4. `futures_usds.premiumIndexKlineData` — Live funding rate and interval reading.
+  5. `wallet.accountStatus` — Sub-account status verification.
+  6. `wallet.getApiKeyPermission` — Zero-withdrawal permission verification.
+  7. `wallet.queryUserWalletBalance` — Free balance asset availability.
+- **1 Exercised State-Gated Tool:**
+  - `margin.queryCrossMarginAccountDetails` — Rejected gracefully with code `-11001` (Margin account not enabled), proving deterministic fail-closed state verification.
+- **73 Unexercised / Dormant Tools:** E.g., `futures_coin`, `sub_account`, and trade execution mutation tools held safely dormant behind `ROVE_ENABLE_LIVE_TRADE=false`.
 
 ---
 

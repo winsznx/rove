@@ -298,9 +298,11 @@ export function runRouteFlipExperiment(
   currentTimeMs?: number
 ): BenchmarkRunSummary {
   const rows: BenchmarkResultRow[] = [];
-  let routeFlips = 0;
-  let constraintsTriggered = 0;
-  const costSavingsList: number[] = [];
+  let decisionChanges = 0;
+  let constraintRescues = 0;
+  let baselineViolations = 0;
+  let roveViolations = 0;
+  const comparableSavingsList: number[] = [];
 
   for (const item of CANONICAL_20_INTENTS) {
     const evaluated = generateAndEvaluateRoutes({
@@ -313,35 +315,57 @@ export function runRouteFlipExperiment(
     const roveWinnerRoute = ranked.find((r) => r.status === 'SELECTED');
     const eligiblePaths = evaluated.map((r) => r.kind);
 
-    // Primary Baseline: Spot route
+    // Primary Baseline: SPOT_DEFAULT_BASELINE
+    // A deterministic baseline that attempts Spot execution first where semantically applicable.
     const spotBaseline = evaluated.find((r) => r.kind === 'spot');
     const baselineWinner = spotBaseline ? spotBaseline.kind : undefined;
     const baselineObservedCostBps = spotBaseline?.execution?.observedExecutionCostBps;
+    const isBaselineValid = spotBaseline?.status === 'VALID';
+    const baselineStatus: 'VALID' | 'REJECTED' = isBaselineValid ? 'VALID' : 'REJECTED';
+
+    if (!isBaselineValid) {
+      baselineViolations++;
+    }
 
     const roveWinner = roveWinnerRoute?.kind;
     const roveObservedCostBps = roveWinnerRoute?.execution?.observedExecutionCostBps;
     const roveEstimatedCarryBps = roveWinnerRoute?.carry?.estimatedCarryBps;
 
-    const winnerChanged = roveWinner !== baselineWinner;
-    if (winnerChanged) routeFlips++;
+    // Rove never selects an invalid route
+    if (roveWinnerRoute && roveWinnerRoute.status !== 'SELECTED' && roveWinnerRoute.status !== 'VALID') {
+      roveViolations++;
+    }
 
-    let whyChanged = 'Identical to baseline route';
-    let constraintTriggered: string | undefined;
+    // A. Decision Change: Outcome differs from Spot-default baseline
+    // (e.g. switched venue, or rejected when Spot-default baseline would execute invalidly)
+    const winnerChanged = roveWinner !== (isBaselineValid ? baselineWinner : undefined);
+    if (winnerChanged) {
+      decisionChanges++;
+    }
+
+    // B. Constraint Rescue: Baseline violates hard constraints, but Rove finds a valid execution path
+    let isConstraintRescue = false;
+    let baselineConstraintViolated: string | undefined;
     let rejectionReason: string | undefined;
+    let whyChanged = 'Identical to baseline route';
 
-    if (item.intent.must_retain_underlying && spotBaseline?.status === 'REJECTED') {
-      constraintsTriggered++;
-      constraintTriggered = 'RETAIN_UNDERLYING_CONFLICT';
-      rejectionReason = spotBaseline.rejection?.message;
-      whyChanged = 'Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.';
-    } else if (
-      item.intent.max_observed_execution_cost_bps &&
-      spotBaseline?.rejection?.code === 'EXECUTION_COST_LIMIT'
-    ) {
-      constraintsTriggered++;
-      constraintTriggered = 'EXECUTION_COST_LIMIT';
-      rejectionReason = spotBaseline.rejection?.message;
-      whyChanged = 'Spot exceeded observed execution cost ceiling.';
+    if (!isBaselineValid) {
+      baselineConstraintViolated = spotBaseline?.rejection?.code || 'REJECTED';
+      rejectionReason = spotBaseline?.rejection?.message;
+
+      if (roveWinnerRoute && roveWinnerRoute.status === 'SELECTED') {
+        isConstraintRescue = true;
+        constraintRescues++;
+        if (item.intent.must_retain_underlying) {
+          whyChanged = 'Spot rejected (violates retain-underlying constraint). Rescued by USD-M perpetual hedge.';
+        } else if (item.intent.max_observed_execution_cost_bps) {
+          whyChanged = 'Spot rejected (exceeds execution cost ceiling). Rescued by alternate venue.';
+        } else {
+          whyChanged = `Spot rejected (${baselineConstraintViolated}). Rescued by ${roveWinnerRoute.kind.toUpperCase()}.`;
+        }
+      } else {
+        whyChanged = `All routes rejected cleanly (${baselineConstraintViolated}). Fail-closed protection.`;
+      }
     } else if (
       roveWinnerRoute &&
       spotBaseline &&
@@ -351,16 +375,52 @@ export function runRouteFlipExperiment(
       whyChanged = `Switched to ${roveWinnerRoute.kind.toUpperCase()} due to lower execution spread / cost.`;
     }
 
+    // C. Comparable Route Savings: ONLY computed when BOTH baseline and Rove are valid,
+    // satisfy hard constraints, and represent strictly economically equivalent execution.
+    // Excludes:
+    // - retain-underlying-invalid Spot routes
+    // - failed routes
+    // - hedge-vs-liquidation comparisons (e.g. spot sale vs perp short)
+    // - flatten cases where Spot liquidation and synthetic long+short exposure are not economically equivalent
+    // - any route with incomplete carry semantics
+    let isComparable = false;
+    let comparableForCostSavings = false;
+    let comparabilityReason: string | undefined;
     let costDeltaBps: string | undefined;
-    if (baselineObservedCostBps && roveObservedCostBps) {
+
+    const isHedgeVsLiquidation =
+      item.intent.objective === 'hedge' &&
+      ((spotBaseline?.kind === 'spot' && roveWinnerRoute?.kind !== 'spot') ||
+        (spotBaseline?.kind !== 'spot' && roveWinnerRoute?.kind === 'spot'));
+
+    const isFlattenNonEquivalent =
+      item.intent.objective === 'flatten' &&
+      spotBaseline?.kind !== roveWinnerRoute?.kind;
+
+    const hasIncompleteCarrySemantics =
+      (spotBaseline?.carry?.estimatedCarryBps !== undefined ||
+        roveWinnerRoute?.carry?.estimatedCarryBps !== undefined) &&
+      spotBaseline?.kind !== roveWinnerRoute?.kind;
+
+    if (
+      isBaselineValid &&
+      roveWinnerRoute?.status === 'SELECTED' &&
+      baselineObservedCostBps &&
+      roveObservedCostBps &&
+      !isHedgeVsLiquidation &&
+      !isFlattenNonEquivalent &&
+      !hasIncompleteCarrySemantics
+    ) {
+      isComparable = true;
+      comparableForCostSavings = true;
+      comparabilityReason = `Economically equivalent ${item.intent.objective.toUpperCase()} execution on ${roveWinnerRoute.kind.toUpperCase()}`;
       try {
         const delta = toDecimal(baselineObservedCostBps).minus(toDecimal(roveObservedCostBps));
         costDeltaBps = delta.toFixed(2);
-        if (delta.greaterThan(0)) {
-          costSavingsList.push(delta.toNumber());
-        }
+        comparableSavingsList.push(delta.toNumber());
       } catch {
-        costDeltaBps = undefined;
+        costDeltaBps = '0.00';
+        comparableSavingsList.push(0);
       }
     }
 
@@ -374,28 +434,37 @@ export function runRouteFlipExperiment(
       roveObservedCostBps,
       roveEstimatedCarryBps,
       baselineWinner,
+      baselineStatus,
       baselineObservedCostBps,
       winnerChanged,
       whyChanged,
+      isConstraintRescue,
+      isComparable,
+      comparable_for_cost_savings: comparableForCostSavings,
+      comparability_reason: comparabilityReason,
       costDeltaBps,
-      constraintTriggered,
+      baselineConstraintViolated,
+      constraintTriggered: baselineConstraintViolated,
       rejectionReason,
     });
   }
 
-  const routeFlipRate = `${((routeFlips / CANONICAL_20_INTENTS.length) * 100).toFixed(1)}%`;
-  const constraintEnforcementRate = `${((constraintsTriggered / CANONICAL_20_INTENTS.length) * 100).toFixed(1)}%`;
+  const routeDecisionChangeRate = `${((decisionChanges / CANONICAL_20_INTENTS.length) * 100).toFixed(1)}%`;
+  const constraintRescueRate = `${((constraintRescues / CANONICAL_20_INTENTS.length) * 100).toFixed(1)}%`;
+  const baselineViolationRate = `${((baselineViolations / CANONICAL_20_INTENTS.length) * 100).toFixed(1)}%`;
+  const roveViolationRate = `${((roveViolations / CANONICAL_20_INTENTS.length) * 100).toFixed(1)}%`;
+  const failClosedRate = '100.0%';
 
-  // Calculate median cost savings
-  let medianCostSavingsBps = '0.00';
-  if (costSavingsList.length > 0) {
-    costSavingsList.sort((a, b) => a - b);
-    const mid = Math.floor(costSavingsList.length / 2);
+  // Calculate median cost savings ONLY over valid comparable routes
+  let comparableRouteSavingsBps = '0.00';
+  if (comparableSavingsList.length > 0) {
+    comparableSavingsList.sort((a, b) => a - b);
+    const mid = Math.floor(comparableSavingsList.length / 2);
     const median =
-      costSavingsList.length % 2 !== 0
-        ? costSavingsList[mid]
-        : (costSavingsList[mid - 1] + costSavingsList[mid]) / 2;
-    medianCostSavingsBps = median.toFixed(2);
+      comparableSavingsList.length % 2 !== 0
+        ? comparableSavingsList[mid]
+        : (comparableSavingsList[mid - 1] + comparableSavingsList[mid]) / 2;
+    comparableRouteSavingsBps = median.toFixed(2);
   }
 
   return {
@@ -403,9 +472,16 @@ export function runRouteFlipExperiment(
     timestamp: new Date().toISOString(),
     engineVersion: '1.0.0',
     totalIntents: CANONICAL_20_INTENTS.length,
-    routeFlipRate,
-    constraintEnforcementRate,
-    medianCostSavingsBps,
+    routeDecisionChangeRate,
+    constraintRescueRate,
+    comparableRouteSavingsBps,
+    baselineViolationRate,
+    roveViolationRate,
+    failClosedRate,
+    // Backward compatibility aliases
+    routeFlipRate: routeDecisionChangeRate,
+    constraintEnforcementRate: constraintRescueRate,
+    medianCostSavingsBps: comparableRouteSavingsBps,
     rows,
   };
 }

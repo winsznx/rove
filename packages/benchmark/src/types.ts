@@ -10,10 +10,16 @@ export type BenchmarkResultRow = {
   roveObservedCostBps?: string;
   roveEstimatedCarryBps?: string;
   baselineWinner?: PathKind;
+  baselineStatus?: 'VALID' | 'REJECTED';
   baselineObservedCostBps?: string;
   winnerChanged: boolean;
   whyChanged: string;
+  isConstraintRescue: boolean;
+  isComparable: boolean;
+  comparable_for_cost_savings: boolean;
+  comparability_reason?: string;
   costDeltaBps?: string;
+  baselineConstraintViolated?: string;
   constraintTriggered?: string;
   rejectionReason?: string;
 };
@@ -26,6 +32,7 @@ export type AblationType =
   | 'no_funding_awareness'
   | 'no_horizon'
   | 'ticker_only'
+  | 'spot_default'
   | 'llm_only';
 
 export type BenchmarkRunSummary = {
@@ -33,8 +40,15 @@ export type BenchmarkRunSummary = {
   timestamp: string;
   engineVersion: string;
   totalIntents: number;
-  routeFlipRate: string; // Percentage where Rove chose different route from Spot baseline
-  constraintEnforcementRate: string; // Percentage where constraints changed winner or rejected invalid
+  routeDecisionChangeRate: string;
+  constraintRescueRate: string;
+  comparableRouteSavingsBps: string;
+  baselineViolationRate: string;
+  roveViolationRate: string;
+  failClosedRate: string;
+  // Backward compatibility aliases
+  routeFlipRate: string;
+  constraintEnforcementRate: string;
   medianCostSavingsBps: string;
   rows: BenchmarkResultRow[];
 };

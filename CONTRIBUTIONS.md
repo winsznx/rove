@@ -6,7 +6,7 @@
 * **Track**: **Track A — Agentic Commerce & Trading Applications**
 * **Project Name**: **Rove**
 * **Tagline**: *Tell Rove the outcome you want. It finds the Binance path that fits.*
-* **Official Endpoint Used**: `https://agent.binance.com/mcp/agentic` (81 tools discovered, live Streamable HTTP / JSON-RPC verified)
+* **Official Endpoint Used**: `https://agent.binance.com/mcp/agentic` (Live-read path verified against production Binance. Live-trade path implemented, tested with fixtures, and safety-gated pending explicit execution verification)
 
 ---
 
@@ -15,7 +15,7 @@
 Track A seeks autonomous applications that unlock real economic utility on Binance through Agent OS. Rove transforms Binance from a set of isolated API endpoints into an **agent-native compiler target**:
 
 1. **True Agent-Native UX**: Instead of forcing users or agent prompts to micro-manage low-level order types (`LIMIT`, `MARKET`, `STOP_LOSS`, leverage settings, margin calls), Rove introduces high-level **Economic Intents** (`hedge`, `buy`, `sell`, `flatten`).
-2. **Empirically Proven Route Flips**: Our 100-snapshot benchmark demonstrates a **100% route flip rate** over naive spot execution, saving users a **median of 12.02 bps** in trading costs and eliminating accidental token liquidations.
+2. **Empirically Proven Route Optimization**: Rove Bench runs 2,000 deterministic evaluations across 20 economic intents and 100 synthetic multi-asset order-book scenarios anchored to observed Binance reference prices, demonstrating a **31.6% Route Decision Change Rate** and **27.2% Constraint Rescue Rate** over a Spot-default baseline. On Rove Bench, the Spot-default baseline violated at least one hard intent constraint in 75.7% of evaluations, while Rove produced 0 hard-constraint violations.
 3. **Rigorous Financial Correctness**: By enforcing strict architectural boundaries—leaving language intelligence to the LLM and delegating all math, depth walking, and constraint evaluation to deterministic TypeScript—Rove establishes a production-grade standard for autonomous financial agents.
 
 ---
@@ -24,7 +24,7 @@ Track A seeks autonomous applications that unlock real economic utility on Binan
 
 ### V1 (Hackathon Delivery - Current)
 * ✅ Full implementation of `@rove/core`, `@rove/binance-agent-os`, `@rove/benchmark`, `@rove/skill`, and `apps/web`.
-* ✅ Live read integration with Binance Agent OS MCP (81 tools).
+* ✅ 81 authenticated Binance Agent OS tools discovered and catalogued; 7 Rove-critical capabilities exercised live against production Binance.
 * ✅ 20-intent benchmark matrix and 100 frozen orderbook snapshots.
 * ✅ 23 deterministic constraint rejection codes.
 * ✅ Visual Route Card with strict Observed vs Estimated cost segregation.

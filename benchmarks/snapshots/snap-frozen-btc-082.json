@@ -73,20 +73,45 @@
     "fromAsset": "BTC",
     "toAsset": "USDT",
     "timestamp": 1788874920015,
-    "ratio": "88647.4639",
-    "inverseRatio": "0.00001128",
+    "ratio": "88399.2758",
+    "inverseRatio": "0.00001131",
     "fromAmount": "1.0",
-    "toAmount": "88647.4639",
+    "toAmount": "88399.2758",
     "validTimestamp": 1788874935000,
-    "quoteId": "quote-BTC-82"
+    "quoteId": "quote-sell-BTC-82"
   },
+  "convertQuotes": [
+    {
+      "fromAsset": "USDT",
+      "toAsset": "BTC",
+      "timestamp": 1788874920015,
+      "ratio": "0.00001125",
+      "inverseRatio": "88877.9242",
+      "fromAmount": "10000",
+      "toAmount": "0.11251388",
+      "validTimestamp": 1788874935000,
+      "quoteId": "quote-buy-BTC-82"
+    },
+    {
+      "fromAsset": "BTC",
+      "toAsset": "USDT",
+      "timestamp": 1788874920015,
+      "ratio": "88399.2758",
+      "inverseRatio": "0.00001131",
+      "fromAmount": "1.0",
+      "toAmount": "88399.2758",
+      "validTimestamp": 1788874935000,
+      "quoteId": "quote-sell-BTC-82"
+    }
+  ],
   "usdM": {
     "symbol": "BTCUSDT",
     "timestamp": 1788874920012,
     "markPrice": "88638.60",
     "currentFundingRateBps": "2.50",
     "fundingIntervalHours": 8,
-    "positions": []
+    "positions": [],
+    "availableMargin": "25000.00"
   },
   "capabilityRegistry": {
     "spot": {

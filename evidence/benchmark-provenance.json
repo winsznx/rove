@@ -1,0 +1,1037 @@
+{
+  "benchmarkDatasetVersion": "1.0.0",
+  "generatedAt": "2026-09-08T14:14:57.939Z",
+  "classification": "SYNTHETIC_DETERMINISTIC_REPLAY",
+  "publicDescription": "Rove Bench runs 2,000 deterministic evaluations across 20 economic intents and 100 synthetic multi-asset order-book scenarios anchored to observed Binance reference prices.",
+  "totalSnapshots": 100,
+  "totalEvaluations": 2000,
+  "symbolsCovered": [
+    "BNBUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ],
+  "marketReferenceAnchors": {
+    "BNB": "750.50",
+    "BTC": "88500.00",
+    "ETH": "2350.00",
+    "SOL": "145.00"
+  },
+  "captureWindow": {
+    "start": "2026-09-08T12:21:00.000Z",
+    "end": "2026-09-08T14:00:00.040Z",
+    "timeStepMs": 60000
+  },
+  "venuesEmulatedPerSnapshot": [
+    "Spot Orderbook (L2 depth)",
+    "Convert RFQ (Two-way quotes)",
+    "USD-M Perpetual Futures"
+  ],
+  "feeTiers": {
+    "spotTakerBps": "10.00",
+    "futuresTakerBps": "5.00",
+    "convertFeeBps": "0.00"
+  },
+  "snapshots": [
+    {
+      "id": "snap-frozen-bnb-001",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:21:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-1",
+      "spotMid": "753.66",
+      "spotSpreadBps": "2.12",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-002",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:22:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-2",
+      "spotMid": "88902.36",
+      "spotSpreadBps": "3.00",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-003",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:23:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-3",
+      "spotMid": "2351.66",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-004",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:24:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-4",
+      "spotMid": "144.45",
+      "spotSpreadBps": "5.54",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-005",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:25:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-5",
+      "spotMid": "746.90",
+      "spotSpreadBps": "1.07",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-006",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:26:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-6",
+      "spotMid": "88376.36",
+      "spotSpreadBps": "2.00",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-007",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:27:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-7",
+      "spotMid": "2357.72",
+      "spotSpreadBps": "2.97",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-008",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:28:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-8",
+      "spotMid": "145.72",
+      "spotSpreadBps": "4.12",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-009",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:29:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-9",
+      "spotMid": "752.05",
+      "spotSpreadBps": "5.05",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-010",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:30:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-10",
+      "spotMid": "88259.27",
+      "spotSpreadBps": "1.00",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-011",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:31:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-11",
+      "spotMid": "2338.25",
+      "spotSpreadBps": "1.97",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-012",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:32:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-12",
+      "spotMid": "144.61",
+      "spotSpreadBps": "2.77",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-013",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:33:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-13",
+      "spotMid": "752.08",
+      "spotSpreadBps": "3.99",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-014",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:34:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-14",
+      "spotMid": "88938.34",
+      "spotSpreadBps": "5.00",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-015",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:35:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-15",
+      "spotMid": "2357.64",
+      "spotSpreadBps": "1.02",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-016",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:36:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-16",
+      "spotMid": "144.79",
+      "spotSpreadBps": "1.38",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-017",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:37:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-17",
+      "spotMid": "746.89",
+      "spotSpreadBps": "2.95",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-018",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:38:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-18",
+      "spotMid": "88167.69",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-019",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:39:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-19",
+      "spotMid": "2351.76",
+      "spotSpreadBps": "5.02",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-020",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:40:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-20",
+      "spotMid": "145.66",
+      "spotSpreadBps": "1.37",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-021",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:41:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-21",
+      "spotMid": "753.64",
+      "spotSpreadBps": "2.12",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-022",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:42:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-22",
+      "spotMid": "88496.08",
+      "spotSpreadBps": "3.00",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-023",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:43:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-23",
+      "spotMid": "2340.06",
+      "spotSpreadBps": "4.02",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-024",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:44:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-24",
+      "spotMid": "144.34",
+      "spotSpreadBps": "5.54",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-025",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:45:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-25",
+      "spotMid": "750.00",
+      "spotSpreadBps": "1.07",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-026",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:46:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-26",
+      "spotMid": "88837.43",
+      "spotSpreadBps": "2.00",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-027",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:47:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-27",
+      "spotMid": "2361.24",
+      "spotSpreadBps": "2.96",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-028",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:48:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-28",
+      "spotMid": "145.20",
+      "spotSpreadBps": "4.13",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-029",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:49:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-29",
+      "spotMid": "748.01",
+      "spotSpreadBps": "5.08",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-030",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:50:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-30",
+      "spotMid": "88062.80",
+      "spotSpreadBps": "1.00",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-031",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:51:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-31",
+      "spotMid": "2345.25",
+      "spotSpreadBps": "1.96",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-032",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:52:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-32",
+      "spotMid": "145.40",
+      "spotSpreadBps": "2.75",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-033",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:53:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-33",
+      "spotMid": "754.25",
+      "spotSpreadBps": "3.98",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-034",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:54:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-34",
+      "spotMid": "88734.12",
+      "spotSpreadBps": "5.00",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-035",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:55:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-35",
+      "spotMid": "2344.97",
+      "spotSpreadBps": "1.02",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-036",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T12:56:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-36",
+      "spotMid": "144.28",
+      "spotSpreadBps": "1.39",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-037",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T12:57:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-37",
+      "spotMid": "748.09",
+      "spotSpreadBps": "2.94",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-038",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T12:58:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-38",
+      "spotMid": "88631.14",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-039",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T12:59:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-39",
+      "spotMid": "2361.32",
+      "spotSpreadBps": "5.00",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-040",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:00:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-40",
+      "spotMid": "145.54",
+      "spotSpreadBps": "1.37",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-041",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:01:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-41",
+      "spotMid": "749.90",
+      "spotSpreadBps": "1.87",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-042",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:02:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-42",
+      "spotMid": "88094.44",
+      "spotSpreadBps": "3.00",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-043",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:03:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-43",
+      "spotMid": "2340.23",
+      "spotSpreadBps": "4.02",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-044",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:04:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-44",
+      "spotMid": "145.01",
+      "spotSpreadBps": "5.52",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-045",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:05:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-45",
+      "spotMid": "753.69",
+      "spotSpreadBps": "1.06",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-046",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:06:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-46",
+      "spotMid": "88899.04",
+      "spotSpreadBps": "2.00",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-047",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:07:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-47",
+      "spotMid": "2351.45",
+      "spotSpreadBps": "2.98",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-048",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:08:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-48",
+      "spotMid": "144.44",
+      "spotSpreadBps": "4.15",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-049",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:09:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-49",
+      "spotMid": "746.92",
+      "spotSpreadBps": "5.09",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-050",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:10:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-50",
+      "spotMid": "88383.90",
+      "spotSpreadBps": "1.00",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-051",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:11:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-51",
+      "spotMid": "2357.88",
+      "spotSpreadBps": "2.04",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-052",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:12:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-52",
+      "spotMid": "145.72",
+      "spotSpreadBps": "2.75",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-053",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:13:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-53",
+      "spotMid": "751.99",
+      "spotSpreadBps": "3.99",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-054",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:14:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-54",
+      "spotMid": "88252.74",
+      "spotSpreadBps": "5.00",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-055",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:15:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-55",
+      "spotMid": "2338.25",
+      "spotSpreadBps": "1.03",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-056",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:16:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-56",
+      "spotMid": "144.62",
+      "spotSpreadBps": "1.38",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-057",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:17:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-57",
+      "spotMid": "752.14",
+      "spotSpreadBps": "2.93",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-058",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:18:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-58",
+      "spotMid": "88939.35",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-059",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:19:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-59",
+      "spotMid": "2357.48",
+      "spotSpreadBps": "5.01",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-060",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:20:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-60",
+      "spotMid": "144.78",
+      "spotSpreadBps": "1.38",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-061",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:21:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-61",
+      "spotMid": "746.87",
+      "spotSpreadBps": "1.87",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-062",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:22:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-62",
+      "spotMid": "88172.91",
+      "spotSpreadBps": "3.00",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-063",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:23:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-63",
+      "spotMid": "2351.97",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-064",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:24:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-64",
+      "spotMid": "145.67",
+      "spotSpreadBps": "5.49",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-065",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:25:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-65",
+      "spotMid": "753.60",
+      "spotSpreadBps": "1.06",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-066",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:26:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-66",
+      "spotMid": "88488.25",
+      "spotSpreadBps": "2.00",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-067",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:27:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-67",
+      "spotMid": "2339.95",
+      "spotSpreadBps": "2.99",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-068",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:28:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-68",
+      "spotMid": "144.35",
+      "spotSpreadBps": "4.16",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-069",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:29:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-69",
+      "spotMid": "750.07",
+      "spotSpreadBps": "5.07",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-070",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:30:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-70",
+      "spotMid": "88842.45",
+      "spotSpreadBps": "1.00",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-071",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:31:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-71",
+      "spotMid": "2361.17",
+      "spotSpreadBps": "2.03",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-072",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:32:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-72",
+      "spotMid": "145.18",
+      "spotSpreadBps": "2.76",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-073",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:33:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-73",
+      "spotMid": "747.96",
+      "spotSpreadBps": "4.01",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-074",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:34:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-74",
+      "spotMid": "88064.07",
+      "spotSpreadBps": "5.00",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-075",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:35:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-75",
+      "spotMid": "2345.44",
+      "spotSpreadBps": "1.02",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-076",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:36:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-76",
+      "spotMid": "145.41",
+      "spotSpreadBps": "1.38",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-077",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:37:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-77",
+      "spotMid": "754.25",
+      "spotSpreadBps": "2.92",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-078",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:38:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-78",
+      "spotMid": "88727.44",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-079",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:39:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-79",
+      "spotMid": "2344.78",
+      "spotSpreadBps": "5.03",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-080",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:40:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-80",
+      "spotMid": "144.28",
+      "spotSpreadBps": "1.39",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-081",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:41:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-81",
+      "spotMid": "748.14",
+      "spotSpreadBps": "1.87",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-082",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:42:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-82",
+      "spotMid": "88638.60",
+      "spotSpreadBps": "3.00",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-083",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:43:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-83",
+      "spotMid": "2361.38",
+      "spotSpreadBps": "3.98",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-084",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:44:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-84",
+      "spotMid": "145.53",
+      "spotSpreadBps": "5.50",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-085",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:45:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-85",
+      "spotMid": "749.84",
+      "spotSpreadBps": "1.07",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-086",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:46:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-86",
+      "spotMid": "88091.37",
+      "spotSpreadBps": "2.00",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-087",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:47:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-87",
+      "spotMid": "2340.34",
+      "spotSpreadBps": "2.99",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-088",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:48:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-88",
+      "spotMid": "145.03",
+      "spotSpreadBps": "4.14",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-089",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:49:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-89",
+      "spotMid": "753.73",
+      "spotSpreadBps": "5.04",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-090",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:50:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-90",
+      "spotMid": "88895.59",
+      "spotSpreadBps": "1.00",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-091",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:51:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-91",
+      "spotMid": "2351.25",
+      "spotSpreadBps": "2.04",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-092",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:52:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-92",
+      "spotMid": "144.43",
+      "spotSpreadBps": "2.77",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-093",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:53:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-93",
+      "spotMid": "746.94",
+      "spotSpreadBps": "4.02",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-094",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:54:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-94",
+      "spotMid": "88391.48",
+      "spotSpreadBps": "5.00",
+      "fundingRateBps": "0.90",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-095",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:55:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-95",
+      "spotMid": "2358.03",
+      "spotSpreadBps": "1.02",
+      "fundingRateBps": "1.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-096",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T13:56:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-96",
+      "spotMid": "145.71",
+      "spotSpreadBps": "1.37",
+      "fundingRateBps": "2.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-bnb-097",
+      "symbol": "BNBUSDT",
+      "startedAt": "2026-09-08T13:57:00.000Z",
+      "sourceFingerprint": "hash-snap-BNB-97",
+      "spotMid": "751.92",
+      "spotSpreadBps": "2.93",
+      "fundingRateBps": "3.30",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-btc-098",
+      "symbol": "BTCUSDT",
+      "startedAt": "2026-09-08T13:58:00.000Z",
+      "sourceFingerprint": "hash-snap-BTC-98",
+      "spotMid": "88246.28",
+      "spotSpreadBps": "4.00",
+      "fundingRateBps": "-1.50",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-eth-099",
+      "symbol": "ETHUSDT",
+      "startedAt": "2026-09-08T13:59:00.000Z",
+      "sourceFingerprint": "hash-snap-ETH-99",
+      "spotMid": "2338.26",
+      "spotSpreadBps": "4.96",
+      "fundingRateBps": "-0.70",
+      "convertQuotesAvailable": 2
+    },
+    {
+      "id": "snap-frozen-sol-100",
+      "symbol": "SOLUSDT",
+      "startedAt": "2026-09-08T14:00:00.000Z",
+      "sourceFingerprint": "hash-snap-SOL-100",
+      "spotMid": "144.63",
+      "spotSpreadBps": "1.38",
+      "fundingRateBps": "0.10",
+      "convertQuotesAvailable": 2
+    }
+  ]
+}

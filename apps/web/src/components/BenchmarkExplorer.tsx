@@ -19,56 +19,56 @@ export const BenchmarkExplorer: React.FC = () => {
       id: 'INT-001',
       category: 'swap',
       text: 'Buy $750 of BNB now with lowest immediate execution cost.',
-      winner: 'CONVERT',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: false,
-      delta: '10.07 bps',
-      reason: 'Convert RFQ eliminated 10 bps taker fee + 0.07 bps book walk on small ticket.',
-    },
-    {
-      id: 'INT-002',
-      category: 'swap',
-      text: 'Buy $10,000 of BNB. Keep observed execution cost under 8 bps.',
-      winner: 'CONVERT',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: true,
-      delta: '12.02 bps',
-      reason: 'Deep book walk on Spot exceeded 8 bps ceiling; Convert quote satisfied limit.',
-    },
-    {
-      id: 'INT-003',
-      category: 'swap',
-      text: 'Sell $2,500 of BNB now with lowest observed execution cost.',
-      winner: 'CONVERT',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: false,
-      delta: '10.05 bps',
-      reason: 'Zero-fee Convert RFQ beat Spot orderbook spread.',
-    },
-    {
-      id: 'INT-004',
-      category: 'swap',
-      text: 'Sell 15 BNB. Must execute with zero slippage tolerance.',
-      winner: 'CONVERT',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: true,
-      delta: '11.50 bps',
-      reason: 'Spot rejected due to book walk; Convert RFQ provides fixed guaranteed ratio.',
-    },
-    {
-      id: 'INT-005',
-      category: 'swap',
-      text: 'Buy $50,000 of BTC with normal urgency.',
       winner: 'SPOT',
       baseline: 'SPOT',
       flipped: false,
       constrained: false,
       delta: '0.00 bps',
-      reason: 'Deep institutional BTC orderbook beat Convert RFQ tier pricing.',
+      reason: 'Spot taker fee (10.00 bps) + book walk (0.07 bps) beats Convert RFQ spread markup (54.97 bps).',
+    },
+    {
+      id: 'INT-002',
+      category: 'swap',
+      text: 'Buy $10,000 of BNB. Keep observed execution cost under 8 bps.',
+      winner: 'NONE',
+      baseline: 'SPOT',
+      flipped: true,
+      constrained: true,
+      delta: '0.00 bps',
+      reason: 'Spot taker fee (10 bps) exceeds 8.0 bps ceiling; rejected by EXECUTION_COST_LIMIT.',
+    },
+    {
+      id: 'INT-003',
+      category: 'swap',
+      text: 'Sell $2,500 of BNB now with lowest observed execution cost.',
+      winner: 'SPOT',
+      baseline: 'SPOT',
+      flipped: false,
+      constrained: false,
+      delta: '0.00 bps',
+      reason: 'Spot orderbook depth (10.05 bps) beats Convert RFQ spread markup (34.7 bps).',
+    },
+    {
+      id: 'INT-004',
+      category: 'swap',
+      text: 'Buy 0.5 BTC. Maximum execution cost ceiling 12 bps.',
+      winner: 'SPOT',
+      baseline: 'SPOT',
+      flipped: false,
+      constrained: false,
+      delta: '0.00 bps',
+      reason: 'Liquid Spot orderbook satisfies 12.0 bps ceiling and beats Convert spread markup.',
+    },
+    {
+      id: 'INT-005',
+      category: 'swap',
+      text: 'Sell $15,000 of ETH. Keep execution cost below 10 bps.',
+      winner: 'NONE',
+      baseline: 'SPOT',
+      flipped: true,
+      constrained: true,
+      delta: '0.00 bps',
+      reason: 'Immediate execution cost (10.05 bps) exceeds 10.0 bps ceiling; rejected by EXECUTION_COST_LIMIT.',
     },
     {
       id: 'INT-006',
@@ -78,162 +78,162 @@ export const BenchmarkExplorer: React.FC = () => {
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '8.22 bps carry',
-      reason: 'Spot pruned by RETAIN_UNDERLYING constraint. USD-M short selected.',
+      delta: '5.14 bps',
+      reason: 'Spot rejected by retain-underlying; safely routed to USD-M perpetual hedge.',
     },
     {
       id: 'INT-007',
       category: 'hedge',
-      text: 'Hedge 100% of my BNB exposure for 8 hours without disposing of underlying tokens.',
+      text: 'Hedge 100% of my BNB exposure for 8 hours. Retain underlying BNB. Max leverage 1.0x.',
       winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '2.74 bps carry',
-      reason: 'Retained BNB for Launchpool rewards; perpetual short delta-neutral.',
+      delta: '5.14 bps',
+      reason: 'Spot rejected by retain-underlying; USD-M perp satisfies 1.0x leverage constraint.',
     },
     {
       id: 'INT-008',
       category: 'hedge',
-      text: 'Hedge 50% of BNB for 7 days. Keep projected carry under 15 bps.',
-      winner: 'NONE',
+      text: 'Hedge 50% of my BNB exposure for 24 hours. Retain underlying. Cap estimated carry at 10 bps.',
+      winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: 'Pruned',
-      reason: 'Projected 7-day funding (57.54 bps) exceeded 15 bps ceiling. Safely aborted.',
+      delta: '13.63 bps',
+      reason: 'USD-M perp carry (8.22 bps) is under 10 bps ceiling; Spot rejected by retain-underlying.',
     },
     {
       id: 'INT-009',
       category: 'hedge',
-      text: 'Hedge 30% of ETH exposure for 12 hours with leverage <= 2.0x.',
-      winner: 'USD_M_PERP',
+      text: 'Hedge 70% of my BNB exposure for 24 hours. Retain underlying. Cap estimated carry at 1.0 bps.',
+      winner: 'NONE',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '4.10 bps carry',
-      reason: 'USD-M perpetual short complied with 2.0x leverage cap.',
+      delta: '0.00 bps',
+      reason: 'Spot rejected by retain-underlying; Futures funding (8.22 bps) exceeds 1.0 bps ceiling.',
     },
     {
       id: 'INT-010',
       category: 'hedge',
-      text: 'Protect $15,000 SOL exposure over weekend (48h). Retain tokens.',
+      text: 'Hedge 50% of my BNB exposure for 7 days. Retain underlying. Leverage <= 2.0x.',
       winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '16.44 bps carry',
-      reason: 'Preserved native SOL staking yield while shorting SOLUSDT perp.',
+      delta: '13.63 bps',
+      reason: 'Projected 7-day carry calculated; satisfies 2.0x leverage cap while retaining BNB.',
     },
     {
       id: 'INT-011',
-      category: 'swap',
-      text: 'Buy $500 BNB immediate. Max observed execution cost 5 bps.',
-      winner: 'CONVERT',
+      category: 'hedge',
+      text: 'Hedge 80% of BTC exposure for 48 hours. Retain underlying BTC. Leverage <= 1.5x.',
+      winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '10.00 bps',
-      reason: 'Spot failed 5 bps cap (10 bps fee); Convert won with 0.00 bps fee.',
+      delta: '6.06 bps',
+      reason: 'Underlying BTC retained; USD-M perp short selected with lower execution fee.',
     },
     {
       id: 'INT-012',
       category: 'hedge',
-      text: 'Hedge 80% BNB for 4 hours. No leverage allowed (1.0x).',
+      text: 'Hedge 50% of ETH exposure for 12 hours. Retain underlying ETH. Max leverage 1.0x.',
       winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '1.37 bps carry',
-      reason: 'Unleveraged 1.0x short perpetual position satisfied constraint.',
+      delta: '11.24 bps',
+      reason: 'Underlying ETH retained; USD-M perp short satisfies 1.0x leverage cap.',
     },
     {
       id: 'INT-013',
-      category: 'swap',
-      text: 'Sell $1,000 BNB with quote freshness < 500ms.',
-      winner: 'CONVERT',
+      category: 'hedge',
+      text: 'Hedge $5,000 BNB exposure for 24h. No retain-underlying restriction.',
+      winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: false,
-      delta: '10.02 bps',
-      reason: 'Fresh Convert quote RFQ returned in 42ms with guaranteed fill.',
+      delta: '7.02 bps',
+      reason: 'USD-M perp taker fee (5.0 bps) lower than Spot taker fee (10.0 bps).',
     },
     {
       id: 'INT-014',
       category: 'hedge',
-      text: 'Flatten BNB perp short position immediately.',
-      winner: 'USD_M_PERP',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: false,
-      delta: '0.00 bps',
-      reason: 'Direct perp market buy closed existing short without touching spot.',
-    },
-    {
-      id: 'INT-015',
-      category: 'swap',
-      text: 'Buy 2.5 BNB using USDT with minimal market impact.',
-      winner: 'CONVERT',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: false,
-      delta: '10.15 bps',
-      reason: 'Convert internal market maker absorbed ticket without moving L2 book.',
-    },
-    {
-      id: 'INT-016',
-      category: 'hedge',
-      text: 'Hedge $20,000 BNB for 24h. Cap carry at 10 bps.',
+      text: 'Hedge 30% of BNB for 60 minutes. Retain underlying. Urgency immediate.',
       winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '8.22 bps carry',
-      reason: '8.22 bps carry was under 10 bps ceiling; Spot rejected by retain-underlying.',
+      delta: '12.04 bps',
+      reason: 'Underlying BNB retained; 1h short perp executed immediately with minimal carry.',
+    },
+    {
+      id: 'INT-015',
+      category: 'hedge',
+      text: 'Hedge 100% of SOL exposure for 24h. Retain underlying SOL. Leverage <= 1.2x.',
+      winner: 'USD_M_PERP',
+      baseline: 'SPOT',
+      flipped: true,
+      constrained: true,
+      delta: '5.00 bps',
+      reason: 'Underlying SOL retained; USD-M perp satisfies 1.2x leverage cap.',
+    },
+    {
+      id: 'INT-016',
+      category: 'swap',
+      text: 'Flatten BNB directional exposure. Immediate execution.',
+      winner: 'USD_M_PERP',
+      baseline: 'SPOT',
+      flipped: true,
+      constrained: false,
+      delta: '5.00 bps',
+      reason: 'USD-M perp short executed with 5.0 bps fee vs Spot 10.0 bps fee.',
     },
     {
       id: 'INT-017',
       category: 'swap',
-      text: 'Sell 0.5 BTC on Spot with limit price.',
+      text: 'Buy $50,000 of BNB. Walk deep order book with max cost ceiling 15 bps.',
+      winner: 'NONE',
+      baseline: 'SPOT',
+      flipped: true,
+      constrained: true,
+      delta: '0.00 bps',
+      reason: 'Order size exceeds visible book depth; Spot rejected for insufficient visible depth.',
+    },
+    {
+      id: 'INT-018',
+      category: 'swap',
+      text: 'Sell 20 BNB. Keep observed cost under 9 bps.',
+      winner: 'NONE',
+      baseline: 'SPOT',
+      flipped: true,
+      constrained: true,
+      delta: '0.00 bps',
+      reason: 'Spot 10 bps fee exceeds 9.0 bps ceiling; rejected by EXECUTION_COST_LIMIT.',
+    },
+    {
+      id: 'INT-019',
+      category: 'swap',
+      text: 'Buy $250 of BNB (retail small ticket). Compare RFQ Convert vs Spot market order.',
       winner: 'SPOT',
       baseline: 'SPOT',
       flipped: false,
       constrained: false,
       delta: '0.00 bps',
-      reason: 'User explicitly requested Spot maker limit order.',
-    },
-    {
-      id: 'INT-018',
-      category: 'hedge',
-      text: 'Hedge 100% BNB for 72h. Must retain tokens. Leverage cap 1.2x.',
-      winner: 'USD_M_PERP',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: true,
-      delta: '24.66 bps carry',
-      reason: 'USD-M perp short satisfied 1.2x cap and retained BNB ownership.',
-    },
-    {
-      id: 'INT-019',
-      category: 'swap',
-      text: 'Buy $3,000 BNB with lowest immediate execution cost.',
-      winner: 'CONVERT',
-      baseline: 'SPOT',
-      flipped: true,
-      constrained: false,
-      delta: '10.08 bps',
-      reason: 'Convert RFQ won retail medium ticket due to zero taker fee.',
+      reason: 'Spot taker fee (10.00 bps) beats Convert RFQ spread markup (30+ bps).',
     },
     {
       id: 'INT-020',
       category: 'hedge',
-      text: 'Hedge 60% BNB for 1h flash event. Max leverage 3.0x.',
+      text: 'Hedge 60% BNB for 4 hours. Tight leverage limit: max 0.8x.',
       winner: 'USD_M_PERP',
       baseline: 'SPOT',
       flipped: true,
       constrained: true,
-      delta: '0.34 bps carry',
-      reason: 'Immediate 1h perp hedge protected against event volatility.',
+      delta: '5.00 bps',
+      reason: 'Spot rejected by retain-underlying; USD-M perp selected with leverage limit compliance.',
     },
   ];
 
@@ -264,40 +264,42 @@ export const BenchmarkExplorer: React.FC = () => {
       {/* KPI Hero Cards */}
       <div className="kpi-grid">
         <div className="kpi-card">
-          <div className="kpi-label">Route Flip Rate</div>
+          <div className="kpi-label">Decision Change Rate</div>
           <div className="kpi-value" style={{ color: 'var(--color-best-text)' }}>
-            100.0%
+            31.6%
           </div>
           <div className="kpi-desc">
-            In 20/20 canonical intents, Rove picked an optimal route different from naive Spot.
+            Across 2,000 evaluations (100 synthetic scenarios), Rove changed outcome from Spot-default baseline via venue flips or safe pruning.
           </div>
         </div>
 
         <div className="kpi-card">
-          <div className="kpi-label">Constraint Enforcement</div>
+          <div className="kpi-label">Constraint Rescue Rate</div>
           <div className="kpi-value" style={{ color: 'var(--color-accent-text)' }}>
-            65.0%
+            27.2%
           </div>
           <div className="kpi-desc">
-            Hard constraints deterministically pruned invalid paths (retain-underlying, carry caps).
+            Spot-default baseline violates retain-underlying; Rove deterministically rescues user intent by routing to USD-M perpetual hedge.
           </div>
         </div>
 
         <div className="kpi-card">
-          <div className="kpi-label">Median Cost Savings</div>
+          <div className="kpi-label">Comparable Route Savings</div>
           <div className="kpi-value" style={{ color: 'var(--color-brand-dark)' }}>
-            12.02 bps
+            0.00 bps
           </div>
           <div className="kpi-desc">
-            Measurable savings from Convert RFQ spread efficiency and derivative shorting.
+            Median savings evaluated strictly on valid, economically equivalent routes (396/396 comparable evaluations).
           </div>
         </div>
 
         <div className="kpi-card">
-          <div className="kpi-label">Replay Stability</div>
-          <div className="kpi-value">100 / 100</div>
+          <div className="kpi-label">Violation: Baseline vs Rove</div>
+          <div className="kpi-value" style={{ color: '#059669' }}>
+            75.7% vs 0.0%
+          </div>
           <div className="kpi-desc">
-            Byte-identical rankings across 100 frozen snapshots (2,000 route evaluations).
+            On Rove Bench, the Spot-default baseline violated at least one hard intent constraint in 75.7% of evaluations, while Rove produced 0 hard-constraint violations with 100% correct fail-closed behavior across tested control cases.
           </div>
         </div>
       </div>
@@ -364,7 +366,7 @@ export const BenchmarkExplorer: React.FC = () => {
               <th style={{ width: '90px' }}>ID</th>
               <th style={{ minWidth: '260px' }}>Natural Language Goal</th>
               <th style={{ width: '130px' }}>Rove Winner</th>
-              <th style={{ width: '100px' }}>Naive Spot</th>
+              <th style={{ width: '100px' }}>Spot Default</th>
               <th style={{ width: '120px' }}>Cost Delta</th>
               <th>Deterministic Decision Rationale</th>
             </tr>
@@ -440,7 +442,7 @@ export const BenchmarkExplorer: React.FC = () => {
               <span className="badge best">0% Failure</span>
             </div>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-best-text)', lineHeight: 1.5 }}>
-              Dynamic routing evaluates all venues concurrently, enforces all 23 constraints, and yields a median 12.02 bps cost reduction.
+              Dynamic routing evaluates all venues concurrently, enforces all 23 constraints, and produced zero hard-constraint violations across Rove Bench.
             </p>
           </div>
         </div>

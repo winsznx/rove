@@ -93,6 +93,7 @@ export type UsdMSnapshot = {
   indexPrice?: string;
   currentFundingRateBps: string;
   fundingIntervalHours: number;
+  availableMargin?: string;
   bids?: BookLevel[];
   asks?: BookLevel[];
   positions: PositionItem[];
@@ -124,6 +125,7 @@ export type ComparisonSnapshot = {
   account: AccountSnapshot;
   spot?: SpotSnapshot;
   convert?: ConvertSnapshot;
+  convertQuotes?: ConvertSnapshot[];
   usdM?: UsdMSnapshot;
   margin?: MarginSnapshot;
   coinM?: CoinMSnapshot;

@@ -16,6 +16,24 @@ export type PathStatus =
   | 'EXPIRED'
   | 'SELECTED';
 
+export type HedgeSemantics = {
+  sourceAsset: string;
+  sourceExposure: string;
+  targetFraction: string;
+  rawHedgeQuantity: string;
+  roundedHedgeQuantity: string;
+  contractSymbol: string;
+  side: 'buy' | 'sell';
+  markPrice: string;
+  hedgeNotionalUsdt: string;
+  availableCollateralUsdt?: string;
+  requiredLeverage?: string;
+  maxLeverageCap?: string;
+  resultingIntendedDelta: string;
+  roundingPrecision: string;
+  status: 'EXACT' | 'UNAVAILABLE';
+};
+
 export type RoutePath = {
   id: string;
   kind: PathKind;
@@ -30,6 +48,10 @@ export type RoutePath = {
   constraints: ConstraintResult[];
   rejection?: Rejection;
   quoteFreshnessMs?: number;
+  quoteId?: string;
+  quoteExpiryRemainingMs?: number;
+  leverage?: string;
+  hedgeSemantics?: HedgeSemantics;
   snapshotId: string;
 };
 
@@ -53,18 +75,100 @@ export function generateAndEvaluateRoutes(input: GenerateRoutesInput): RoutePath
   // Derive trade size
   let requestedBaseQuantity: string | undefined;
   let requestedQuoteNotional: string | undefined;
+  let hedgeSemantics: HedgeSemantics | undefined;
+
+  const availableCollateral = snapshot.usdM?.availableMargin || snapshot.account.balances['USDT']?.free;
 
   if (intent.amount) {
     if (intent.amount.type === 'notional') {
       requestedQuoteNotional = intent.amount.value;
+      if (intent.objective === 'hedge') {
+        const markPrice = snapshot.usdM?.markPrice || (snapshot.spot ? toDecimal(snapshot.spot.bidPrice).plus(toDecimal(snapshot.spot.askPrice)).dividedBy(2).toFixed(8) : '1');
+        const rawQty = toDecimal(markPrice).isZero() ? toDecimal(0) : toDecimal(intent.amount.value).dividedBy(toDecimal(markPrice));
+        requestedBaseQuantity = rawQty.toFixed(8);
+        const reqLev = (availableCollateral && toDecimal(availableCollateral).greaterThan(0))
+          ? toDecimal(intent.amount.value).dividedBy(toDecimal(availableCollateral)).toFixed(2)
+          : undefined;
+
+        hedgeSemantics = {
+          sourceAsset: baseAsset,
+          sourceExposure: requestedBaseQuantity,
+          targetFraction: '1.0',
+          rawHedgeQuantity: rawQty.toFixed(8),
+          roundedHedgeQuantity: rawQty.toFixed(3),
+          contractSymbol: `${baseAsset}${quoteAsset}`,
+          side: 'sell',
+          markPrice,
+          hedgeNotionalUsdt: intent.amount.value,
+          availableCollateralUsdt: availableCollateral,
+          requiredLeverage: reqLev,
+          maxLeverageCap: intent.max_leverage,
+          resultingIntendedDelta: `0.00000000 ${baseAsset} (100.0% hedged)`,
+          roundingPrecision: '0.001',
+          status: availableCollateral ? 'EXACT' : 'UNAVAILABLE',
+        };
+      }
     } else if (intent.amount.type === 'asset_quantity') {
       requestedBaseQuantity = intent.amount.value;
+      if (intent.objective === 'hedge') {
+        const markPrice = snapshot.usdM?.markPrice || (snapshot.spot ? toDecimal(snapshot.spot.bidPrice).plus(toDecimal(snapshot.spot.askPrice)).dividedBy(2).toFixed(8) : '1');
+        const notional = toDecimal(intent.amount.value).times(toDecimal(markPrice)).toFixed(2);
+        const reqLev = (availableCollateral && toDecimal(availableCollateral).greaterThan(0))
+          ? toDecimal(notional).dividedBy(toDecimal(availableCollateral)).toFixed(2)
+          : undefined;
+
+        hedgeSemantics = {
+          sourceAsset: baseAsset,
+          sourceExposure: intent.amount.value,
+          targetFraction: '1.0',
+          rawHedgeQuantity: intent.amount.value,
+          roundedHedgeQuantity: toDecimal(intent.amount.value).toFixed(3),
+          contractSymbol: `${baseAsset}${quoteAsset}`,
+          side: 'sell',
+          markPrice,
+          hedgeNotionalUsdt: notional,
+          availableCollateralUsdt: availableCollateral,
+          requiredLeverage: reqLev,
+          maxLeverageCap: intent.max_leverage,
+          resultingIntendedDelta: `0.00000000 ${baseAsset} (100.0% hedged)`,
+          roundingPrecision: '0.001',
+          status: availableCollateral ? 'EXACT' : 'UNAVAILABLE',
+        };
+      }
     } else if (intent.amount.type === 'exposure_fraction') {
       // Look up balance or position of the base asset from account snapshot
       const bal = snapshot.account.balances[baseAsset];
       const freeAmount = bal ? toDecimal(bal.free) : toDecimal(0);
       const frac = toDecimal(intent.amount.value);
-      requestedBaseQuantity = freeAmount.times(frac).toFixed(8);
+      const rawQty = freeAmount.times(frac);
+      requestedBaseQuantity = rawQty.toFixed(8);
+
+      const markPrice = snapshot.usdM?.markPrice || (snapshot.spot ? toDecimal(snapshot.spot.bidPrice).plus(toDecimal(snapshot.spot.askPrice)).dividedBy(2).toFixed(8) : '1');
+      const notional = rawQty.times(toDecimal(markPrice)).toFixed(2);
+      const reqLev = (availableCollateral && toDecimal(availableCollateral).greaterThan(0))
+        ? toDecimal(notional).dividedBy(toDecimal(availableCollateral)).toFixed(2)
+        : undefined;
+
+      const unhedgedFraction = toDecimal(1).minus(frac);
+      const remainingExposure = freeAmount.times(unhedgedFraction).toFixed(8);
+
+      hedgeSemantics = {
+        sourceAsset: baseAsset,
+        sourceExposure: freeAmount.toFixed(8),
+        targetFraction: frac.toFixed(4),
+        rawHedgeQuantity: rawQty.toFixed(8),
+        roundedHedgeQuantity: rawQty.toFixed(3),
+        contractSymbol: `${baseAsset}${quoteAsset}`,
+        side: 'sell',
+        markPrice,
+        hedgeNotionalUsdt: notional,
+        availableCollateralUsdt: availableCollateral,
+        requiredLeverage: reqLev,
+        maxLeverageCap: intent.max_leverage,
+        resultingIntendedDelta: `+${remainingExposure} ${baseAsset} (${unhedgedFraction.times(100).toFixed(1)}% unhedged)`,
+        roundingPrecision: '0.001',
+        status: availableCollateral ? 'EXACT' : 'UNAVAILABLE',
+      };
     }
   }
 
@@ -142,51 +246,118 @@ export function generateAndEvaluateRoutes(input: GenerateRoutesInput): RoutePath
   }
 
   // --- 2. CONVERT ROUTE ---
-  if (snapshot.convert) {
-    let execution: ObservedExecutionCost | undefined;
-    const effectivePrice = side === 'buy' ? snapshot.convert.inverseRatio : snapshot.convert.ratio;
-    const refPrice = snapshot.spot
-      ? toDecimal(snapshot.spot.bidPrice).plus(toDecimal(snapshot.spot.askPrice)).dividedBy(2).toFixed(8)
-      : effectivePrice;
+  const convertQuote = snapshot.convertQuotes?.find((q) =>
+    side === 'buy'
+      ? (q.fromAsset === quoteAsset && q.toAsset === baseAsset)
+      : (q.fromAsset === baseAsset && q.toAsset === quoteAsset)
+  ) || snapshot.convert;
 
-    execution = calculateConvertCost(
-      effectivePrice,
-      refPrice,
-      side,
-      snapshot.convert.quoteId,
-      new Date(snapshot.convert.timestamp).toISOString()
-    );
+  if (convertQuote) {
+    const convert = convertQuote;
+    let isDirectionCompatible = false;
+    let effectivePrice: string | undefined;
 
-    const disposesUnderlying = side === 'sell';
-    const hasPermission = snapshot.account.permissions.spotTrade && snapshot.capabilityRegistry.convert.trade;
-    const isProductAvailable = snapshot.capabilityRegistry.convert.trade;
+    if (side === 'buy') {
+      // User is buying baseAsset with quoteAsset:
+      // Convert quote MUST convert FROM quoteAsset TO baseAsset
+      if (convert.fromAsset === quoteAsset && convert.toAsset === baseAsset) {
+        isDirectionCompatible = true;
+        effectivePrice = toDecimal(convert.fromAmount).dividedBy(toDecimal(convert.toAmount)).toFixed(8);
+      }
+    } else {
+      // User is selling baseAsset for quoteAsset:
+      // Convert quote MUST convert FROM baseAsset TO quoteAsset
+      if (convert.fromAsset === baseAsset && convert.toAsset === quoteAsset) {
+        isDirectionCompatible = true;
+        effectivePrice = toDecimal(convert.toAmount).dividedBy(toDecimal(convert.fromAmount)).toFixed(8);
+      }
+    }
 
-    const evalResult = evaluateRouteConstraints(intent, {
-      kind: 'convert',
-      side,
-      disposesUnderlying,
-      execution,
-      hasPermission,
-      isProductAvailable,
-      validUntilTimestamp: snapshot.convert.validTimestamp,
-      currentTimeMs,
-    });
+    if (!isDirectionCompatible || !effectivePrice) {
+      // Fail closed: Spot and Convert cannot be compared fairly from available data
+      routes.push({
+        id: `convert-${baseAsset}-${quoteAsset}`,
+        kind: 'convert',
+        status: 'UNAVAILABLE',
+        side,
+        baseAsset,
+        quoteAsset,
+        requestedQuantity: requestedBaseQuantity,
+        requestedNotional: requestedQuoteNotional,
+        execution: {
+          status: 'UNAVAILABLE',
+          components: [
+            {
+              key: 'quote_spread_delta',
+              valueBps: null,
+              source: 'convert_quote',
+              status: 'UNAVAILABLE',
+              note: `Convert RFQ direction (${convert.fromAsset} -> ${convert.toAsset}) is incompatible with requested trade direction (${side} ${baseAsset}/${quoteAsset}). Incomplete comparison.`,
+            },
+          ],
+        },
+        constraints: [
+          {
+            key: 'quote_direction_compatible',
+            state: 'FAIL',
+            reason: `Convert quote direction (${convert.fromAsset}->${convert.toAsset}) does not match trade side (${side})`,
+          },
+        ],
+        rejection: {
+          code: 'COST_COMPONENT_UNAVAILABLE',
+          message: `Incompatible Convert RFQ direction (${convert.fromAsset}->${convert.toAsset}) for ${side} ${baseAsset}`,
+        },
+        quoteFreshnessMs: Math.max(0, currentTimeMs - convert.timestamp),
+        quoteId: convert.quoteId,
+        quoteExpiryRemainingMs: Math.max(0, convert.validTimestamp - currentTimeMs),
+        snapshotId: snapshot.id,
+      });
+    } else {
+      const refPrice = snapshot.spot
+        ? toDecimal(snapshot.spot.bidPrice).plus(toDecimal(snapshot.spot.askPrice)).dividedBy(2).toFixed(8)
+        : effectivePrice;
 
-    routes.push({
-      id: `convert-${baseAsset}-${quoteAsset}`,
-      kind: 'convert',
-      status: evalResult.isValid ? 'VALID' : 'REJECTED',
-      side,
-      baseAsset,
-      quoteAsset,
-      requestedQuantity: requestedBaseQuantity,
-      requestedNotional: requestedQuoteNotional,
-      execution,
-      constraints: evalResult.constraints,
-      rejection: evalResult.rejection,
-      quoteFreshnessMs: Math.max(0, currentTimeMs - snapshot.convert.timestamp),
-      snapshotId: snapshot.id,
-    });
+      const execution = calculateConvertCost(
+        effectivePrice,
+        refPrice,
+        side,
+        convert.quoteId,
+        new Date(convert.timestamp).toISOString()
+      );
+
+      const disposesUnderlying = side === 'sell';
+      const hasPermission = snapshot.account.permissions.spotTrade && snapshot.capabilityRegistry.convert.trade;
+      const isProductAvailable = snapshot.capabilityRegistry.convert.trade;
+
+      const evalResult = evaluateRouteConstraints(intent, {
+        kind: 'convert',
+        side,
+        disposesUnderlying,
+        execution,
+        hasPermission,
+        isProductAvailable,
+        validUntilTimestamp: convert.validTimestamp,
+        currentTimeMs,
+      });
+
+      routes.push({
+        id: `convert-${baseAsset}-${quoteAsset}`,
+        kind: 'convert',
+        status: evalResult.isValid ? 'VALID' : 'REJECTED',
+        side,
+        baseAsset,
+        quoteAsset,
+        requestedQuantity: requestedBaseQuantity,
+        requestedNotional: requestedQuoteNotional,
+        execution,
+        constraints: evalResult.constraints,
+        rejection: evalResult.rejection,
+        quoteFreshnessMs: Math.max(0, currentTimeMs - convert.timestamp),
+        quoteId: convert.quoteId,
+        quoteExpiryRemainingMs: Math.max(0, convert.validTimestamp - currentTimeMs),
+        snapshotId: snapshot.id,
+      });
+    }
   }
 
   // --- 3. USD-M PERPETUAL FUTURES ROUTE ---
@@ -207,7 +378,7 @@ export function generateAndEvaluateRoutes(input: GenerateRoutesInput): RoutePath
 
       // Derivatives hedge uses synthetic short perp without selling underlying BNB
       const disposesUnderlying = false;
-      const requiredLeverage = intent.max_leverage ? intent.max_leverage : '1.0';
+      const requiredLeverage = hedgeSemantics?.requiredLeverage;
       const hasPermission = snapshot.account.permissions.futuresTrade && snapshot.capabilityRegistry.usdM.trade;
       const isProductAvailable = snapshot.capabilityRegistry.usdM.trade;
 
@@ -236,7 +407,9 @@ export function generateAndEvaluateRoutes(input: GenerateRoutesInput): RoutePath
         carry: costOutput.carry,
         constraints: evalResult.constraints,
         rejection: evalResult.rejection,
+        leverage: requiredLeverage,
         quoteFreshnessMs: Math.max(0, currentTimeMs - snapshot.usdM.timestamp),
+        hedgeSemantics,
         snapshotId: snapshot.id,
       });
     }

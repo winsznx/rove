@@ -60,16 +60,40 @@ const mockSnapshot: ComparisonSnapshot = {
     ],
   },
   convert: {
-    fromAsset: 'BNB',
-    toAsset: 'USDT',
+    fromAsset: 'USDT',
+    toAsset: 'BNB',
     timestamp: Date.now(),
-    ratio: '747.938',
-    inverseRatio: '0.00133701',
-    fromAmount: '1.0',
-    toAmount: '747.938',
+    ratio: '0.00132508',
+    inverseRatio: '754.671',
+    fromAmount: '750',
+    toAmount: '0.99381104',
     validTimestamp: Date.now() + 15000,
-    quoteId: 'conv-live-098',
+    quoteId: 'conv-live-verified-buy-002',
   },
+  convertQuotes: [
+    {
+      fromAsset: 'USDT',
+      toAsset: 'BNB',
+      timestamp: Date.now(),
+      ratio: '0.00132508',
+      inverseRatio: '754.671',
+      fromAmount: '750',
+      toAmount: '0.99381104',
+      validTimestamp: Date.now() + 15000,
+      quoteId: 'conv-live-verified-buy-002',
+    },
+    {
+      fromAsset: 'BNB',
+      toAsset: 'USDT',
+      timestamp: Date.now(),
+      ratio: '747.938',
+      inverseRatio: '0.00133701',
+      fromAmount: '1.0',
+      toAmount: '747.938',
+      validTimestamp: Date.now() + 15000,
+      quoteId: 'conv-live-verified-sell-001',
+    },
+  ],
   usdM: {
     symbol: 'BNBUSDT',
     timestamp: Date.now(),
@@ -191,7 +215,7 @@ export const App: React.FC = () => {
           onClick={() => setActiveTab('benchmarks')}
         >
           <Layers size={15} />
-          <span>Rove Bench (100 Snapshots & Matrix)</span>
+          <span>Rove Bench (100 Scenarios & Matrix)</span>
         </button>
         <button
           className={`tab-btn ${activeTab === 'evidence' ? 'active' : ''}`}

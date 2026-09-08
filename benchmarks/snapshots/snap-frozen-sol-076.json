@@ -73,20 +73,45 @@
     "fromAsset": "SOL",
     "toAsset": "USDT",
     "timestamp": 1788874560015,
-    "ratio": "145.4536",
-    "inverseRatio": "0.00687504",
+    "ratio": "144.8138",
+    "inverseRatio": "0.00690542",
     "fromAmount": "1.0",
-    "toAmount": "145.4536",
+    "toAmount": "144.8138",
     "validTimestamp": 1788874575000,
-    "quoteId": "quote-SOL-76"
+    "quoteId": "quote-sell-SOL-76"
   },
+  "convertQuotes": [
+    {
+      "fromAsset": "USDT",
+      "toAsset": "SOL",
+      "timestamp": 1788874560015,
+      "ratio": "0.00684902",
+      "inverseRatio": "146.0062",
+      "fromAmount": "10000",
+      "toAmount": "68.49024220",
+      "validTimestamp": 1788874575000,
+      "quoteId": "quote-buy-SOL-76"
+    },
+    {
+      "fromAsset": "SOL",
+      "toAsset": "USDT",
+      "timestamp": 1788874560015,
+      "ratio": "144.8138",
+      "inverseRatio": "0.00690542",
+      "fromAmount": "1.0",
+      "toAmount": "144.8138",
+      "validTimestamp": 1788874575000,
+      "quoteId": "quote-sell-SOL-76"
+    }
+  ],
   "usdM": {
     "symbol": "SOLUSDT",
     "timestamp": 1788874560012,
     "markPrice": "145.41",
     "currentFundingRateBps": "3.30",
     "fundingIntervalHours": 8,
-    "positions": []
+    "positions": [],
+    "availableMargin": "25000.00"
   },
   "capabilityRegistry": {
     "spot": {

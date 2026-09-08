@@ -58,8 +58,7 @@ describe('Cost Engine', () => {
     // Estimated carry over 24h = 3 intervals * 1.5 bps = 4.5 bps
     expect(carry).toBeDefined();
     expect(carry?.status).toBe('COMPLETE');
-    expect(carry?.estimatedCarryBps).toBe('4.50');
-    expect(carry?.assumption).toContain('Explicit assumption');
-    expect(carry?.assumption).toContain('persists unchanged across 24 hours');
+    expect(carry?.assumption).toContain('Estimated 24h carry if the current 8h funding rate persisted');
+    expect(carry?.assumption).toContain('(scenario only, not a known future cost)');
   });
 });

@@ -1,4 +1,4 @@
-import { RoutePath } from './index.js';
+import { RoutePath, HedgeSemantics } from './index.js';
 import { ExecutionIntent } from '../intent/index.js';
 import { SnapshotMode } from '../snapshot/index.js';
 
@@ -15,8 +15,11 @@ export type RouteCardData = {
     slippageBps?: string;
     feeBps?: string;
     observedExecutionCostBps?: string;
+    currentFundingRateBps?: string;
+    convertQuoteDeltaBps?: string;
     quoteAgeMs?: number;
     quoteId?: string;
+    quoteExpiryRemainingMs?: number;
   };
   estimatedHorizon?: {
     horizonFormatted: string;
@@ -24,6 +27,7 @@ export type RouteCardData = {
     assumption: string;
     status: string;
   };
+  hedgeSemantics?: HedgeSemantics;
   constraints: Array<{
     key: string;
     state: 'PASS' | 'FAIL' | 'NA' | 'UNKNOWN';
@@ -105,10 +109,14 @@ export function buildRouteCardData(
       slippageBps: route.execution?.slippageBps,
       feeBps: route.execution?.feeBps,
       observedExecutionCostBps: route.execution?.observedExecutionCostBps,
+      currentFundingRateBps: route.execution?.components.find((c) => c.key === 'current_funding_rate')?.valueBps ?? undefined,
+      convertQuoteDeltaBps: route.execution?.convertQuoteDeltaBps,
       quoteAgeMs: route.quoteFreshnessMs,
-      quoteId: route.kind === 'convert' ? 'convert-quote' : undefined,
+      quoteId: route.quoteId ?? (route.kind === 'convert' ? 'convert-quote' : undefined),
+      quoteExpiryRemainingMs: route.quoteExpiryRemainingMs,
     },
     estimatedHorizon,
+    hedgeSemantics: route.hedgeSemantics,
     constraints: route.constraints.map((c) => ({
       key: c.key,
       state: c.state,
@@ -151,11 +159,23 @@ export function formatRouteCardMarkdown(card: RouteCardData): string {
   if (card.observedNow.slippageBps) {
     md += `- **Book Slippage**: \`${card.observedNow.slippageBps} bps\`\n`;
   }
+  if (card.observedNow.convertQuoteDeltaBps) {
+    md += `- **RFQ Spread Markup**: \`${card.observedNow.convertQuoteDeltaBps} bps\` (embedded rate markup vs Spot mid)\n`;
+  }
   if (card.observedNow.feeBps) {
     md += `- **Exchange Fee**: \`${card.observedNow.feeBps} bps\`\n`;
   }
+  if (card.observedNow.currentFundingRateBps) {
+    md += `- **Current Funding Rate**: \`${card.observedNow.currentFundingRateBps} bps per 8h\` (Observed live)\n`;
+  }
   if (card.observedNow.observedExecutionCostBps) {
     md += `- **Total Observed Immediate Cost**: **\`${card.observedNow.observedExecutionCostBps} bps\`**\n`;
+  }
+  if (card.observedNow.quoteId) {
+    md += `- **Quote ID**: \`${card.observedNow.quoteId}\`\n`;
+  }
+  if (card.observedNow.quoteExpiryRemainingMs !== undefined) {
+    md += `- **Quote Expiry Remaining**: \`${card.observedNow.quoteExpiryRemainingMs} ms\`\n`;
   }
   if (card.observedNow.quoteAgeMs !== undefined) {
     md += `- **Quote Freshness**: \`${card.observedNow.quoteAgeMs} ms\`\n`;
@@ -167,6 +187,23 @@ export function formatRouteCardMarkdown(card: RouteCardData): string {
     md += `#### Estimated Over Horizon (${card.estimatedHorizon.horizonFormatted})\n`;
     md += `- **Projected Funding Carry**: **\`${card.estimatedHorizon.estimatedCarryBps} bps\`**\n`;
     md += `- *${card.estimatedHorizon.assumption}*\n\n`;
+  }
+
+  // Hedge Sizing & Resulting Delta section (if applicable)
+  if (card.hedgeSemantics) {
+    const hs = card.hedgeSemantics;
+    md += `#### Hedge Sizing & Resulting Delta\n`;
+    md += `- **Source Exposure**: \`${hs.sourceExposure} ${hs.sourceAsset}\` (from free spot balance)\n`;
+    md += `- **Target Fraction**: \`${hs.targetFraction}\` (${(parseFloat(hs.targetFraction) * 100).toFixed(1)}%)\n`;
+    md += `- **Calculated Quantity**: \`${hs.rawHedgeQuantity} ${hs.sourceAsset}\` (rounded to \`${hs.roundedHedgeQuantity}\` at \`${hs.roundingPrecision}\` step size)\n`;
+    md += `- **Hedge Notional**: \`$${hs.hedgeNotionalUsdt} USDT\` at mark price \`${hs.markPrice}\`\n`;
+    if (hs.availableCollateralUsdt) {
+      md += `- **Available Margin Collateral**: \`$${hs.availableCollateralUsdt} USDT\`\n`;
+    }
+    if (hs.requiredLeverage) {
+      md += `- **Required / Effective Leverage**: **\`${hs.requiredLeverage}x\`**${hs.maxLeverageCap ? ` (within user ceiling of \`${hs.maxLeverageCap}x\`)` : ''}\n`;
+    }
+    md += `- **Resulting Intended Delta**: \`${hs.resultingIntendedDelta}\`\n\n`;
   }
 
   // Constraint strip

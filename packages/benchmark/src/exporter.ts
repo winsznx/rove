@@ -16,6 +16,8 @@ export function formatBenchmarkCsv(rows: BenchmarkResultRow[]): string {
     'observed_cost_delta',
     'constraint_delta',
     'snapshot_id',
+    'comparable_for_cost_savings',
+    'comparability_reason',
   ];
 
   const lines = [headers.join(',')];
@@ -31,6 +33,8 @@ export function formatBenchmarkCsv(rows: BenchmarkResultRow[]): string {
       r.costDeltaBps ?? '0.00',
       r.constraintTriggered ?? 'NONE',
       r.snapshotId,
+      r.comparable_for_cost_savings ? 'TRUE' : 'FALSE',
+      `"${(r.comparability_reason ?? '').replace(/"/g, '""')}"`,
     ];
     lines.push(row.join(','));
   }

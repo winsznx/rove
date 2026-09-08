@@ -8,15 +8,15 @@ Rove was built for the **Binance Agent OS Mini Hackathon, Track A: Agentic Comme
 
 ---
 
-## 2. The Core Problem: The Naive LLM Fallacy
+## 2. The Core Problem: The Execution Compilation Gap
 
-When traditional AI agents are granted access to cryptocurrency exchange APIs, they suffer from two critical architectural defects:
+When unassisted agent pipelines connect directly to cryptocurrency exchange APIs without an execution compiler, they encounter two critical architectural gaps:
 
-### Defect 1: The Monolithic Spot Trap
-Most AI trading agents have only one tool: `createSpotOrder`. When a user provides a complex economic request:
+### Gap 1: The Monolithic Spot Trap
+Basic execution logic typically defaults to a single venue: Spot. When a user provides a complex economic request:
 > *"I have 50 BNB. I want to protect myself against downside over the next 48 hours, but I want to keep my BNB for Launchpool rewards. Keep my leverage under 2x."*
 
-A naive LLM will execute `spot.newOrder(symbol="BNBUSDT", side="SELL")`. This action:
+A deterministic Spot-default baseline will execute `spot.newOrder(symbol="BNBUSDT", side="SELL")`. This action:
 * Destroys the user's Launchpool yield and voting rights.
 * Incurs immediate spot taker fees (10 bps).
 * Incurs market depth slippage.
@@ -105,7 +105,7 @@ Every Route Card adheres to strict information architecture:
    * Quote freshness.
 3. **Estimated Over Horizon**: Metrics requiring forward-looking assumptions:
    * Projected funding carry across specified horizon.
-   * Prominent disclosure of explicit assumption: *"Current funding rate of X bps persists across Y hours."*
+   * Prominent disclosure of explicit assumption: *"Estimated Xh carry if the current Yh funding rate persisted (scenario only, not a known future cost)."*
 4. **Constraint Audit Table**: Full checklist showing pass/fail status and observed vs limit values for each constraint.
 5. **Decision Rationale**: Human-readable explanation of why this path was selected or pruned.
 6. **Machine Evidence**: Expandable JSON payload containing snapshot IDs, formulas, and tool provenance.
