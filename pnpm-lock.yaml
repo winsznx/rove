@@ -18,6 +18,25 @@ importers:
         specifier: ^3.0.7
         version: 3.2.7(@types/node@22.20.1)
 
+  packages/binance-agent-os:
+    dependencies:
+      '@rove/core':
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.9
+        version: 22.20.1
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+      vitest:
+        specifier: ^3.0.7
+        version: 3.2.7(@types/node@22.20.1)
+
   packages/core:
     dependencies:
       decimal.js:
