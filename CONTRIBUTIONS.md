@@ -23,19 +23,19 @@ Track A seeks autonomous applications that unlock real economic utility on Binan
 ## 3. Product Roadmap
 
 ### V1 (Hackathon Delivery - Current)
-* ✅ Full implementation of `@rove/core`, `@rove/binance-agent-os`, `@rove/benchmark`, `@rove/skill`, and `apps/web`.
-* ✅ 81 authenticated Binance Agent OS tools discovered and catalogued; 7 Rove-critical capabilities exercised live against production Binance.
-* ✅ 20-intent benchmark matrix and 100 frozen orderbook snapshots.
-* ✅ 23 deterministic constraint rejection codes.
-* ✅ Visual Route Card with strict Observed vs Estimated cost segregation.
-* ✅ Interactive What-If Recompilation engine.
-* ✅ Live verified execution evidence on `BNBUSDT`.
+* Full implementation of `@rove/core`, `@rove/binance-agent-os`, `@rove/benchmark`, `@rove/skill`, and `apps/web`.
+* 81 authenticated Binance Agent OS tools discovered and catalogued; 7 Rove-critical capabilities exercised live against production Binance.
+* 20-intent benchmark matrix and 100 frozen orderbook snapshots.
+* 23 deterministic constraint rejection codes.
+* Visual Route Card with strict Observed vs Estimated cost segregation.
+* Interactive What-If Recompilation engine.
+* Live verified execution evidence on `BNBUSDT`.
 
 ### V2 (Next Steps)
-* 🔄 **Algorithmic Slicing**: TWAP / VWAP execution for large institutional tickets.
-* 🔄 **Cross Margin Enablement**: Full borrow rate costing when sub-account margin trading is provisioned.
-* 🔄 **COIN-M Inverse Perps**: Hedging with native crypto collateral.
-* 🔄 **Multi-Leg Portfolio Intents**: Basket hedging (e.g. "Hedge top 5 altcoin holdings against BTC beta").
+* **Algorithmic Slicing**: TWAP / VWAP execution for large institutional tickets.
+* **Cross Margin Enablement**: Full borrow rate costing when sub-account margin trading is provisioned.
+* **COIN-M Inverse Perps**: Hedging with native crypto collateral.
+* **Multi-Leg Portfolio Intents**: Basket hedging (e.g. "Hedge top 5 altcoin holdings against BTC beta").
 
 ---
 

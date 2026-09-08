@@ -10,7 +10,7 @@
 
 ---
 
-## 🎯 The Core Idea
+### The Core Idea
 
 > **"Tell Rove the outcome you want. It finds the Binance path that fits."**
 
@@ -50,12 +50,12 @@ Rove enforces strict architectural separation:
 
 ---
 
-## 📋 The Route Card
+## The Route Card
 
 When an intent is compiled, Rove evaluates candidate Binance execution paths (**Spot**, **Convert**, **USD-M Perpetual Futures**, **Cross Margin**, and **COIN-M**) against the same live state snapshot and produces an authoritative **Route Card**:
 
 ```markdown
-### USD_M_PERP Route — 🟢 BEST [LIVE-READ]
+### USD_M_PERP Route — BEST [LIVE-READ]
 
 **Direction**: SELL 8.75000000 BNB
 **Timestamp**: 2026-09-08T12:44:55.000Z
@@ -84,11 +84,11 @@ When an intent is compiled, Rove evaluates candidate Binance execution paths (**
 #### Constraints
 | Constraint | Result | Observed / Limit |
 | :--- | :---: | :--- |
-| `product_available` | **✅ PASS** | Compliant |
-| `trade_permission` | **✅ PASS** | Compliant |
-| `retain_underlying` | **✅ PASS** | Compliant |
-| `max_leverage` | **✅ PASS** | 1.31x required (limit: 1.5x) |
-| `max_carry` | **✅ PASS** | 8.22 bps (limit: 15.0 bps) |
+| `product_available` | **PASS** | Compliant |
+| `trade_permission` | **PASS** | Compliant |
+| `retain_underlying` | **PASS** | Compliant |
+| `max_leverage` | **PASS** | 1.31x required (limit: 1.5x) |
+| `max_carry` | **PASS** | 8.22 bps (limit: 15.0 bps) |
 
 > **Decision**: Ranked first because it satisfies every hard constraint and has the lowest observed execution cost (5.00 bps) on this snapshot.
 ```
@@ -98,7 +98,7 @@ When an intent is compiled, Rove evaluates candidate Binance execution paths (**
 
 ---
 
-## 📊 Rove Bench: Empirical Route-Flip Benchmark
+## Rove Bench: Empirical Route-Flip Benchmark
 
 We constructed **Rove Bench**—running 2,000 deterministic evaluations across 20 economic intents and 100 synthetic multi-asset order-book scenarios anchored to observed Binance reference prices (BNB, BTC, ETH, SOL).
 
@@ -120,7 +120,7 @@ We constructed **Rove Bench**—running 2,000 deterministic evaluations across 2
 
 ---
 
-## 🔌 Binance Agent OS Tool Surface Audit
+## Binance Agent OS Tool Surface Audit
 
 **Live-read path verified against production Binance. Live-trade path implemented, tested with fixtures, and safety-gated pending explicit execution verification.**
 
@@ -139,7 +139,7 @@ We constructed **Rove Bench**—running 2,000 deterministic evaluations across 2
 
 ---
 
-## 🏗️ Monorepo Architecture
+## Monorepo Architecture
 
 ```
 rove/
@@ -163,7 +163,7 @@ rove/
 
 ---
 
-## ⚡ Quickstart
+## Quickstart
 
 ### Prerequisites
 * Node.js >= 22
@@ -186,7 +186,7 @@ Open `http://localhost:5173` to explore the **Interactive What-If Recompilation 
 
 ---
 
-## 🤖 Antigravity & Claude Code Skill Integration
+## Antigravity & Claude Code Skill Integration
 
 Rove is packaged as a ready-to-run agent skill under `.agents/skills/rove/` and `packages/skill/`:
 
@@ -203,7 +203,7 @@ Agent: [Invokes Rove Skill] -> Compiles intent -> Collects live snapshot -> Form
 
 ---
 
-## 🔒 Safety Guarantees
+## Safety Guarantees
 
 * **Default Read-Only**: `ROVE_ENABLE_LIVE_TRADE=false` by default. Live trade orders cannot execute without explicit operator toggle.
 * **Non-Custodial Architecture**: The web dashboard and core compiler require zero Binance API keys or secrets.
@@ -212,7 +212,7 @@ Agent: [Invokes Rove Skill] -> Compiles intent -> Collects live snapshot -> Form
 
 ---
 
-## 📜 Documentation Suite
+## Documentation Suite
 
 * [Product Vision & Specification (PRODUCT.md)](PRODUCT.md)
 * [System Architecture & Invariants (ARCHITECTURE.md)](ARCHITECTURE.md)

@@ -136,18 +136,11 @@ export function buildRouteCardData(
  * Formats a RouteCardData into clean GitHub Flavored Markdown.
  */
 export function formatRouteCardMarkdown(card: RouteCardData): string {
-  const badgeEmoji =
-    card.badge === 'BEST'
-      ? '🟢 BEST'
-      : card.badge === 'VALID'
-      ? '⚪ VALID'
-      : card.badge === 'REJECTED'
-      ? '🔴 REJECTED'
-      : '⚠️ ' + card.badge;
+  const badgeText = card.badge;
 
   const modeChip = `[${card.mode.toUpperCase()}]`;
 
-  let md = `### ${card.kind.toUpperCase()} Route — ${badgeEmoji} ${modeChip}\n\n`;
+  let md = `### ${card.kind.toUpperCase()} Route — ${badgeText} ${modeChip}\n\n`;
   md += `**Direction**: ${card.side.toUpperCase()} ${card.sizeFormatted}  \n`;
   md += `**Timestamp**: \`${card.snapshotTimestamp}\`  \n\n`;
 
@@ -211,9 +204,9 @@ export function formatRouteCardMarkdown(card: RouteCardData): string {
   md += `| Constraint | Result | Observed / Limit |\n`;
   md += `| :--- | :---: | :--- |\n`;
   for (const c of card.constraints) {
-    const icon = c.state === 'PASS' ? '✅ PASS' : c.state === 'FAIL' ? '❌ FAIL' : '➖ ' + c.state;
+    const resultText = c.state === 'PASS' ? 'PASS' : c.state === 'FAIL' ? 'FAIL' : c.state;
     const detail = c.observedValue && c.limitValue ? `${c.observedValue} (limit: ${c.limitValue})` : c.reason ?? 'Compliant';
-    md += `| \`${c.key}\` | **${icon}** | ${detail} |\n`;
+    md += `| \`${c.key}\` | **${resultText}** | ${detail} |\n`;
   }
   md += `\n`;
 
