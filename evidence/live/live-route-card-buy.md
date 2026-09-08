@@ -29,7 +29,7 @@
 
 <details><summary><b>View Machine Evidence & Formula Details</b></summary>
 
-- **Snapshot ID**: `snap-live-1788896117518`
+- **Snapshot ID**: `snap-live-1788903693606`
 - **Cost Components**:
   - `slippage`: 0.07 bps (OBSERVED from spot_orderbook_walk — Consumed 1 book levels)
   - `exchange_fee`: 10.00 bps (OBSERVED from spot_account_commission — Authoritative account taker commission)
@@ -65,7 +65,7 @@
 
 <details><summary><b>View Machine Evidence & Formula Details</b></summary>
 
-- **Snapshot ID**: `snap-live-1788896117518`
+- **Snapshot ID**: `snap-live-1788903693606`
 - **Cost Components**:
   - `quote_spread_delta`: 54.97 bps (OBSERVED from convert_quote — Quote ID: conv-live-verified-buy-002 (Embedded RFQ spread markup vs Spot mid))
   - `exchange_fee`: 0.00 bps (OBSERVED from binance_convert — Zero explicit trading fee on Binance Convert (cost is embedded in quoted rate))
@@ -90,7 +90,7 @@
 
 <details><summary><b>View Machine Evidence & Formula Details</b></summary>
 
-- **Snapshot ID**: `snap-live-1788896117518`
+- **Snapshot ID**: `snap-live-1788903693606`
 - **Cost Components**:
 
 </details>
