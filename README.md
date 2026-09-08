@@ -188,7 +188,10 @@ Open `http://localhost:5173` to explore the **Interactive What-If Recompilation 
 
 ## SkillHub & Agent OS Skill Integration
 
-Rove is packaged as a fully portable, production-ready agent skill conforming to standard open agent skill specifications (`.agents/skills/rove/SKILL.md` and `packages/skill/SKILL.md`), ready for submission to Binance Agent OS SkillHub registries.
+Rove is submitted as an official skill to the **Binance Skills Hub** repository ([binance/binance-skills-hub#338](https://github.com/binance/binance-skills-hub/pull/338)) and packaged locally under `.agents/skills/rove/SKILL.md` and `packages/skill/SKILL.md`.
+
+### Official Binance Skills Hub PR
+- **Pull Request #338**: [github.com/binance/binance-skills-hub/pull/338](https://github.com/binance/binance-skills-hub/pull/338)
 
 ### Skill Location & Structure
 - **Root Agent Skill**: [`.agents/skills/rove/SKILL.md`](.agents/skills/rove/SKILL.md)
