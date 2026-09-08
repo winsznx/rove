@@ -1,0 +1,465 @@
+{
+  "discoveredAt": "2026-09-08T12:29:32.193Z",
+  "server": "binance",
+  "endpoint": "https://agent.binance.com/mcp/agentic",
+  "totalTools": 81,
+  "tools": [
+    {
+      "name": "analysis.getTokenAiReport",
+      "description": "Get Token AI Report\nQuery the AI-generated report for a single token.\n\nReturns a structured report (report metadata, token metadata, and\ncontent modules) for the given token. \n\nMinimal request: send only `token`. When `timestamp` is omitted the\nlatest available report is returned; when `product` is omitted it\ndefaults to `spot`. `expId` may be omitted.\n\nNotes:\n- Single-token query only; batch is not supported.\n- Not strictly real-time — suitable for research, summarization, Q&A,\n  and attribution rather than live market data.",
+      "parameters": null
+    },
+    {
+      "name": "convert.acceptQuote",
+      "description": "Accept Quote (TRADE)\nAccept the offered quote by quote ID.",
+      "parameters": null
+    },
+    {
+      "name": "convert.cancelLimitOrder",
+      "description": "Cancel limit order (TRADE)\nEnable users to cancel a limit order",
+      "parameters": null
+    },
+    {
+      "name": "convert.getConvertTradeHistory",
+      "description": "Get Convert Trade History (USER_DATA)\nGet Convert Trade History\n\nNotes:\n- The max interval between `startTime` and `endTime` is 30 days.",
+      "parameters": null
+    },
+    {
+      "name": "convert.listAllConvertPairs",
+      "description": "List All Convert Pairs\nQuery for all convertible token pairs and the tokens’ respective\nupper/lower limits\n\nNotes:\n- User needs to supply either or both input parameters.\n- If only one of `fromAsset` and `toAsset` is provided, only partial token pairs are returned.",
+      "parameters": null
+    },
+    {
+      "name": "convert.orderStatus",
+      "description": "Order status (USER_DATA)\nQuery order status by order ID.",
+      "parameters": null
+    },
+    {
+      "name": "convert.placeLimitOrder",
+      "description": "Place limit order (TRADE)\nEnable users to place a limit order\n\nNotes:\n- `baseAsset` and `quoteAsset` can be determined via the `exchangeInfo` endpoint.\n- Limit price is defined from `baseAsset` to `quoteAsset`.\n- Exactly one of `baseAmount` or `quoteAmount` should be sent.",
+      "parameters": null
+    },
+    {
+      "name": "convert.queryLimitOpenOrders",
+      "description": "Query limit open orders (USER_DATA)\nQuery current open limit orders",
+      "parameters": null
+    },
+    {
+      "name": "convert.queryOrderQuantityPrecisionPerAsset",
+      "description": "Query order quantity precision per asset (USER_DATA)\nQuery for supported asset’s precision information",
+      "parameters": null
+    },
+    {
+      "name": "convert.sendQuoteRequest",
+      "description": "Send Quote Request (TRADE)\nRequest a quote for the requested token pairs\n\nNotes:\n- Either `fromAmount` or `toAmount` should be sent.\n- `quoteId` is returned only if you have enough funds to convert.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.accountInformation",
+      "description": "Account Information (USER_DATA)\nGet current account information.\n\nNotes:\n- for One-way Mode user, the \"positions\" will only show the \"BOTH\" positions\n- for Hedge Mode user, the \"positions\" will show \"BOTH\", \"LONG\", and \"SHORT\" positions.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.cancelOrder",
+      "description": "Cancel Order (TRADE)\nCancel an active order.\n\nNotes:\n- Either `orderId` or `origClientOrderId` must be sent.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.changeInitialLeverage",
+      "description": "Change Initial Leverage (TRADE)\nChange user's initial leverage in the specific symbol market.\n\nFor Hedge Mode, LONG and SHORT positions of one symbol use the same\ninitial leverage and share a total notional value.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.changeMarginType",
+      "description": "Change Margin Type (TRADE)\nChange user's margin type in the specific symbol market.For Hedge Mode,\nLONG and SHORT positions of one symbol use the same margin type.\n\nWith ISOLATED margin type, margins of the LONG and SHORT positions are\nisolated from each other.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.continuousContractKlineCandlestickData",
+      "description": "Continuous Contract Kline/Candlestick Data\nKline/candlestick bars for a specific contract type. Klines are uniquely identified by their open time.\n\nNotes:\n- The difference between `startTime` and `endTime` can only be up to 200 days\n- Between `startTime` and `endTime`, the most recent `limit` data from `endTime` will be returned:\n  - If `startTime` and `endTime` are not sent, current timestamp will be set as `endTime`, and the most recent data will be returned.\n  - If `startTime` is sent only, the timestamp of 200 days after `startTime` will be set as `endTime`(up to the current time)\n  - If `endTime` is sent only, the timestamp of 200 days before `endTime` will be set as `startTime`",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.currentAllOpenOrders",
+      "description": "Current All Open Orders (USER_DATA)\nGet all open orders on a symbol. **Careful** when accessing this with no symbol.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.exchangeInformation",
+      "description": "Exchange Information\nCurrent exchange trading rules and symbol information",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.futuresAccountBalance",
+      "description": "Futures Account Balance (USER_DATA)\nCheck futures account balance",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.indexPriceKlineCandlestickData",
+      "description": "Index Price Kline/Candlestick Data\nKline/candlestick bars for the index price of a pair. Klines are uniquely identified by their open time.\n\nNotes:\n- The difference between `startTime` and `endTime` can only be up to 200 days\n- Between `startTime` and `endTime`, the most recent `limit` data from `endTime` will be returned:\n  - If `startTime` and `endTime` are not sent, current timestamp will be set as `endTime`, and the most recent data will be returned.\n  - If `startTime` is sent only, the timestamp of 200 days after `startTime` will be set as `endTime`(up to the current time)\n  - If `endTime` is sent only, the timestamp of 200 days before `endTime` will be set as `startTime`",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.klineCandlestickData",
+      "description": "Kline/Candlestick Data\nKline/candlestick bars for a symbol. Klines are uniquely identified by their open time.\n\nNotes:\n- The difference between `startTime` and `endTime` can only be up to 200 days\n- Between `startTime` and `endTime`, the most recent `limit` data from `endTime` will be returned:\n  - If `startTime` and `endTime` are not sent, current timestamp will be set as `endTime`, and the most recent data will be returned.\n  - If `startTime` is sent only, the timestamp of 200 days after `startTime` will be set as `endTime`(up to the current time)\n  - If `endTime` is sent only, the timestamp of 200 days before `endTime` will be set as `startTime`",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.markPriceKlineCandlestickData",
+      "description": "Mark Price Kline/Candlestick Data\nKline/candlestick bars for the mark price of a symbol. Klines are uniquely identified by their open time.\n\nNotes:\n- The difference between `startTime` and `endTime` can only be up to 200 days\n- Between `startTime` and `endTime`, the most recent `limit` data from `endTime` will be returned:\n  - If `startTime` and `endTime` are not sent, current timestamp will be set as `endTime`, and the most recent data will be returned.\n  - If `startTime` is sent only, the timestamp of 200 days after `startTime` will be set as `endTime`(up to the current time)\n  - If `endTime` is sent only, the timestamp of 200 days before `endTime` will be set as `startTime`",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.newOrder",
+      "description": "New Order (TRADE)\nSend in a new order.\n\nNotes:\n- Additional mandatory parameters based on `type`:\n  - Order with type `STOP`, parameter `timeInForce` can be sent ( default `GTC`).\n  - Order with type `TAKE_PROFIT`, parameter `timeInForce` can be sent ( default `GTC`).\n  - Condition orders will be triggered when:\n  - If parameter`priceProtect`is sent as true:\n  - when price reaches the `stopPrice` ，the difference rate between \"MARK_PRICE\" and \"CONTRACT_PRICE\" cannot be larger than the \"triggerProtect\" of the symbol\n  - \"triggerProtect\" of a symbol can be got from `GET /dapi/v1/exchangeInfo`\n  - `STOP`, `STOP_MARKET`:\n  - BUY: latest price (\"MARK_PRICE\" or \"CONTRACT_PRICE\") >= `stopPrice`\n  - SELL: latest price (\"MARK_PRICE\" or \"CONTRACT_PRICE\")\n  -`TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:\n  - BUY: latest price (\"MARK_PRICE\" or \"CONTRACT_PRICE\")\n  - SELL: latest price (\"MARK_PRICE\" or \"CONTRACT_PRICE\") >= `stopPrice`\n  - `TRAILING_STOP_MARKET`:\n  - BUY: the lowest price after order placed ``= the lowest price * (1 + `callbackRate`)\n  - SELL: the highest price after order placed >= `activationPrice`, and the latest price\n\n  - For `TRAILING_STOP_MARKET`, if you got such error code. > `{\"code\": -2021, \"msg\": \"Order would immediately trigger.\"}` > means that the parameters you send do not meet the following requirements:\n  - BUY: `activationPrice` should be smaller than latest price.\n  - SELL: `activationPrice` should be larger than latest price.\n  - If `newOrderRespType ` is sent as `RESULT` :\n  - `MARKET` order: the final FILLED result of the order will be return directly.\n  - `LIMIT` order with special `timeInForce`: the final status result of the order(FILLED or EXPIRED) will be returned directly.\n  - `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:\n  - Follow the same rules for condition orders.\n  - If triggered,**close all** current long position( if `SELL`) or current short position( if `BUY`).\n  - Cannot be used with `quantity` parameter\n  - Cannot be used with `reduceOnly` parameter\n  - In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side\n\n  - `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC`.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.positionInformation",
+      "description": "Position Information (USER_DATA)\nGet current account information.\n\nNotes:\n- If neither `marginAsset` nor `pair` is sent, positions of all symbols with `TRADING` status will be returned.\n- for One-way Mode user, the response will only show the \"BOTH\" positions\n- for Hedge Mode user, the response will show \"BOTH\", \"LONG\", and \"SHORT\" positions. **Note** > Please use with user data stream `ACCOUNT_UPDATE` to meet your timeliness and accuracy needs.\n- Please use with user data stream ACCOUNT_UPDATE to meet your timeliness and accuracy needs.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.premiumIndexKlineData",
+      "description": "Premium index Kline Data\nPremium index kline bars of a symbol. Klines are uniquely identified by their open time.\n\nNotes:\n- If startTime and endTime are not sent, the most recent klines are returned.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.queryOrder",
+      "description": "Query Order (USER_DATA)\nCheck an order's status.\n\n* These orders will not be found:\n  * order status is CANCELED or EXPIRED AND order has NO filled trade AND created time + 3 days < current time\n  * order create time + 90 days < current time\n\nNotes:\n- Either `orderId` or `origClientOrderId` must be sent.",
+      "parameters": null
+    },
+    {
+      "name": "futures_coin.symbolPriceTicker",
+      "description": "Symbol Price Ticker\nLatest price for a symbol or symbols.\n\nNotes:\n- Symbol and pair cannot be sent together\n- If a pair is sent,tickers for all symbols of the pair will be returned\n- If either a pair or symbol is sent, tickers for all symbols of all pairs will be returned",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.accountInformationV3",
+      "description": "Account Information V3 (USER_DATA)\nGet current account information. User in single-asset/ multi-assets mode will see different value, see comments in response section for detail.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.cancelOrder",
+      "description": "Cancel Order (TRADE)\nCancel an active order.\n\nNotes:\n- Either `orderId` or `origClientOrderId` must be sent.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.changeInitialLeverage",
+      "description": "Change Initial Leverage (TRADE)\nChange user's initial leverage of specific symbol market.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.changeMarginType",
+      "description": "Change Margin Type (TRADE)\nChange symbol level margin type",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.continuousContractKlineCandlestickData",
+      "description": "Continuous Contract Kline/Candlestick Data\nKline/candlestick bars for a specific contract type.\nKlines are uniquely identified by their open time.\n\nNotes:\n- If startTime and endTime are not sent, the most recent klines are returned.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.currentAllOpenOrders",
+      "description": "Current All Open Orders (USER_DATA)\nGet all open orders on a symbol.\n\nNotes:\n- If the symbol is not sent, orders for all symbols will be returned in an array.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.exchangeInformation",
+      "description": "Exchange Information\nCurrent exchange trading rules and symbol information",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.futuresAccountBalanceV3",
+      "description": "Futures Account Balance V3 (USER_DATA)\nQuery account balance information.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.indexPriceKlineCandlestickData",
+      "description": "Index Price Kline/Candlestick Data\nKline/candlestick bars for the index price of a pair.\nKlines are uniquely identified by their open time.\n\nNotes:\n- If startTime and endTime are not sent, the most recent klines are returned.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.klineCandlestickData",
+      "description": "Kline/Candlestick Data\nKline/candlestick bars for a symbol.\nKlines are uniquely identified by their open time.\n\nNotes:\n- If startTime and endTime are not sent, the most recent klines are returned.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.markPriceKlineCandlestickData",
+      "description": "Mark Price Kline/Candlestick Data\nKline/candlestick bars for the mark price of a symbol.\nKlines are uniquely identified by their open time.\n\nNotes:\n- If startTime and endTime are not sent, the most recent klines are returned.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.newOrder",
+      "description": "New Order (TRADE)\nSend in a new order.\n\nNotes:\nAdditional mandatory parameters based on `type`:\n\n| Type | Additional mandatory parameters |\n|------|----------------------------------|\n| `LIMIT` | `timeInForce`, `quantity`, `price` |\n| `MARKET` | `quantity` |\n\n- If `newOrderRespType` is sent as `RESULT`:\n  - `MARKET` order: the final FILLED result of the order will be returned directly.\n  - `LIMIT` order with special `timeInForce`: the final status result of the order (FILLED or EXPIRED) will be returned directly.\n- `selfTradePreventionMode` is only effective when `timeInForce` is set to `IOC`, `GTC`, or `GTD`.\n- In extreme market conditions, `timeInForce` `GTD` order auto-cancel time might be delayed compared to `goodTillDate`.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.positionInformationV2",
+      "description": "Position Information V2 (USER_DATA)\nGet current position information.\n\nNotes:\n- Please use with user data stream `ACCOUNT_UPDATE` to meet your timeliness and accuracy needs.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.premiumIndexKlineData",
+      "description": "Premium index Kline Data\nPremium index kline bars of a symbol. Klines are uniquely identified by their open time.\n\nNotes:\n- If startTime and endTime are not sent, the most recent klines are returned.",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.queryOrder",
+      "description": "Query Order (USER_DATA)\nCheck an order's status.\n\n* These orders will not be found:\n  * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time\n  * order create time + 90 days < current time\n\nNotes:\n- Either `orderId` or `origClientOrderId` must be sent.\n- `orderId` is self-increment for each specific `symbol`",
+      "parameters": null
+    },
+    {
+      "name": "futures_usds.symbolPriceTicker",
+      "description": "Symbol Price Ticker\nLatest price for a symbol or symbols.\n\nNotes:\n- If the symbol is not sent, prices for all symbols will be returned in an array.",
+      "parameters": null
+    },
+    {
+      "name": "margin.crossMarginCollateralRatio",
+      "description": "Cross margin collateral ratio (MARKET_DATA)\nCross margin collateral ratio",
+      "parameters": null
+    },
+    {
+      "name": "margin.getAllIsolatedMarginSymbol",
+      "description": "Get All Isolated Margin Symbol (MARKET_DATA)\nGet All Isolated Margin Symbol",
+      "parameters": null
+    },
+    {
+      "name": "margin.getAllMarginAssets",
+      "description": "Get All Margin Assets (MARKET_DATA)\nGet All Margin Assets.",
+      "parameters": null
+    },
+    {
+      "name": "margin.marginAccountBorrowRepay",
+      "description": "Margin account borrow/repay (USER_DATA)\nMargin account borrow/repay",
+      "parameters": null
+    },
+    {
+      "name": "margin.marginAccountCancelAllOpenOrdersOnASymbol",
+      "description": "Margin Account Cancel all Open Orders on a Symbol (TRADE)\nCancels all active orders on a symbol for margin account.<br></br>\nThis includes OCO orders.",
+      "parameters": null
+    },
+    {
+      "name": "margin.marginAccountCancelOrder",
+      "description": "Margin Account Cancel Order (TRADE)\nCancel an active order for margin account.\n\nNotes:\n- Either orderId or origClientOrderId must be sent.",
+      "parameters": null
+    },
+    {
+      "name": "margin.marginAccountNewOrder",
+      "description": "Margin Account New Order (TRADE)\nPost a new order for margin account.\n\nNotes:\n- autoRepayAtCancel is suggested to set as “FALSE” to keep liability unrepaid under high frequent new order/cancel order execution",
+      "parameters": null
+    },
+    {
+      "name": "margin.queryCrossMarginAccountDetails",
+      "description": "Query Cross Margin Account Details (USER_DATA)\nQuery Cross Margin Account Details",
+      "parameters": null
+    },
+    {
+      "name": "margin.queryMarginAccountsAllOrders",
+      "description": "Query Margin Account's All Orders (USER_DATA)\nQuery Margin Account's All Orders\n\nNotes:\n- If orderId is set, it will get orders >= that orderId. Otherwise the\norders within 24 hours are returned.\n\n- For some historical orders cummulativeQuoteQty will be < 0, meaning\nthe data is not available at this time.\n\n- Less than 24 hours between startTime and endTime.",
+      "parameters": null
+    },
+    {
+      "name": "margin.queryMarginAccountsOpenOrders",
+      "description": "Query Margin Account's Open Orders (USER_DATA)\nQuery Margin Account's Open Orders\n\nNotes:\n- If the symbol is not sent, orders for all symbols will be returned in\nan array.\n\n- When all symbols are returned, the number of requests counted against\nthe rate limiter is equal to the number of symbols currently trading on\nthe exchange.\n\n- If isIsolated =\"TRUE\", symbol must be sent.",
+      "parameters": null
+    },
+    {
+      "name": "margin.queryMarginAccountsOrder",
+      "description": "Query Margin Account's Order (USER_DATA)\nQuery Margin Account's Order\n\nNotes:\n- Either orderId or origClientOrderId must be sent.\n\n- For some historical orders cummulativeQuoteQty will be < 0, meaning\nthe data is not available at this time.",
+      "parameters": null
+    },
+    {
+      "name": "margin.queryMarginAccountsTradeList",
+      "description": "Query Margin Account's Trade List (USER_DATA)\nQuery Margin Account's Trade List\n\nNotes:\n- If fromId is set, it will get trades >= that fromId. Otherwise the\ntrades within 24 hours are returned.\n\n- Less than 24 hours between startTime and endTime.",
+      "parameters": null
+    },
+    {
+      "name": "margin.queryMaxBorrow",
+      "description": "Query Max Borrow (USER_DATA)\nQuery Max Borrow\n\nNotes:\n- If isolatedSymbol is not sent, crossed margin data will be sent.\n- `borrowLimit` is also available from [https://www.binance.com/en/margin-fee](https://www.binance.com/en/margin-fee)",
+      "parameters": null
+    },
+    {
+      "name": "spot.deleteOpenOrders",
+      "description": "Cancel All Open Orders on a Symbol (TRADE)\nCancels all active orders on a symbol.\nThis includes orders that are part of an order list.\n\nNotes:\n**Data Source:** Matching Engine",
+      "parameters": null
+    },
+    {
+      "name": "spot.deleteOrder",
+      "description": "Cancel order (TRADE)\nCancel an active order.\n\nNotes:\n**Data Source:** Matching Engine\n\n- Either `orderId` or `origClientOrderId` must be sent.\n- If both `orderId` and `origClientOrderId` are provided, the `orderId` is searched first, then the `origClientOrderId` from that result is checked against that order. If both conditions are not met the request will be rejected.\n- The performance for canceling an order (single cancel or as part of a cancel-replace) is always better when only `orderId` is sent. Sending `origClientOrderId` or both `orderId` + `origClientOrderId` will be slower.",
+      "parameters": null
+    },
+    {
+      "name": "spot.depth",
+      "description": "Order book\nOrder book\n\nNotes:\n**Data Source:** Memory",
+      "parameters": null
+    },
+    {
+      "name": "spot.exchangeInfo",
+      "description": "Exchange information\nCurrent exchange trading rules and symbol information\n\nNotes:\n**Data Source:** Memory\n\n**Notes:**\n* If the value provided to `symbol` or `symbols` do not exist, the endpoint will throw an error saying the symbol is invalid.\n* All parameters are optional.\n* `permissions` can support single or multiple values (e.g. `SPOT`, `[\"MARGIN\",\"LEVERAGED\"]`). This cannot be used in combination with `symbol` or `symbols`.\n* If `permissions` parameter not provided, all symbols that have either `SPOT`, `MARGIN`, or `LEVERAGED` permission will be exposed.\n  * To display symbols with any permission you need to specify them explicitly in `permissions`: (e.g. `[\"SPOT\",\"MARGIN\",...]`.). See Account and Symbol Permissions for the full list.\n\n**Examples of Symbol Permissions Interpretation from the Response:**\n\n* `[[\"A\",\"B\"]]` means you may place an order if your account has either permission \"A\" **or** permission \"B\".\n* `[[\"A\"],[\"B\"]]` means you can place an order if your account has permission \"A\" **and** permission \"B\".\n* `[[\"A\"],[\"B\",\"C\"]]` means you can place an order if your account has permission \"A\" **and** permission \"B\" or permission \"C\". (Inclusive or is applied here, not exclusive or, so your account may have both permission \"B\" and permission \"C\".)",
+      "parameters": null
+    },
+    {
+      "name": "spot.getAccount",
+      "description": "Account information (USER_DATA)\nGet current account information.\n\nNotes:\n**Data Source:** Memory => Database",
+      "parameters": null
+    },
+    {
+      "name": "spot.getOpenOrders",
+      "description": "Current open orders (USER_DATA)\nGet all open orders on a symbol. **Careful** when accessing this with no symbol.\n\nNotes:\n**Data Source:** Memory => Database\n\n- If the symbol is not sent, orders for all symbols will be returned in an array.",
+      "parameters": null
+    },
+    {
+      "name": "spot.getOrder",
+      "description": "Query order (USER_DATA)\nCheck an order's status.\n\nNotes:\n**Data Source:** Memory => Database\n\n- Either `orderId` or `origClientOrderId` must be sent.\n- If both `orderId` and `origClientOrderId` are provided, the `orderId` is searched first, then the `origClientOrderId` from that result is checked against that order. If both conditions are not met the request will be rejected.\n- For some historical orders `cummulativeQuoteQty` will be < 0, meaning the data is not available at this time.",
+      "parameters": null
+    },
+    {
+      "name": "spot.klines",
+      "description": "Kline/Candlestick data\nKline/candlestick bars for a symbol.\nKlines are uniquely identified by their open time.\n\nNotes:\n**Data Source:** Database\n\nSupported kline intervals (case-sensitive):\n\nInterval  | `interval` value\n--------- | ----------------\nseconds   | `1s`\nminutes   | `1m`, `3m`, `5m`, `15m`, `30m`\nhours     | `1h`, `2h`, `4h`, `6h`, `8h`, `12h`\ndays      | `1d`, `3d`\nweeks     | `1w`\nmonths    | `1M`\n\n**Notes:**\n\n* If `startTime` and `endTime` are not sent, the most recent klines are returned.\n* Supported values for `timeZone`:\n  * Hours and minutes (e.g. `-1:00`, `05:45`)\n  * Only hours (e.g. `0`, `8`, `4`)\n  * Accepted range is strictly [-12:00 to +14:00] inclusive\n* If `timeZone` provided, kline intervals are interpreted in that timezone instead of UTC.\n* Note that `startTime` and `endTime` are always interpreted in UTC, regardless of `timeZone`.",
+      "parameters": null
+    },
+    {
+      "name": "spot.myTrades",
+      "description": "Account trade list (USER_DATA)\nGet trades for a specific account and symbol.\n\nNotes:\n**Data Source:** Memory => Database\n\n**Notes:**:\n- If `fromId` is set, it will get trades >= that `fromId`. Otherwise most recent trades are returned.\n- The time between `startTime` and `endTime` can't be longer than 24 hours.\n- These are the supported combinations of all parameters:\n  - `symbol`\n  - `symbol` + `orderId`\n  - `symbol` + `startTime`\n  - `symbol` + `endTime`\n  - `symbol` + `fromId`\n  - `symbol` + `startTime` + `endTime`\n  - `symbol`+ `orderId` + `fromId`",
+      "parameters": null
+    },
+    {
+      "name": "spot.newOrder",
+      "description": "New order (TRADE)\nSend in a new order.\n\nThis adds 1 order to the `EXCHANGE_MAX_ORDERS` filter and the `MAX_NUM_ORDERS` filter.\n\nUnfilled Order Count: 1\n\nNotes:\n**Data Source:** Matching Engine\n\nSome additional mandatory parameters based on order `type`:\n\nType | Additional mandatory parameters | Additional Information\n------------ | ------------| ------\n`LIMIT` | `timeInForce`, `quantity`, `price`|\n`MARKET` | `quantity` or `quoteOrderQty`| `MARKET` orders using the `quantity` field specifies the amount of the `base asset` the user wants to buy or sell at the market price. <br/> E.g. MARKET order on BTCUSDT will specify how much BTC the user is buying or selling. <br/><br/> `MARKET` orders using `quoteOrderQty` specifies the amount the user wants to spend (when buying) or receive (when selling) the `quote` asset; the correct `quantity` will be determined based on the market liquidity and `quoteOrderQty`. <br/> E.g. Using the symbol BTCUSDT: <br/> `BUY` side, the order will buy as many BTC as `quoteOrderQty` USDT can. <br/> `SELL` side, the order will sell as much BTC needed to receive `quoteOrderQty` USDT.\n`STOP_LOSS` | `quantity`, `stopPrice` or `trailingDelta`| This will execute a `MARKET` order when the conditions are met. (e.g. `stopPrice` is met or `trailingDelta` is activated)\n`STOP_LOSS_LIMIT` | `timeInForce`, `quantity`,  `price`, `stopPrice` or `trailingDelta`\n`TAKE_PROFIT` | `quantity`, `stopPrice` or `trailingDelta` | This will execute a `MARKET` order when the conditions are met. (e.g. `stopPrice` is met or `trailingDelta` is activated)\n`TAKE_PROFIT_LIMIT` | `timeInForce`, `quantity`, `price`, `stopPrice` or `trailingDelta` |\n`LIMIT_MAKER` | `quantity`, `price`| This is a `LIMIT` order that will be rejected if the order immediately matches and trades as a taker. <br/> This is also known as a POST-ONLY order.\n\n\nNotes on using parameters for Pegged Orders:\n* These parameters are allowed for `LIMIT`, `LIMIT_MAKER`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT_LIMIT` orders.\n* If `pegPriceType` is specified, `price` becomes optional. Otherwise, it is still mandatory.\n* `pegPriceType=PRIMARY_PEG` means the primary peg, that is the best price on the same side of the order book as your order.\n* `pegPriceType=MARKET_PEG` means the market peg, that is the best price on the opposite side of the order book from your order.\n* Use `pegOffsetType` and `pegOffsetValue` to request a price level other than the best one. These parameters must be specified together.\n\nOther info:\n* Any `LIMIT` or `LIMIT_MAKER` type order can be made an iceberg order by sending an `icebergQty`.\n* Any order with an `icebergQty` MUST have `timeInForce` set to `GTC`.\n* For `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT_LIMIT` and `TAKE_PROFIT` orders, `trailingDelta` can be combined with `stopPrice`.\n* `MARKET` orders using `quoteOrderQty` will not break `LOT_SIZE` filter rules; the order will execute a `quantity` that will have the notional value as close as possible to `quoteOrderQty`. Trigger order price rules against market price for both MARKET and LIMIT versions:\n  * Price above market price: `STOP_LOSS` `BUY`, `TAKE_PROFIT` `SELL`\n  * Price below market price: `STOP_LOSS` `SELL`, `TAKE_PROFIT` `BUY`",
+      "parameters": null
+    },
+    {
+      "name": "spot.ticker24hr",
+      "description": "24hr ticker price change statistics\n24 hour rolling window price change statistics. **Careful** when accessing this with no symbol.\n\nNotes:\n**Data Source:** Memory",
+      "parameters": null
+    },
+    {
+      "name": "spot.tickerPrice",
+      "description": "Symbol price ticker\nLatest price for a symbol or symbols.\n\nNotes:\n**Data Source:** Memory",
+      "parameters": null
+    },
+    {
+      "name": "spot.uiKlines",
+      "description": "UIKlines\nThe request is similar to klines having the same parameters and\nresponse.\n\n`uiKlines` return modified kline data, optimized for presentation of\ncandlestick charts.\n\nNotes:\n**Data Source:** Database\n\n- If `startTime` and `endTime` are not sent, the most recent klines are returned.\n- Supported values for `timeZone`:\n  - Hours and minutes (e.g. `-1:00`, `05:45`)\n  - Only hours (e.g. `0`, `8`, `4`)\n  - Accepted range is strictly [-12:00 to +14:00] inclusive\n- If `timeZone` provided, kline intervals are interpreted in that timezone instead of UTC.\n- Note that `startTime` and `endTime` are always interpreted in UTC, regardless of `timeZone`.",
+      "parameters": null
+    },
+    {
+      "name": "sub_account.getMainAccountAsset",
+      "description": "Query Main-account Spot Assets (For Agentic Sub-account) (USER_DATA)\nQuery the spot account assets of the main (parent) account bound to the calling Agentic sub-account.\nNotes: - Optionally pass `quoteAsset` (e.g. USDT, BTC) to value the assets; when omitted the default quote asset(USDT) is used.",
+      "parameters": null
+    },
+    {
+      "name": "tool_execute",
+      "description": "Execute any visible tool. Equivalent to tools/call but with the tool name in arguments, for calling hidden tools in META mode.",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "arguments": {
+            "additionalProperties": true,
+            "description": "Arguments to pass through to the target tool (structured according to the target tool's inputSchema)",
+            "type": "object"
+          },
+          "toolName": {
+            "description": "The target toolName to execute (obtained via tool_search, or directly from the tools/list alwaysExpose results)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "toolName"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "tool_search",
+      "description": "Search the currently visible tool list by category. Returns {tools, nextCursor}; pass the previous nextCursor as cursor for pagination.",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "description": "Filter visible tools precisely by category",
+            "enum": [
+              "account",
+              "ai-analysis",
+              "asset",
+              "asset-management",
+              "borrow-repay",
+              "capital",
+              "convert",
+              "general",
+              "market",
+              "market-data",
+              "others",
+              "portfolio-margin-endpoints",
+              "trade",
+              "transfer",
+              "travel-rule",
+              "user-data-stream",
+              "user-data-streams"
+            ],
+            "type": "string"
+          },
+          "cursor": {
+            "description": "Pagination cursor (opaque token), obtained from the nextCursor of a previous tool_search call",
+            "type": "string"
+          }
+        },
+        "required": [
+          "category"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "wallet.accountStatus",
+      "description": "Account Status (USER_DATA)\nFetch account status detail.",
+      "parameters": null
+    },
+    {
+      "name": "wallet.allCoinsInformation",
+      "description": "All Coins' Information (USER_DATA)\nGet information of coins (available for deposit and withdraw) for user.",
+      "parameters": null
+    },
+    {
+      "name": "wallet.dailyAccountSnapshot",
+      "description": "Daily Account Snapshot (USER_DATA)\nDaily account snapshot\n\nNotes:\n- The query time period must be less then 30 days\n- Support query within the last one month only\n- If startTimeand endTime not sent, return records of the last 7 days by default",
+      "parameters": null
+    },
+    {
+      "name": "wallet.depositAddress",
+      "description": "Deposit Address(supporting network) (USER_DATA)\nFetch deposit address with network.\n\nNotes:\n- If `network` is not send, return with default network of the coin.\n- You can get `network` and `isDefault` in `networkList` in the response of `Get /sapi/v1/capital/config/getall (HMAC SHA256)`.\n- `amount` needs to be sent if using LIGHTNING network",
+      "parameters": null
+    },
+    {
+      "name": "wallet.depositHistory",
+      "description": "Deposit History (supporting network) (USER_DATA)\nFetch deposit history.\n\nNotes:\n- Please notice the default `startTime` and `endTime` to make sure that time interval is within 0-90 days.\n- If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 90 days.",
+      "parameters": null
+    },
+    {
+      "name": "wallet.getApiKeyPermission",
+      "description": "Get API Key Permission (USER_DATA)\nGet API Key Permission",
+      "parameters": null
+    },
+    {
+      "name": "wallet.queryUserUniversalTransferHistory",
+      "description": "Query User Universal Transfer History (USER_DATA)\nQuery User Universal Transfer History\n\nNotes:\n- `fromSymbol` must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN\n- `toSymbol` must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN\n- Support query within the last 6 months only\n- If `startTime`and `endTime` not sent, return records of the last 7 days by default",
+      "parameters": null
+    },
+    {
+      "name": "wallet.queryUserWalletBalance",
+      "description": "Query User Wallet Balance (USER_DATA)\nQuery User Wallet Balance",
+      "parameters": null
+    },
+    {
+      "name": "wallet.userUniversalTransfer",
+      "description": "User Universal Transfer (USER_DATA)\nTransfer assets between Binance accounts (spot, USDⓈ-M futures, COIN-M futures, cross margin, isolated margin, funding, options, portfolio margin).\nSpecify the transfer direction via the `type` parameter, e.g. `MAIN_UMFUTURE` transfers from Spot to USDⓈ-M Futures, `UMFUTURE_MAIN` transfers back from USDⓈ-M Futures to Spot.\n\nNotes:\n- You need to enable Permits Universal Transfer option for the API Key that requests this endpoint.\n- `fromSymbol` must be sent when type is `ISOLATEDMARGIN_MARGIN` or `ISOLATEDMARGIN_ISOLATEDMARGIN`.\n- `toSymbol` must be sent when type is `MARGIN_ISOLATEDMARGIN` or `ISOLATEDMARGIN_ISOLATEDMARGIN`.\n- ENUM of transfer types:\n- `MAIN_UMFUTURE`: Spot → USDⓈ-M Futures\n- `MAIN_CMFUTURE`: Spot → COIN-M Futures\n- `MAIN_MARGIN`: Spot → Margin (cross)\n- `UMFUTURE_MAIN`: USDⓈ-M Futures → Spot\n- `UMFUTURE_MARGIN`: USDⓈ-M Futures → Margin (cross)\n- `CMFUTURE_MAIN`: COIN-M Futures → Spot\n- `CMFUTURE_MARGIN`: COIN-M Futures → Margin (cross)\n- `MARGIN_MAIN`: Margin (cross) → Spot\n- `MARGIN_UMFUTURE`: Margin (cross) → USDⓈ-M Futures\n- `MARGIN_CMFUTURE`: Margin (cross) → COIN-M Futures\n- `ISOLATEDMARGIN_MARGIN`: Isolated margin → Margin (cross)\n- `MARGIN_ISOLATEDMARGIN`: Margin (cross) → Isolated margin\n- `ISOLATEDMARGIN_ISOLATEDMARGIN`: Isolated margin → Isolated margin\n- `MAIN_FUNDING`: Spot → Funding\n- `FUNDING_MAIN`: Funding → Spot\n- `FUNDING_UMFUTURE`: Funding → USDⓈ-M Futures\n- `UMFUTURE_FUNDING`: USDⓈ-M Futures → Funding\n- `MARGIN_FUNDING`: Margin (cross) → Funding\n- `FUNDING_MARGIN`: Funding → Margin (cross)\n- `FUNDING_CMFUTURE`: Funding → COIN-M Futures\n- `CMFUTURE_FUNDING`: COIN-M Futures → Funding\n- `MAIN_OPTION`: Spot → Options\n- `OPTION_MAIN`: Options → Spot\n- `UMFUTURE_OPTION`: USDⓈ-M Futures → Options\n- `OPTION_UMFUTURE`: Options → USDⓈ-M Futures\n- `MARGIN_OPTION`: Margin (cross) → Options\n- `OPTION_MARGIN`: Options → Margin (cross)\n- `FUNDING_OPTION`: Funding → Options\n- `OPTION_FUNDING`: Options → Funding\n- `MAIN_PORTFOLIO_MARGIN`: Spot → Portfolio Margin\n- `PORTFOLIO_MARGIN_MAIN`: Portfolio Margin → Spot",
+      "parameters": null
+    },
+    {
+      "name": "wallet.withdrawHistory",
+      "description": "Withdraw History (supporting network) (USER_DATA)\nFetch withdraw history\n\nNotes:\n- `network` may not be in the response for old withdraw.\n- Please notice the default `startTime` and `endTime` to make sure that time interval is within 0-90 days.\n- If both `startTime` and `endTime`are sent, time between `startTime`and `endTime`must be less than 90 days.\n- If `withdrawOrderId` is sent, time between `startTime` and `endTime` must be less than 7 days.\n- If `withdrawOrderId` is sent, `startTime` and `endTime` are not sent, will return last 7 days records by default.\n- Maximum support `idList` number is 45.",
+      "parameters": null
+    }
+  ]
+}

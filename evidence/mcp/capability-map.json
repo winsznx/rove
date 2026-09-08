@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-09-08T13:30:00.000Z",
+  "endpoint": "https://agent.binance.com/mcp/agentic",
+  "totalDiscoveredTools": 81,
+  "registry": {
+    "spot": {
+      "marketRead": true,
+      "accountRead": true,
+      "trade": true,
+      "feeRead": true,
+      "tools": {
+        "price": "spot.tickerPrice",
+        "ticker24hr": "spot.ticker24hr",
+        "depth": "spot.depth",
+        "exchangeInfo": "spot.exchangeInfo",
+        "klines": "spot.klines",
+        "account": "spot.getAccount",
+        "trade": "spot.newOrder",
+        "cancel": "spot.deleteOrder",
+        "queryOrder": "spot.getOrder",
+        "openOrders": "spot.getOpenOrders",
+        "myTrades": "spot.myTrades"
+      },
+      "runtimeVerification": {
+        "priceRead": "VERIFIED_LIVE (BNBUSDT returned price)",
+        "depthRead": "VERIFIED_LIVE (BNBUSDT returned 20 bid/ask levels)",
+        "accountRead": "VERIFIED_LIVE (canTrade=true, commissionRates verified)",
+        "feeRead": "VERIFIED_LIVE (maker=10bps, taker=10bps in spot.getAccount)"
+      }
+    },
+    "convert": {
+      "quote": true,
+      "trade": true,
+      "tools": {
+        "quote": "convert.sendQuoteRequest",
+        "accept": "convert.acceptQuote",
+        "status": "convert.orderStatus",
+        "pairs": "convert.listAllConvertPairs",
+        "precision": "convert.queryOrderQuantityPrecisionPerAsset",
+        "tradeHistory": "convert.getConvertTradeHistory",
+        "limitOrder": "convert.placeLimitOrder"
+      },
+      "runtimeVerification": {
+        "quoteRead": "VERIFIED_LIVE (fromAmount 10 USDT -> BNB returned ratio, inverseRatio, toAmount, validTimestamp)",
+        "quoteIdConstraint": "VERIFIED_LIVE (quoteId is issued only when wallet has sufficient balance, pricing available regardless)"
+      }
+    },
+    "usdM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true,
+      "tools": {
+        "ticker": "futures_usds.symbolPriceTicker",
+        "klines": "futures_usds.klineCandlestickData",
+        "markPriceKlines": "futures_usds.markPriceKlineCandlestickData",
+        "premiumIndex": "futures_usds.premiumIndexKlineData",
+        "exchangeInfo": "futures_usds.exchangeInformation",
+        "account": "futures_usds.accountInformationV3",
+        "positions": "futures_usds.positionInformationV2",
+        "trade": "futures_usds.newOrder",
+        "cancel": "futures_usds.cancelOrder",
+        "leverage": "futures_usds.changeInitialLeverage",
+        "marginType": "futures_usds.changeMarginType",
+        "queryOrder": "futures_usds.queryOrder",
+        "openOrders": "futures_usds.currentAllOpenOrders"
+      },
+      "runtimeVerification": {
+        "accountRead": "VERIFIED_LIVE (assets and empty positions verified)",
+        "fundingRead": "VERIFIED_LIVE (premiumIndexKlineData returned premium index intervals)",
+        "markPriceRead": "VERIFIED_LIVE (markPriceKlineCandlestickData verified)",
+        "feeRead": "VERIFIED_VIA_TIER (VIP 0 schedule: maker 0.02%, taker 0.05%)"
+      }
+    },
+    "margin": {
+      "marketRead": true,
+      "borrowRateRead": true,
+      "accountRead": true,
+      "trade": false,
+      "costingComplete": false,
+      "status": "UNAVAILABLE",
+      "tools": {
+        "account": "margin.queryCrossMarginAccountDetails",
+        "maxBorrow": "margin.queryMaxBorrow",
+        "borrowRepay": "margin.marginAccountBorrowRepay",
+        "trade": "margin.marginAccountNewOrder",
+        "assets": "margin.getAllMarginAssets"
+      },
+      "runtimeVerification": {
+        "accountRead": "VERIFIED_LIVE (tradeEnabled=false, borrowEnabled=false, created=false)",
+        "decision": "FEATURE_GATED_UNAVAILABLE per PRD Section 4.2 & 16.4"
+      }
+    },
+    "coinM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true,
+      "costingComplete": true,
+      "status": "FEATURE_GATED",
+      "tools": {
+        "ticker": "futures_coin.symbolPriceTicker",
+        "exchangeInfo": "futures_coin.exchangeInformation",
+        "account": "futures_coin.accountInformation",
+        "positions": "futures_coin.positionInformation",
+        "trade": "futures_coin.newOrder",
+        "cancel": "futures_coin.cancelOrder",
+        "leverage": "futures_coin.changeInitialLeverage",
+        "marginType": "futures_coin.changeMarginType"
+      },
+      "runtimeVerification": {
+        "accountRead": "VERIFIED_LIVE (canTrade=true, feeTier=0 verified)",
+        "decision": "FEATURE_GATED in V1, architected for enablement"
+      }
+    }
+  },
+  "permissions": {
+    "enableReading": true,
+    "enableFutures": true,
+    "enableSpotAndMarginTrading": true,
+    "enableWithdrawals": false,
+    "permitsUniversalTransfer": true,
+    "enableMargin": true,
+    "ipRestrict": false
+  }
+}
