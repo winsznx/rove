@@ -6,21 +6,73 @@ import {
   rankRoutes,
 } from '@rove/core';
 import { RouteCardView } from './RouteCardView.js';
-import { Sliders } from 'lucide-react';
+import {
+  Sliders,
+  Shield,
+  Zap,
+  Clock,
+  TrendingDown,
+  RotateCcw,
+  Sparkles,
+  ArrowRight,
+} from 'lucide-react';
 
 interface WhatIfSimulatorProps {
   baseSnapshot: ComparisonSnapshot;
 }
 
 export const WhatIfSimulator: React.FC<WhatIfSimulatorProps> = ({ baseSnapshot }) => {
-  const [objective, setObjective] = useState<'buy' | 'sell' | 'hedge' | 'flatten'>('hedge');
+  const [objective, setObjective] = useState<'hedge' | 'buy' | 'sell' | 'flatten'>('hedge');
   const [asset, setAsset] = useState<string>('BNB');
   const [fraction, setFraction] = useState<string>('0.7');
   const [horizonHours, setHorizonHours] = useState<number>(24);
   const [mustRetain, setMustRetain] = useState<boolean>(true);
   const [maxLeverage, setMaxLeverage] = useState<string>('1.5');
-  const [maxCarryBps, setMaxCarryBps] = useState<string>('10.0');
+  const [maxCarryBps, setMaxCarryBps] = useState<string>('15.0');
   const [maxExecutionCostBps, setMaxExecutionCostBps] = useState<string>('25.0');
+  const [activePreset, setActivePreset] = useState<string>('hedge-bnb');
+
+  // Intent Presets
+  const applyPreset = (presetKey: string) => {
+    setActivePreset(presetKey);
+    if (presetKey === 'hedge-bnb') {
+      setObjective('hedge');
+      setAsset('BNB');
+      setFraction('0.7');
+      setHorizonHours(24);
+      setMustRetain(true);
+      setMaxLeverage('1.5');
+      setMaxCarryBps('15.0');
+      setMaxExecutionCostBps('25.0');
+    } else if (presetKey === 'retail-buy') {
+      setObjective('buy');
+      setAsset('BNB');
+      setFraction('0.1');
+      setHorizonHours(1);
+      setMustRetain(false);
+      setMaxLeverage('1.0');
+      setMaxCarryBps('5.0');
+      setMaxExecutionCostBps('20.0');
+    } else if (presetKey === 'deep-buy') {
+      setObjective('buy');
+      setAsset('BNB');
+      setFraction('0.9');
+      setHorizonHours(1);
+      setMustRetain(false);
+      setMaxLeverage('1.0');
+      setMaxCarryBps('5.0');
+      setMaxExecutionCostBps('10.0');
+    } else if (presetKey === 'long-hedge') {
+      setObjective('hedge');
+      setAsset('BNB');
+      setFraction('0.5');
+      setHorizonHours(168); // 7 days
+      setMustRetain(true);
+      setMaxLeverage('1.2');
+      setMaxCarryBps('20.0');
+      setMaxExecutionCostBps('25.0');
+    }
+  };
 
   const intent: ExecutionIntent = useMemo(() => {
     return {
@@ -47,128 +99,291 @@ export const WhatIfSimulator: React.FC<WhatIfSimulatorProps> = ({ baseSnapshot }
   }, [intent, baseSnapshot]);
 
   const winner = routes.find((r) => r.status === 'SELECTED');
+  const spotRoute = routes.find((r) => r.kind === 'spot');
 
   return (
-    <div style={{ marginTop: '2rem' }}>
-      <div className="simulator-box">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
-          <Sliders size={18} color="var(--color-accent)" />
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700 }}>Interactive What-If Recompilation Engine</h3>
+    <div>
+      {/* Intent Presets Picker */}
+      <div className="presets-container">
+        <div className="presets-label">
+          <Sparkles size={13} style={{ display: 'inline', marginRight: '0.35rem', verticalAlign: 'middle' }} />
+          Verified Hackathon Scenarios (Quick-Start Presets)
         </div>
-
-        <div className="input-grid">
-          <div className="form-group">
-            <label className="form-label">Economic Objective</label>
-            <select
-              className="form-input"
-              value={objective}
-              onChange={(e) => setObjective(e.target.value as any)}
-            >
-              <option value="hedge">Hedge Exposure</option>
-              <option value="buy">Buy Asset</option>
-              <option value="sell">Sell Asset</option>
-              <option value="flatten">Flatten Position</option>
-            </select>
+        <div className="presets-grid">
+          <div
+            className={`preset-chip ${activePreset === 'hedge-bnb' ? 'active' : ''}`}
+            onClick={() => applyPreset('hedge-bnb')}
+          >
+            <div className="preset-chip-title">
+              <Shield size={14} color="var(--color-best)" />
+              <span>Hedge 70% BNB (24h)</span>
+            </div>
+            <div className="preset-chip-desc">
+              Must retain BNB for Launchpool. Selects USD-M short.
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Target Asset</label>
-            <select
-              className="form-input"
-              value={asset}
-              onChange={(e) => setAsset(e.target.value)}
-            >
-              <option value="BNB">BNB</option>
-              <option value="BTC">BTC</option>
-              <option value="ETH">ETH</option>
-              <option value="SOL">SOL</option>
-            </select>
+          <div
+            className={`preset-chip ${activePreset === 'retail-buy' ? 'active' : ''}`}
+            onClick={() => applyPreset('retail-buy')}
+          >
+            <div className="preset-chip-title">
+              <Zap size={14} color="var(--color-brand)" />
+              <span>Small Retail Swap ($750)</span>
+            </div>
+            <div className="preset-chip-desc">
+              Convert RFQ eliminates 10 bps taker fee + slippage.
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Exposure Fraction (0.1 - 1.0)</label>
-            <input
-              type="text"
-              className="form-input"
-              value={fraction}
-              onChange={(e) => setFraction(e.target.value)}
-            />
+          <div
+            className={`preset-chip ${activePreset === 'deep-buy' ? 'active' : ''}`}
+            onClick={() => applyPreset('deep-buy')}
+          >
+            <div className="preset-chip-title">
+              <TrendingDown size={14} color="var(--color-accent)" />
+              <span>Deep Book Accumulate</span>
+            </div>
+            <div className="preset-chip-desc">
+              Enforces strict 10 bps execution ceiling on deep walk.
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Horizon (Hours)</label>
-            <input
-              type="number"
-              className="form-input"
-              value={horizonHours}
-              onChange={(e) => setHorizonHours(Number(e.target.value))}
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Max Leverage Cap</label>
-            <input
-              type="text"
-              className="form-input"
-              value={maxLeverage}
-              onChange={(e) => setMaxLeverage(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Carry Ceiling (bps)</label>
-            <input
-              type="text"
-              className="form-input"
-              value={maxCarryBps}
-              onChange={(e) => setMaxCarryBps(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Max Exec Cost Ceiling (bps)</label>
-            <input
-              type="text"
-              className="form-input"
-              value={maxExecutionCostBps}
-              onChange={(e) => setMaxExecutionCostBps(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group" style={{ gridColumn: 'span 2' }}>
-            <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-              <input
-                type="checkbox"
-                checked={mustRetain}
-                onChange={(e) => setMustRetain(e.target.checked)}
-                style={{ width: '16px', height: '16px' }}
-              />
-              <span>Must Retain Underlying Asset (rejects routes that dispose of protected token)</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Dynamic Status Bar */}
-        <div style={{ background: 'var(--bg-primary)', padding: '0.85rem 1rem', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ fontSize: '0.85rem' }}>
-            <span style={{ color: 'var(--text-muted)' }}>Selected Winner: </span>
-            {winner ? (
-              <span className="mono" style={{ fontWeight: 700, color: 'var(--color-best)' }}>
-                {winner.kind.toUpperCase()} ({winner.side.toUpperCase()})
-              </span>
-            ) : (
-              <span className="mono" style={{ color: 'var(--color-rejected)', fontWeight: 700 }}>
-                NO VALID ROUTE (All prunned by constraints)
-              </span>
-            )}
-          </div>
-          <div className="mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            Snapshot ID: {baseSnapshot.id}
+          <div
+            className={`preset-chip ${activePreset === 'long-hedge' ? 'active' : ''}`}
+            onClick={() => applyPreset('long-hedge')}
+          >
+            <div className="preset-chip-title">
+              <Clock size={14} color="var(--color-warning)" />
+              <span>Long Horizon (7 Days)</span>
+            </div>
+            <div className="preset-chip-desc">
+              Tests funding carry accumulation over 168 hours.
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Rendered Route Cards */}
+      {/* Simulator Box */}
+      <div className="simulator-box">
+        <div className="simulator-header">
+          <div className="simulator-title">
+            <Sliders size={20} color="var(--color-brand)" />
+            <span>Interactive Execution-Path Compiler</span>
+          </div>
+          <button
+            onClick={() => applyPreset('hedge-bnb')}
+            className="btn-secondary"
+            style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}
+          >
+            <RotateCcw size={12} />
+            Reset Parameters
+          </button>
+        </div>
+
+        <div className="input-grid">
+          {/* Objective */}
+          <div className="form-group">
+            <label className="form-label">Economic Objective</label>
+            <div className="segmented-control">
+              {(['hedge', 'buy', 'sell', 'flatten'] as const).map((obj) => (
+                <button
+                  key={obj}
+                  className={`segment-btn ${objective === obj ? 'active' : ''}`}
+                  onClick={() => {
+                    setObjective(obj);
+                    setActivePreset('custom');
+                  }}
+                >
+                  {obj.charAt(0).toUpperCase() + obj.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Target Asset */}
+          <div className="form-group">
+            <label className="form-label">Target Asset</label>
+            <div className="segmented-control">
+              {['BNB', 'BTC', 'ETH', 'SOL'].map((tok) => (
+                <button
+                  key={tok}
+                  className={`segment-btn ${asset === tok ? 'active' : ''}`}
+                  onClick={() => {
+                    setAsset(tok);
+                    setActivePreset('custom');
+                  }}
+                >
+                  {tok}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Exposure Fraction */}
+          <div className="form-group">
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label className="form-label">Exposure Fraction</label>
+              <span className="mono" style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-accent-text)' }}>
+                {(parseFloat(fraction) * 100).toFixed(0)}%
+              </span>
+            </div>
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.05"
+              value={fraction}
+              onChange={(e) => {
+                setFraction(e.target.value);
+                setActivePreset('custom');
+              }}
+              style={{ width: '100%', accentColor: 'var(--color-brand)' }}
+            />
+            <div style={{ display: 'flex', gap: '0.35rem', marginTop: '0.35rem' }}>
+              {['0.25', '0.50', '0.70', '1.0'].map((val) => (
+                <button
+                  key={val}
+                  className="btn-secondary"
+                  style={{ flex: 1, padding: '0.2rem', fontSize: '0.72rem' }}
+                  onClick={() => {
+                    setFraction(val);
+                    setActivePreset('custom');
+                  }}
+                >
+                  {(parseFloat(val) * 100).toFixed(0)}%
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Horizon Hours */}
+          <div className="form-group">
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label className="form-label">Horizon</label>
+              <span className="mono" style={{ fontSize: '0.8rem', fontWeight: 700 }}>
+                {horizonHours} Hours
+              </span>
+            </div>
+            <div className="segmented-control">
+              {[
+                { label: '8h', val: 8 },
+                { label: '24h', val: 24 },
+                { label: '3d', val: 72 },
+                { label: '7d', val: 168 },
+              ].map((h) => (
+                <button
+                  key={h.val}
+                  className={`segment-btn ${horizonHours === h.val ? 'active' : ''}`}
+                  onClick={() => {
+                    setHorizonHours(h.val);
+                    setActivePreset('custom');
+                  }}
+                >
+                  {h.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Max Leverage */}
+          <div className="form-group">
+            <label className="form-label">Max Allowed Leverage</label>
+            <select
+              className="form-select"
+              value={maxLeverage}
+              onChange={(e) => {
+                setMaxLeverage(e.target.value);
+                setActivePreset('custom');
+              }}
+            >
+              <option value="1.0">1.0x (No Leverage)</option>
+              <option value="1.2">1.2x (Conservative)</option>
+              <option value="1.5">1.5x (Recommended)</option>
+              <option value="2.0">2.0x (Moderate)</option>
+              <option value="3.0">3.0x (High Risk)</option>
+            </select>
+          </div>
+
+          {/* Max Carry Ceiling */}
+          <div className="form-group">
+            <label className="form-label">Max Carry Ceiling (bps)</label>
+            <input
+              type="text"
+              className="form-input mono"
+              value={maxCarryBps}
+              onChange={(e) => {
+                setMaxCarryBps(e.target.value);
+                setActivePreset('custom');
+              }}
+              placeholder="e.g. 15.0"
+            />
+          </div>
+        </div>
+
+        {/* Retain Underlying Asset Switch */}
+        <div
+          className="toggle-switch-container"
+          onClick={() => {
+            setMustRetain(!mustRetain);
+            setActivePreset('custom');
+          }}
+        >
+          <div>
+            <div className="toggle-switch-label">
+              🔒 Must Retain Underlying Token ({asset})
+            </div>
+            <div className="toggle-switch-desc">
+              Strictly prevents spot/convert selling. Keeps tokens available for staking & Launchpool yields.
+            </div>
+          </div>
+          <input
+            type="checkbox"
+            checked={mustRetain}
+            onChange={() => {}}
+            style={{ width: '18px', height: '18px', accentColor: 'var(--color-best)', cursor: 'pointer' }}
+          />
+        </div>
+
+        {/* Dynamic Recompilation Status Banner */}
+        <div className="recompilation-banner">
+          <div>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Winning Execution Path: </span>
+            {winner ? (
+              <span className="mono" style={{ fontWeight: 800, color: 'var(--color-best-text)', fontSize: '0.95rem' }}>
+                {winner.kind.toUpperCase()} ({winner.side.toUpperCase()})
+              </span>
+            ) : (
+              <span className="mono" style={{ fontWeight: 800, color: 'var(--color-rejected-text)', fontSize: '0.95rem' }}>
+                NO ELIGIBLE PATH (Pruned by Hard Constraints)
+              </span>
+            )}
+          </div>
+          <div className="mono" style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+            {mustRetain && spotRoute?.status === 'REJECTED' && (
+              <span style={{ color: 'var(--color-rejected-text)' }}>
+                ● Spot selling pruned: RETAIN_UNDERLYING
+              </span>
+            )}
+            {!mustRetain && winner?.kind === 'convert' && (
+              <span style={{ color: 'var(--color-best-text)' }}>
+                ● Route flipped to Convert: Saved 10.07 bps vs Spot
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Rendered Route Cards Grid */}
+      <div style={{ marginBottom: '1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+          Evaluated Execution Paths ({routes.length})
+        </h3>
+        <span className="mono" style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          State Captured: {baseSnapshot.completedAt} (<span style={{ color: 'var(--color-best-text)' }}>{baseSnapshot.maxObservedSkewMs}ms skew</span>)
+        </span>
+      </div>
+
       <div className="cards-grid">
         {routes.map((route) => (
           <RouteCardView

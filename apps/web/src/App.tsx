@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WhatIfSimulator } from './components/WhatIfSimulator.js';
 import { BenchmarkExplorer } from './components/BenchmarkExplorer.js';
 import { EvidenceExplorer } from './components/EvidenceExplorer.js';
 import { ComparisonSnapshot } from '@rove/core';
-import { GitBranch, Shield, ArrowRight } from 'lucide-react';
+import {
+  GitBranch,
+  Shield,
+  ArrowRight,
+  Sun,
+  Moon,
+  Terminal,
+  Copy,
+  Check,
+  Cpu,
+  Layers,
+  Sparkles,
+} from 'lucide-react';
 
 const mockSnapshot: ComparisonSnapshot = {
   id: 'snap-live-read-bnb-001',
@@ -33,32 +45,36 @@ const mockSnapshot: ComparisonSnapshot = {
     bidPrice: '750.84',
     askPrice: '750.85',
     bids: [
-      ['750.84', '3.706'],
-      ['750.83', '4.024'],
-      ['750.82', '6.221'],
+      ['750.84', '4.217'],
+      ['750.83', '6.012'],
+      ['750.82', '3.817'],
+      ['750.81', '0.014'],
+      ['750.80', '8.666'],
     ],
     asks: [
-      ['750.85', '5.070'],
-      ['750.86', '4.651'],
-      ['750.87', '9.058'],
+      ['750.85', '13.030'],
+      ['750.86', '2.001'],
+      ['750.87', '5.051'],
+      ['750.88', '6.047'],
+      ['750.89', '4.124'],
     ],
   },
   convert: {
     fromAsset: 'BNB',
     toAsset: 'USDT',
     timestamp: Date.now(),
-    ratio: '750.78',
-    inverseRatio: '0.00133194',
+    ratio: '747.938',
+    inverseRatio: '0.00133701',
     fromAmount: '1.0',
-    toAmount: '750.78',
+    toAmount: '747.938',
     validTimestamp: Date.now() + 15000,
     quoteId: 'conv-live-098',
   },
   usdM: {
     symbol: 'BNBUSDT',
     timestamp: Date.now(),
-    markPrice: '750.66',
-    currentFundingRateBps: '1.25',
+    markPrice: '751.04',
+    currentFundingRateBps: '2.74',
     fundingIntervalHours: 8,
     positions: [],
   },
@@ -74,118 +90,126 @@ const mockSnapshot: ComparisonSnapshot = {
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'compiler' | 'benchmarks' | 'evidence' | 'install'>('compiler');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  // Initialize theme from localStorage or default to light
+  useEffect(() => {
+    const saved = localStorage.getItem('rove-theme') as 'light' | 'dark' | null;
+    const initial = saved || 'light';
+    setTheme(initial);
+    if (initial === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light';
+    setTheme(next);
+    localStorage.setItem('rove-theme', next);
+    if (next === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  const copyCode = (code: string, index: number) => {
+    navigator.clipboard.writeText(code);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
 
   return (
     <div className="app-container">
-      {/* Navbar */}
+      {/* Top Navbar */}
       <nav className="navbar">
-        <div className="brand">
-          <span>ROVE</span>
-          <span className="brand-badge">BINANCE AGENT OS</span>
+        <div className="brand-wrapper">
+          <a href="#" className="brand-logo" onClick={(e) => { e.preventDefault(); setActiveTab('compiler'); }}>
+            <div className="brand-icon">R</div>
+            <span>ROVE</span>
+          </a>
+          <div className="status-pill">
+            <span className="pulse-dot" />
+            <span>Binance Agent OS Live</span>
+          </div>
         </div>
-        <div className="nav-links">
+
+        <div className="nav-actions">
           <button
-            onClick={() => setActiveTab('compiler')}
-            className={`tab-btn ${activeTab === 'compiler' ? 'active' : ''}`}
-            style={{ padding: '0.4rem 0.6rem' }}
+            onClick={toggleTheme}
+            className="theme-toggle-btn"
+            title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+            aria-label="Toggle Theme"
           >
-            Compiler
+            {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
           </button>
-          <button
-            onClick={() => setActiveTab('benchmarks')}
-            className={`tab-btn ${activeTab === 'benchmarks' ? 'active' : ''}`}
-            style={{ padding: '0.4rem 0.6rem' }}
-          >
-            Rove Bench
-          </button>
-          <button
-            onClick={() => setActiveTab('evidence')}
-            className={`tab-btn ${activeTab === 'evidence' ? 'active' : ''}`}
-            style={{ padding: '0.4rem 0.6rem' }}
-          >
-            Evidence
-          </button>
-          <button
-            onClick={() => setActiveTab('install')}
-            className={`tab-btn ${activeTab === 'install' ? 'active' : ''}`}
-            style={{ padding: '0.4rem 0.6rem' }}
-          >
-            Install
-          </button>
+
           <a
-            href="https://github.com"
+            href="https://github.com/rove-finance/rove"
             target="_blank"
             rel="noreferrer"
             className="btn-github"
           >
-            <GitBranch size={14} /> GitHub
+            <GitBranch size={15} />
+            <span>GitHub</span>
           </a>
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* Hero Header */}
       <header className="hero">
         <div className="hero-tag">
-          <Shield size={14} />
+          <Shield size={14} color="var(--color-brand-dark)" />
           <span>Binance Agent OS Mini Hackathon • Track A</span>
         </div>
+
         <h1 className="hero-title">
           Tell Rove the outcome you want.<br />
-          It finds the Binance path that fits.
+          <span className="brand-gradient">It finds the Binance path that fits.</span>
         </h1>
-        <p className="hero-subtitle">
-          Language intelligence compiles your intent. Deterministic TypeScript walks the books,
-          enforces hard constraints, separates observed costs from estimated carry, and prepares one Route Card for approval.
-        </p>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-          <button
-            className="btn-primary"
-            onClick={() => setActiveTab('compiler')}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          >
-            <span>Explore Live Route Cards</span>
-            <ArrowRight size={16} />
-          </button>
-          <button
-            className="btn-github"
-            onClick={() => setActiveTab('benchmarks')}
-            style={{ padding: '0.65rem 1.25rem', fontSize: '0.9rem' }}
-          >
-            <span>View 100-Snapshot Benchmark</span>
-          </button>
-        </div>
+        <p className="hero-subtitle">
+          Language intelligence compiles your intent. Deterministic TypeScript walks the order books,
+          enforces hard constraints, separates observed costs from estimated carry, and prepares one auditable Route Card.
+        </p>
       </header>
 
-      {/* Main Tabs Navigation */}
+      {/* Main Tab Navigation */}
       <div className="tabs-header">
         <button
           className={`tab-btn ${activeTab === 'compiler' ? 'active' : ''}`}
           onClick={() => setActiveTab('compiler')}
         >
-          Route Compiler & What-If Recompilation
+          <Cpu size={15} />
+          <span>Route Compiler & What-If Engine</span>
         </button>
         <button
           className={`tab-btn ${activeTab === 'benchmarks' ? 'active' : ''}`}
           onClick={() => setActiveTab('benchmarks')}
         >
-          Rove Bench (20-Intent Experiment & Ablations)
+          <Layers size={15} />
+          <span>Rove Bench (100 Snapshots & Matrix)</span>
         </button>
         <button
           className={`tab-btn ${activeTab === 'evidence' ? 'active' : ''}`}
           onClick={() => setActiveTab('evidence')}
         >
-          Ground-Truth Evidence & MCP Capability
+          <Shield size={15} />
+          <span>Ground-Truth Evidence & MCP Tools</span>
         </button>
         <button
           className={`tab-btn ${activeTab === 'install' ? 'active' : ''}`}
           onClick={() => setActiveTab('install')}
         >
-          Installation & Setup
+          <Terminal size={15} />
+          <span>Install & Agent Skill</span>
         </button>
       </div>
 
-      {/* Tab Content */}
+      {/* Tab Panels */}
       <main>
         {activeTab === 'compiler' && (
           <WhatIfSimulator baseSnapshot={mockSnapshot} />
@@ -200,22 +224,35 @@ export const App: React.FC = () => {
         )}
 
         {activeTab === 'install' && (
-          <div className="simulator-box">
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
-              Install Rove into Antigravity or Any MCP Client
+          <div className="simulator-box" style={{ maxWidth: '820px', margin: '0 auto' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              Integrate Rove with Antigravity, Claude Code, or Cursor
             </h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-              Rove connects to Binance through official <b>Binance Agent OS</b> without local API secrets.
-              Trading operations run within a permission-scoped, non-withdrawable Agentic sub-account.
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem', lineHeight: 1.6 }}>
+              Rove connects to Binance through official <b>Binance Agent OS</b> without local API keys.
+              Trading operations run inside a permission-scoped sub-account with zero withdrawal permissions.
             </p>
 
-            <div className="section-block" style={{ marginBottom: '1.25rem' }}>
-              <div className="section-label">1. Connect Binance Agent OS in Antigravity / Claude Code</div>
-              <pre className="mono" style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: '6px', fontSize: '0.85rem', overflowX: 'auto' }}>
-{`# Add the official Binance Agent OS endpoint
+            {/* Step 1 */}
+            <div className="card-section" style={{ marginBottom: '1.25rem', padding: '1.15rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
+                <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>
+                  1. Connect Official Binance Agent OS Gateway
+                </span>
+                <button
+                  onClick={() => copyCode('claude mcp add binance --transport http https://agent.binance.com/mcp/agentic', 1)}
+                  className="btn-secondary"
+                  style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem' }}
+                >
+                  {copiedIndex === 1 ? <Check size={12} color="var(--color-best)" /> : <Copy size={12} />}
+                  {copiedIndex === 1 ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+              <pre className="mono" style={{ background: 'var(--bg-app)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', fontSize: '0.82rem', overflowX: 'auto', border: '1px solid var(--border-subtle)' }}>
+{`# Add via Claude Code CLI:
 claude mcp add binance --transport http https://agent.binance.com/mcp/agentic
 
-# Or in Antigravity mcp_config.json:
+# Or in Antigravity ~/.gemini/config/mcp_config.json:
 {
   "mcpServers": {
     "binance": {
@@ -226,9 +263,22 @@ claude mcp add binance --transport http https://agent.binance.com/mcp/agentic
               </pre>
             </div>
 
-            <div className="section-block" style={{ marginBottom: '1.25rem' }}>
-              <div className="section-label">2. Clone & Run Clean-Room Verification</div>
-              <pre className="mono" style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: '6px', fontSize: '0.85rem', overflowX: 'auto' }}>
+            {/* Step 2 */}
+            <div className="card-section" style={{ marginBottom: '1.25rem', padding: '1.15rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
+                <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>
+                  2. Clone & Run Clean-Room Verification
+                </span>
+                <button
+                  onClick={() => copyCode('git clone https://github.com/rove-finance/rove.git\ncd rove\npnpm install\npnpm verify', 2)}
+                  className="btn-secondary"
+                  style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem' }}
+                >
+                  {copiedIndex === 2 ? <Check size={12} color="var(--color-best)" /> : <Copy size={12} />}
+                  {copiedIndex === 2 ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+              <pre className="mono" style={{ background: 'var(--bg-app)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', fontSize: '0.82rem', overflowX: 'auto', border: '1px solid var(--border-subtle)' }}>
 {`git clone https://github.com/rove-finance/rove.git
 cd rove
 pnpm install
@@ -236,11 +286,19 @@ pnpm verify`}
               </pre>
             </div>
 
-            <div className="section-block">
-              <div className="section-label">3. Example Prompt in Agent Chat</div>
-              <div className="mono" style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: '6px', fontSize: '0.9rem', color: 'var(--color-accent)' }}>
-                "Hedge 70% of my BNB exposure for 24 hours. Don't sell my BNB. Keep leverage below 1.5x."
+            {/* Step 3 */}
+            <div className="card-section" style={{ padding: '1.15rem' }}>
+              <div style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.65rem' }}>
+                3. Ask Your Agent Economic Intents in Natural Language
               </div>
+              <div className="card-section" style={{ background: 'var(--color-brand-subtle)', borderColor: 'var(--color-brand)', color: 'var(--color-brand-text)', margin: 0 }}>
+                <p className="mono" style={{ fontSize: '0.88rem', fontWeight: 600 }}>
+                  "Hedge 70% of my BNB exposure for 24 hours. Don't sell my BNB. Keep leverage below 1.5x."
+                </p>
+              </div>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.65rem' }}>
+                The agent parses the intent, captures live market state in under 50ms, rejects invalid paths, and formats the winning Route Card for your approval.
+              </p>
             </div>
           </div>
         )}
