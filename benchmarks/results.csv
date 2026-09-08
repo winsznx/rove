@@ -1,0 +1,21 @@
+intent_id,eligible_paths,winner,baseline_winner,winner_changed,why_changed,observed_cost_delta,constraint_delta,snapshot_id
+INT-001,"spot;convert;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",11.06,NONE,snap-frozen-bnb-001
+INT-002,"spot;convert;margin",convert,spot,TRUE,"Spot exceeded observed execution cost ceiling.",16.51,EXECUTION_COST_LIMIT,snap-frozen-bnb-001
+INT-003,"spot;convert;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",11.06,NONE,snap-frozen-bnb-001
+INT-004,"spot;convert;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",11.06,NONE,snap-frozen-bnb-001
+INT-005,"spot;convert;margin",convert,spot,TRUE,"Spot exceeded observed execution cost ceiling.",18.02,EXECUTION_COST_LIMIT,snap-frozen-bnb-001
+INT-006,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",0.00,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-007,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",0.00,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-008,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",13.63,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-009,"spot;convert;usd_m_perp;margin",NONE,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",0.00,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-010,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",13.63,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-011,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",6.06,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-012,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",11.24,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-013,"spot;convert;usd_m_perp;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",12.02,NONE,snap-frozen-bnb-001
+INT-014,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",12.04,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-015,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",0.00,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001
+INT-016,"spot;convert;usd_m_perp;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",0.00,NONE,snap-frozen-bnb-001
+INT-017,"spot;convert;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",0.00,NONE,snap-frozen-bnb-001
+INT-018,"spot;convert;margin",convert,spot,TRUE,"Spot exceeded observed execution cost ceiling.",18.03,EXECUTION_COST_LIMIT,snap-frozen-bnb-001
+INT-019,"spot;convert;margin",convert,spot,TRUE,"Switched to CONVERT due to lower execution spread / cost.",11.06,NONE,snap-frozen-bnb-001
+INT-020,"spot;convert;usd_m_perp;margin",usd_m_perp,spot,TRUE,"Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",0.00,RETAIN_UNDERLYING_CONFLICT,snap-frozen-bnb-001

@@ -1,0 +1,126 @@
+{
+  "id": "snap-frozen-btc-094",
+  "mode": "fixture",
+  "startedAt": "2026-09-08T13:54:00.000Z",
+  "completedAt": "2026-09-08T13:54:00.040Z",
+  "maxObservedSkewMs": 24,
+  "account": {
+    "timestamp": 1788875640000,
+    "canTrade": true,
+    "makerFeeBps": "10.00",
+    "takerFeeBps": "10.00",
+    "balances": {
+      "BNB": {
+        "asset": "BNB",
+        "free": "50.00000000",
+        "locked": "0.00000000"
+      },
+      "BTC": {
+        "asset": "BTC",
+        "free": "2.50000000",
+        "locked": "0.00000000"
+      },
+      "ETH": {
+        "asset": "ETH",
+        "free": "25.00000000",
+        "locked": "0.00000000"
+      },
+      "SOL": {
+        "asset": "SOL",
+        "free": "150.00000000",
+        "locked": "0.00000000"
+      },
+      "USDT": {
+        "asset": "USDT",
+        "free": "100000.00000000",
+        "locked": "0.00000000"
+      }
+    },
+    "permissions": {
+      "spotTrade": true,
+      "futuresTrade": true,
+      "marginTrade": false,
+      "reading": true
+    }
+  },
+  "spot": {
+    "symbol": "BTCUSDT",
+    "timestamp": 1788875640010,
+    "bidPrice": "88369.38",
+    "askPrice": "88413.58",
+    "bids": [
+      [
+        "88369.38",
+        "9.00"
+      ],
+      [
+        "88281.01",
+        "24.00"
+      ]
+    ],
+    "asks": [
+      [
+        "88413.58",
+        "9.00"
+      ],
+      [
+        "88501.99",
+        "24.00"
+      ]
+    ]
+  },
+  "convert": {
+    "fromAsset": "BTC",
+    "toAsset": "USDT",
+    "timestamp": 1788875640015,
+    "ratio": "88400.3191",
+    "inverseRatio": "0.00001131",
+    "fromAmount": "1.0",
+    "toAmount": "88400.3191",
+    "validTimestamp": 1788875655000,
+    "quoteId": "quote-BTC-94"
+  },
+  "usdM": {
+    "symbol": "BTCUSDT",
+    "timestamp": 1788875640012,
+    "markPrice": "88391.48",
+    "currentFundingRateBps": "0.90",
+    "fundingIntervalHours": 8,
+    "positions": []
+  },
+  "capabilityRegistry": {
+    "spot": {
+      "marketRead": true,
+      "accountRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "convert": {
+      "quote": true,
+      "trade": true
+    },
+    "usdM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "margin": {
+      "marketRead": false,
+      "borrowRateRead": false,
+      "accountRead": false,
+      "trade": false,
+      "costingComplete": false
+    },
+    "coinM": {
+      "marketRead": false,
+      "fundingRead": false,
+      "positionRead": false,
+      "trade": false,
+      "feeRead": false,
+      "costingComplete": false
+    }
+  },
+  "sourceFingerprint": "hash-snap-BTC-94"
+}

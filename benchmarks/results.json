@@ -1,0 +1,401 @@
+{
+  "runId": "run-1788871029484",
+  "timestamp": "2026-09-08T12:37:09.484Z",
+  "engineVersion": "1.0.0",
+  "totalIntents": 20,
+  "routeFlipRate": "100.0%",
+  "constraintEnforcementRate": "65.0%",
+  "medianCostSavingsBps": "12.02",
+  "rows": [
+    {
+      "intentId": "INT-001",
+      "intentText": "Buy $750 of BNB now with lowest immediate execution cost.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "11.06",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost.",
+      "costDeltaBps": "11.06"
+    },
+    {
+      "intentId": "INT-002",
+      "intentText": "Buy $10,000 of BNB. Keep observed execution cost under 8 bps.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "16.51",
+      "winnerChanged": true,
+      "whyChanged": "Spot exceeded observed execution cost ceiling.",
+      "costDeltaBps": "16.51",
+      "constraintTriggered": "EXECUTION_COST_LIMIT",
+      "rejectionReason": "Immediate execution cost of 16.51 bps exceeds your ceiling of 8.0 bps"
+    },
+    {
+      "intentId": "INT-003",
+      "intentText": "Sell $2,500 of BNB now with the lowest observed execution cost.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "11.06",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost.",
+      "costDeltaBps": "11.06"
+    },
+    {
+      "intentId": "INT-004",
+      "intentText": "Buy 0.5 BTC. Maximum execution cost ceiling 12 bps.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "11.06",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost.",
+      "costDeltaBps": "11.06"
+    },
+    {
+      "intentId": "INT-005",
+      "intentText": "Sell $15,000 of ETH. Keep execution cost below 10 bps.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "18.02",
+      "winnerChanged": true,
+      "whyChanged": "Spot exceeded observed execution cost ceiling.",
+      "costDeltaBps": "18.02",
+      "constraintTriggered": "EXECUTION_COST_LIMIT",
+      "rejectionReason": "Immediate execution cost of 18.02 bps exceeds your ceiling of 10.0 bps"
+    },
+    {
+      "intentId": "INT-006",
+      "intentText": "Hedge 70% of my BNB exposure for 24 hours. Do not sell my BNB. Keep leverage below 1.5x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "2.10",
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-007",
+      "intentText": "Hedge 100% of my BNB exposure for 8 hours. Retain underlying BNB. Max leverage 1.0x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "0.70",
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-008",
+      "intentText": "Hedge 50% of my BNB exposure for 24 hours. Retain underlying. Cap estimated carry at 10 bps.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "2.10",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "18.63",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "costDeltaBps": "13.63",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-009",
+      "intentText": "Hedge 70% of my BNB exposure for 24 hours. Retain underlying. Cap estimated carry at 1.0 bps (strict carry ceiling).",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-010",
+      "intentText": "Hedge 50% of my BNB exposure for 7 days. Retain underlying. Leverage <= 2.0x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "14.70",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "18.63",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "costDeltaBps": "13.63",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-011",
+      "intentText": "Hedge 80% of BTC exposure for 48 hours. Retain underlying BTC. Leverage <= 1.5x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "4.20",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "11.06",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "costDeltaBps": "6.06",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BTC you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-012",
+      "intentText": "Hedge 50% of ETH exposure for 12 hours. Retain underlying ETH. Max leverage 1.0x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "1.05",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "16.24",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "costDeltaBps": "11.24",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the ETH you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-013",
+      "intentText": "Hedge $5,000 BNB exposure for 24h. No retain-underlying restriction. Compare spot sale vs perp short.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "12.02",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost.",
+      "costDeltaBps": "12.02"
+    },
+    {
+      "intentId": "INT-014",
+      "intentText": "Hedge 30% of BNB for 60 minutes. Retain underlying. Urgency immediate.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "0.09",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "17.04",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "costDeltaBps": "12.04",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-015",
+      "intentText": "Hedge 100% of SOL exposure for 24h. Retain underlying SOL. Leverage <= 1.2x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "2.10",
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the SOL you explicitly asked to retain"
+    },
+    {
+      "intentId": "INT-016",
+      "intentText": "Flatten BNB directional exposure. Immediate execution.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost."
+    },
+    {
+      "intentId": "INT-017",
+      "intentText": "Buy $50,000 of BNB. Walk deep order book with max cost ceiling 15 bps.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost."
+    },
+    {
+      "intentId": "INT-018",
+      "intentText": "Sell 20 BNB. Keep observed cost under 9 bps.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "18.03",
+      "winnerChanged": true,
+      "whyChanged": "Spot exceeded observed execution cost ceiling.",
+      "costDeltaBps": "18.03",
+      "constraintTriggered": "EXECUTION_COST_LIMIT",
+      "rejectionReason": "Immediate execution cost of 18.03 bps exceeds your ceiling of 9.0 bps"
+    },
+    {
+      "intentId": "INT-019",
+      "intentText": "Buy $250 of BNB (retail small ticket). Compare RFQ Convert vs Spot market order.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "margin"
+      ],
+      "roveWinner": "convert",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "0.00",
+      "baselineWinner": "spot",
+      "baselineObservedCostBps": "11.06",
+      "winnerChanged": true,
+      "whyChanged": "Switched to CONVERT due to lower execution spread / cost.",
+      "costDeltaBps": "11.06"
+    },
+    {
+      "intentId": "INT-020",
+      "intentText": "Hedge 60% BNB for 4 hours. Tight leverage limit: max 0.8x.",
+      "snapshotId": "snap-frozen-bnb-001",
+      "eligiblePaths": [
+        "spot",
+        "convert",
+        "usd_m_perp",
+        "margin"
+      ],
+      "roveWinner": "usd_m_perp",
+      "roveStatus": "SELECTED",
+      "roveObservedCostBps": "5.00",
+      "roveEstimatedCarryBps": "0.35",
+      "baselineWinner": "spot",
+      "winnerChanged": true,
+      "whyChanged": "Spot rejected because intent requires retaining underlying asset. Switched to USD-M perpetual hedge.",
+      "constraintTriggered": "RETAIN_UNDERLYING_CONFLICT",
+      "rejectionReason": "Rejected because this path requires selling the BNB you explicitly asked to retain"
+    }
+  ]
+}

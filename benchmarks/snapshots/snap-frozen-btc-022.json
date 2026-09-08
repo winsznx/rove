@@ -1,0 +1,126 @@
+{
+  "id": "snap-frozen-btc-022",
+  "mode": "fixture",
+  "startedAt": "2026-09-08T12:42:00.000Z",
+  "completedAt": "2026-09-08T12:42:00.040Z",
+  "maxObservedSkewMs": 42,
+  "account": {
+    "timestamp": 1788871320000,
+    "canTrade": true,
+    "makerFeeBps": "10.00",
+    "takerFeeBps": "10.00",
+    "balances": {
+      "BNB": {
+        "asset": "BNB",
+        "free": "50.00000000",
+        "locked": "0.00000000"
+      },
+      "BTC": {
+        "asset": "BTC",
+        "free": "2.50000000",
+        "locked": "0.00000000"
+      },
+      "ETH": {
+        "asset": "ETH",
+        "free": "25.00000000",
+        "locked": "0.00000000"
+      },
+      "SOL": {
+        "asset": "SOL",
+        "free": "150.00000000",
+        "locked": "0.00000000"
+      },
+      "USDT": {
+        "asset": "USDT",
+        "free": "100000.00000000",
+        "locked": "0.00000000"
+      }
+    },
+    "permissions": {
+      "spotTrade": true,
+      "futuresTrade": true,
+      "marginTrade": false,
+      "reading": true
+    }
+  },
+  "spot": {
+    "symbol": "BTCUSDT",
+    "timestamp": 1788871320010,
+    "bidPrice": "88482.81",
+    "askPrice": "88509.35",
+    "bids": [
+      [
+        "88482.81",
+        "7.00"
+      ],
+      [
+        "88394.33",
+        "27.00"
+      ]
+    ],
+    "asks": [
+      [
+        "88509.35",
+        "7.00"
+      ],
+      [
+        "88597.86",
+        "27.00"
+      ]
+    ]
+  },
+  "convert": {
+    "fromAsset": "BTC",
+    "toAsset": "USDT",
+    "timestamp": 1788871320015,
+    "ratio": "88504.9296",
+    "inverseRatio": "0.00001130",
+    "fromAmount": "1.0",
+    "toAmount": "88504.9296",
+    "validTimestamp": 1788871335000,
+    "quoteId": "quote-BTC-22"
+  },
+  "usdM": {
+    "symbol": "BTCUSDT",
+    "timestamp": 1788871320012,
+    "markPrice": "88496.08",
+    "currentFundingRateBps": "-0.70",
+    "fundingIntervalHours": 8,
+    "positions": []
+  },
+  "capabilityRegistry": {
+    "spot": {
+      "marketRead": true,
+      "accountRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "convert": {
+      "quote": true,
+      "trade": true
+    },
+    "usdM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "margin": {
+      "marketRead": false,
+      "borrowRateRead": false,
+      "accountRead": false,
+      "trade": false,
+      "costingComplete": false
+    },
+    "coinM": {
+      "marketRead": false,
+      "fundingRead": false,
+      "positionRead": false,
+      "trade": false,
+      "feeRead": false,
+      "costingComplete": false
+    }
+  },
+  "sourceFingerprint": "hash-snap-BTC-22"
+}

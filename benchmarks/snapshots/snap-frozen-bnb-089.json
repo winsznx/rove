@@ -1,0 +1,126 @@
+{
+  "id": "snap-frozen-bnb-089",
+  "mode": "fixture",
+  "startedAt": "2026-09-08T13:49:00.000Z",
+  "completedAt": "2026-09-08T13:49:00.040Z",
+  "maxObservedSkewMs": 49,
+  "account": {
+    "timestamp": 1788875340000,
+    "canTrade": true,
+    "makerFeeBps": "10.00",
+    "takerFeeBps": "10.00",
+    "balances": {
+      "BNB": {
+        "asset": "BNB",
+        "free": "50.00000000",
+        "locked": "0.00000000"
+      },
+      "BTC": {
+        "asset": "BTC",
+        "free": "2.50000000",
+        "locked": "0.00000000"
+      },
+      "ETH": {
+        "asset": "ETH",
+        "free": "25.00000000",
+        "locked": "0.00000000"
+      },
+      "SOL": {
+        "asset": "SOL",
+        "free": "150.00000000",
+        "locked": "0.00000000"
+      },
+      "USDT": {
+        "asset": "USDT",
+        "free": "100000.00000000",
+        "locked": "0.00000000"
+      }
+    },
+    "permissions": {
+      "spotTrade": true,
+      "futuresTrade": true,
+      "marginTrade": false,
+      "reading": true
+    }
+  },
+  "spot": {
+    "symbol": "BNBUSDT",
+    "timestamp": 1788875340010,
+    "bidPrice": "753.54",
+    "askPrice": "753.92",
+    "bids": [
+      [
+        "753.54",
+        "14.00"
+      ],
+      [
+        "752.79",
+        "34.00"
+      ]
+    ],
+    "asks": [
+      [
+        "753.92",
+        "14.00"
+      ],
+      [
+        "754.67",
+        "34.00"
+      ]
+    ]
+  },
+  "convert": {
+    "fromAsset": "BNB",
+    "toAsset": "USDT",
+    "timestamp": 1788875340015,
+    "ratio": "753.8054",
+    "inverseRatio": "0.00132660",
+    "fromAmount": "1.0",
+    "toAmount": "753.8054",
+    "validTimestamp": 1788875355000,
+    "quoteId": "quote-BNB-89"
+  },
+  "usdM": {
+    "symbol": "BNBUSDT",
+    "timestamp": 1788875340012,
+    "markPrice": "753.73",
+    "currentFundingRateBps": "2.50",
+    "fundingIntervalHours": 8,
+    "positions": []
+  },
+  "capabilityRegistry": {
+    "spot": {
+      "marketRead": true,
+      "accountRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "convert": {
+      "quote": true,
+      "trade": true
+    },
+    "usdM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "margin": {
+      "marketRead": false,
+      "borrowRateRead": false,
+      "accountRead": false,
+      "trade": false,
+      "costingComplete": false
+    },
+    "coinM": {
+      "marketRead": false,
+      "fundingRead": false,
+      "positionRead": false,
+      "trade": false,
+      "feeRead": false,
+      "costingComplete": false
+    }
+  },
+  "sourceFingerprint": "hash-snap-BNB-89"
+}

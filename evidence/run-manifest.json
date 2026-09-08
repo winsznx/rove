@@ -1,0 +1,14 @@
+{
+  "manifestVersion": "1.0.0",
+  "createdAt": "2026-09-08T12:37:09.493Z",
+  "commitSha": "main",
+  "artifacts": {
+    "toolList": "evidence/mcp/tool-list.json",
+    "capabilityMap": "evidence/mcp/capability-map.json",
+    "claimLedger": "evidence/claim-ledger.md",
+    "benchmarkResultsJson": "benchmarks/results.json",
+    "benchmarkResultsCsv": "benchmarks/results.csv",
+    "ablationSummary": "benchmarks/ablations/summary.json",
+    "snapshotsCount": 100
+  }
+}

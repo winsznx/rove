@@ -1,0 +1,126 @@
+{
+  "id": "snap-frozen-eth-091",
+  "mode": "fixture",
+  "startedAt": "2026-09-08T13:51:00.000Z",
+  "completedAt": "2026-09-08T13:51:00.040Z",
+  "maxObservedSkewMs": 21,
+  "account": {
+    "timestamp": 1788875460000,
+    "canTrade": true,
+    "makerFeeBps": "10.00",
+    "takerFeeBps": "10.00",
+    "balances": {
+      "BNB": {
+        "asset": "BNB",
+        "free": "50.00000000",
+        "locked": "0.00000000"
+      },
+      "BTC": {
+        "asset": "BTC",
+        "free": "2.50000000",
+        "locked": "0.00000000"
+      },
+      "ETH": {
+        "asset": "ETH",
+        "free": "25.00000000",
+        "locked": "0.00000000"
+      },
+      "SOL": {
+        "asset": "SOL",
+        "free": "150.00000000",
+        "locked": "0.00000000"
+      },
+      "USDT": {
+        "asset": "USDT",
+        "free": "100000.00000000",
+        "locked": "0.00000000"
+      }
+    },
+    "permissions": {
+      "spotTrade": true,
+      "futuresTrade": true,
+      "marginTrade": false,
+      "reading": true
+    }
+  },
+  "spot": {
+    "symbol": "ETHUSDT",
+    "timestamp": 1788875460010,
+    "bidPrice": "2351.01",
+    "askPrice": "2351.49",
+    "bids": [
+      [
+        "2351.01",
+        "6.00"
+      ],
+      [
+        "2348.66",
+        "21.00"
+      ]
+    ],
+    "asks": [
+      [
+        "2351.49",
+        "6.00"
+      ],
+      [
+        "2353.84",
+        "21.00"
+      ]
+    ]
+  },
+  "convert": {
+    "fromAsset": "ETH",
+    "toAsset": "USDT",
+    "timestamp": 1788875460015,
+    "ratio": "2351.4851",
+    "inverseRatio": "0.00042526",
+    "fromAmount": "1.0",
+    "toAmount": "2351.4851",
+    "validTimestamp": 1788875475000,
+    "quoteId": "quote-ETH-91"
+  },
+  "usdM": {
+    "symbol": "ETHUSDT",
+    "timestamp": 1788875460012,
+    "markPrice": "2351.25",
+    "currentFundingRateBps": "-1.50",
+    "fundingIntervalHours": 8,
+    "positions": []
+  },
+  "capabilityRegistry": {
+    "spot": {
+      "marketRead": true,
+      "accountRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "convert": {
+      "quote": true,
+      "trade": true
+    },
+    "usdM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "margin": {
+      "marketRead": false,
+      "borrowRateRead": false,
+      "accountRead": false,
+      "trade": false,
+      "costingComplete": false
+    },
+    "coinM": {
+      "marketRead": false,
+      "fundingRead": false,
+      "positionRead": false,
+      "trade": false,
+      "feeRead": false,
+      "costingComplete": false
+    }
+  },
+  "sourceFingerprint": "hash-snap-ETH-91"
+}

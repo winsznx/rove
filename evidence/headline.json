@@ -1,0 +1,16 @@
+{
+  "experiment": "Rove Bench 20-Intent Route-Flip Experiment",
+  "generatedAt": "2026-09-08T12:37:09.493Z",
+  "engineVersion": "1.0.0",
+  "totalEvaluatedIntents": 20,
+  "routeFlipRate": "100.0%",
+  "constraintEnforcementRate": "65.0%",
+  "medianCostSavingsBps": "12.02",
+  "frozenSnapshotsCount": 100,
+  "findings": [
+    "Retain-underlying constraint deterministically rejects spot & convert sale in 100% of applicable hedge cases, safely switching to USD-M perpetual futures.",
+    "Execution-cost ceiling rejects spot market orders when order-book walk exceeds user-specified bps.",
+    "Convert RFQ wins retail ticket cases where zero book slippage offsets exchange fees.",
+    "Carrying costs are explicitly projected and separated from immediate execution observations."
+  ]
+}

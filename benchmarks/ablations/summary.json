@@ -1,0 +1,23 @@
+{
+  "spot_only": {
+    "spotSelectionRate": "25.0%"
+  },
+  "no_convert": {
+    "spotSelectionRate": "20.0%"
+  },
+  "no_futures": {
+    "spotSelectionRate": "0.0%"
+  },
+  "no_funding_awareness": {
+    "spotSelectionRate": "0.0%"
+  },
+  "no_horizon": {
+    "spotSelectionRate": "0.0%"
+  },
+  "ticker_only": {
+    "spotSelectionRate": "0.0%"
+  },
+  "llm_only": {
+    "spotSelectionRate": "100.0%"
+  }
+}

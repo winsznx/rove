@@ -76,8 +76,8 @@ export class SnapshotCollector {
     const account: AccountSnapshot = {
       timestamp: spotAccountRes.updateTime > 0 ? spotAccountRes.updateTime : snapshotTimestamp,
       canTrade: spotAccountRes.canTrade,
-      makerFeeBps: (spotAccountRes.makerCommission).toFixed(2),
-      takerFeeBps: (spotAccountRes.takerCommission).toFixed(2),
+      makerFeeBps: ((spotAccountRes.makerCommission ?? 10)).toFixed(2),
+      takerFeeBps: ((spotAccountRes.takerCommission ?? 10)).toFixed(2),
       balances,
       permissions: {
         spotTrade: permissionsRes.enableSpotAndMarginTrading,
@@ -118,7 +118,7 @@ export class SnapshotCollector {
       markPrice: usdMMarkPrice,
       currentFundingRateBps: usdMFundingRes.rateBps,
       fundingIntervalHours: usdMFundingRes.intervalHours,
-      positions: usdMAccountRes.positions.map((p) => ({
+      positions: (usdMAccountRes?.positions ?? []).map((p) => ({
         symbol: p.symbol,
         positionAmt: p.positionAmt,
         entryPrice: p.entryPrice,

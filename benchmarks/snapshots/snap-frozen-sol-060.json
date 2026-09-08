@@ -1,0 +1,126 @@
+{
+  "id": "snap-frozen-sol-060",
+  "mode": "fixture",
+  "startedAt": "2026-09-08T13:20:00.000Z",
+  "completedAt": "2026-09-08T13:20:00.040Z",
+  "maxObservedSkewMs": 20,
+  "account": {
+    "timestamp": 1788873600000,
+    "canTrade": true,
+    "makerFeeBps": "10.00",
+    "takerFeeBps": "10.00",
+    "balances": {
+      "BNB": {
+        "asset": "BNB",
+        "free": "50.00000000",
+        "locked": "0.00000000"
+      },
+      "BTC": {
+        "asset": "BTC",
+        "free": "2.50000000",
+        "locked": "0.00000000"
+      },
+      "ETH": {
+        "asset": "ETH",
+        "free": "25.00000000",
+        "locked": "0.00000000"
+      },
+      "SOL": {
+        "asset": "SOL",
+        "free": "150.00000000",
+        "locked": "0.00000000"
+      },
+      "USDT": {
+        "asset": "USDT",
+        "free": "100000.00000000",
+        "locked": "0.00000000"
+      }
+    },
+    "permissions": {
+      "spotTrade": true,
+      "futuresTrade": true,
+      "marginTrade": false,
+      "reading": true
+    }
+  },
+  "spot": {
+    "symbol": "SOLUSDT",
+    "timestamp": 1788873600010,
+    "bidPrice": "144.77",
+    "askPrice": "144.79",
+    "bids": [
+      [
+        "144.77",
+        "5.00"
+      ],
+      [
+        "144.63",
+        "20.00"
+      ]
+    ],
+    "asks": [
+      [
+        "144.79",
+        "5.00"
+      ],
+      [
+        "144.93",
+        "20.00"
+      ]
+    ]
+  },
+  "convert": {
+    "fromAsset": "SOL",
+    "toAsset": "USDT",
+    "timestamp": 1788873600015,
+    "ratio": "144.7583",
+    "inverseRatio": "0.00690807",
+    "fromAmount": "1.0",
+    "toAmount": "144.7583",
+    "validTimestamp": 1788873615000,
+    "quoteId": "quote-SOL-60"
+  },
+  "usdM": {
+    "symbol": "SOLUSDT",
+    "timestamp": 1788873600012,
+    "markPrice": "144.78",
+    "currentFundingRateBps": "1.70",
+    "fundingIntervalHours": 8,
+    "positions": []
+  },
+  "capabilityRegistry": {
+    "spot": {
+      "marketRead": true,
+      "accountRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "convert": {
+      "quote": true,
+      "trade": true
+    },
+    "usdM": {
+      "marketRead": true,
+      "fundingRead": true,
+      "positionRead": true,
+      "trade": true,
+      "feeRead": true
+    },
+    "margin": {
+      "marketRead": false,
+      "borrowRateRead": false,
+      "accountRead": false,
+      "trade": false,
+      "costingComplete": false
+    },
+    "coinM": {
+      "marketRead": false,
+      "fundingRead": false,
+      "positionRead": false,
+      "trade": false,
+      "feeRead": false,
+      "costingComplete": false
+    }
+  },
+  "sourceFingerprint": "hash-snap-SOL-60"
+}
