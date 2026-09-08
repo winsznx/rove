@@ -186,20 +186,28 @@ Open `http://localhost:5173` to explore the **Interactive What-If Recompilation 
 
 ---
 
-## Antigravity & Claude Code Skill Integration
+## SkillHub & Agent OS Skill Integration
 
-Rove is packaged as a ready-to-run agent skill under `.agents/skills/rove/` and `packages/skill/`:
+Rove is packaged as a fully portable, production-ready agent skill conforming to standard open agent skill specifications (`.agents/skills/rove/SKILL.md` and `packages/skill/SKILL.md`), ready for submission to Binance Agent OS SkillHub registries.
 
+### Skill Location & Structure
+- **Root Agent Skill**: [`.agents/skills/rove/SKILL.md`](.agents/skills/rove/SKILL.md)
+- **Monorepo Package**: [`packages/skill/SKILL.md`](packages/skill/SKILL.md)
+
+### 1. Connect Official Binance Agent OS Gateway
 ```bash
-# Connect official Binance Agent OS MCP
+# Connect official Binance Agent OS MCP transport
 claude mcp add binance --transport http https://agent.binance.com/mcp/agentic
 ```
 
-In any agent session:
+### 2. Natural Language Agent Interaction
+In any Antigravity, Claude Code, Cursor, or Binance Agent OS session:
+```text
+User:  "Hedge 70% of my BNB exposure for 24 hours. Don't sell my BNB. Keep leverage below 1.5x."
+Agent: [Invokes Rove Skill] -> Compiles intent -> Reads live Binance state -> Formats Route Card -> Awaits user confirmation.
 ```
-User: "Hedge 70% of my BNB exposure for 24 hours. Don't sell my BNB. Keep leverage below 1.5x."
-Agent: [Invokes Rove Skill] -> Compiles intent -> Collects live snapshot -> Formats Route Card -> Awaits user confirmation.
-```
+
+The host LLM delegates all financial arithmetic, book walking, and constraint checks to `@rove/core`, while using language intelligence to parse user intent and explain formatted Route Cards.
 
 ---
 
